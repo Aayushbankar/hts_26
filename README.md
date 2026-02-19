@@ -137,7 +137,3 @@ Every prompt gets a quantified risk assessment:
   "hipaa_identifiers_protected": 6
 }
 ```
-
-## 📜 License
-
-Built for Smart India Hackathon 2026.
