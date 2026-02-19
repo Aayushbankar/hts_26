@@ -54,3 +54,14 @@ async def chat(request: ChatRequest):
     except Exception as e:
         # If the API fails, this sends a clear error message instead of crashing
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+# 7. Aliases Endpoint (Placeholder for Task 4.2)
+@app.get("/aliases")
+async def get_aliases():
+    return {"aliases": {}, "total": 0}
+
+# 8. Reset Endpoint (Placeholder for Task 4.3)
+@app.post("/reset")
+async def reset_session():
+    return {"status": "reset", "message": "All aliases cleared"}
