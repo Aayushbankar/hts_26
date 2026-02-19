@@ -39,11 +39,11 @@ Silent-Protocol is a **privacy proxy** that sits between the user and any public
 │   USER       │     │   SILENT-PROTOCOL    │     │  PUBLIC   │
 │              │     │                      │     │  LLM      │
 │ "Draft NDA   │────>│ 1. DETECT entities   │     │           │
-│  for Apple"  │     │ 2. REPLACE with      │────>│ Sees only │
-│              │     │    fake aliases       │     │ "Orion    │
-│              │     │ 3. STORE the mapping  │     │  Corp"    │
-│              │<────│ 4. REBUILD response   │<────│           │
-│ Gets back    │     │    with real names    │     │           │
+│  for Apple"  │     │ 2. REPLACE with      │────>│ Sees only│
+│              │     │    fake aliases      │     │ "Orion   │
+│              │     │ 3. STORE the mapping │     │  Corp"   │
+│              │<────│ 4. REBUILD response  │<────│          │
+│ Gets back    │     │    with real names   │     │          │
 │ "Apple..."   │     └──────────────────────┘     └──────────┘
 └──────────────┘
 ```
