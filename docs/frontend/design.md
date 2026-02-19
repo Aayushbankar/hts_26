@@ -113,7 +113,7 @@ The main area sits between header and input bar, and scrolls independently.
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
 │ HEADER (56px, fixed top, full width)                                 │
-│  Left: Lock icon + "Silent-Protocol" + "v0.1" badge                 │
+│  Left: Lock icon + "Silent-Protocol" + "v0.1" badge                  │
 │  Right: Silent Mode toggle switch + "Reset Session" button           │
 ├──────────────────────────────────────────┬───────────────────────────┤
 │                                          │                           │

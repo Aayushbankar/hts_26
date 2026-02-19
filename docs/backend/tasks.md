@@ -5,7 +5,7 @@
 
 ---
 
-## Task 1: Environment Setup (1 hour)
+## Task 1: Environment Setup (1 hour) 
 
 - [ ] **1.1** Install Python 3.11 (confirm with `python --version`) (10 min)
 - [ ] **1.2** Install VS Code and the Python extension (10 min)
