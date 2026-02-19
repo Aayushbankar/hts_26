@@ -1,0 +1,421 @@
+{
+  "_meta": {
+    "project": "Silent-Protocol",
+    "version": "2.0",
+    "description": "Comprehensive test & demo dataset. Part A = testing scenarios (what to test). Part B = real-world user prompts (what people would actually type).",
+    "total_prompts": 50,
+    "domains": ["medical", "legal", "financial", "compliance", "government", "corporate", "education", "real_estate", "insurance", "general"],
+    "tiers_tested": ["REPLACE", "PERTURB", "PRESERVE"]
+  },
+
+  "part_a_testing": {
+    "_description": "Scenarios designed to test specific features of the system. Use these to verify correct behavior.",
+
+    "tier_1_replace_tests": [
+      {
+        "id": "T01",
+        "test_name": "Basic Person + Organization",
+        "prompt": "Tim Cook is the CEO of Apple Inc. He works at their headquarters in Cupertino, California.",
+        "expected_behavior": "Tim Cook, Apple Inc, Cupertino, California all replaced with fakes",
+        "expected_entities": ["person", "organization", "location"],
+        "verify": "None of the original names appear in output"
+      },
+      {
+        "id": "T02",
+        "test_name": "Email + Phone + SSN Detection",
+        "prompt": "Contact John Smith at john.smith@company.com, or call +1-408-555-1234. His SSN is 123-45-6789.",
+        "expected_behavior": "All three PII items detected by regex and replaced",
+        "expected_entities": ["person", "email", "phone", "ssn"],
+        "verify": "Original email, phone, SSN all gone. Replacements look realistic."
+      },
+      {
+        "id": "T03",
+        "test_name": "Credit Card + IP Address + URL",
+        "prompt": "Process payment with card 4111-1111-1111-1111 from IP 192.168.1.100. Receipt at https://payments.example.com/receipt/12345.",
+        "expected_behavior": "Credit card, IP, and URL all replaced by regex layer",
+        "expected_entities": ["credit_card", "ip_address", "url"],
+        "verify": "None of the original values appear"
+      },
+      {
+        "id": "T04",
+        "test_name": "Multiple People in Same Prompt",
+        "prompt": "Sarah Chen and David Kim discussed the project with their manager Priya Sharma. Later, Sarah Chen sent the summary to David Kim.",
+        "expected_behavior": "Each person gets a unique alias. Same person always gets the same alias across both mentions.",
+        "expected_entities": ["person", "person", "person"],
+        "verify": "Sarah Chen → same fake both times. David Kim → same fake both times. All three fakes are different."
+      },
+      {
+        "id": "T05",
+        "test_name": "Locale-Aware Name Replacement",
+        "prompt": "Dr. Priya Sharma referred patient Rajesh Patel to Dr. Wei Chen at the Seoul clinic run by Dr. Kim Yeon.",
+        "expected_behavior": "Indian names replaced with Indian names, Chinese with Chinese, Korean with Korean",
+        "expected_entities": ["person", "person", "person", "person"],
+        "verify": "Cultural origin preserved in replacements"
+      }
+    ],
+
+    "tier_2_perturb_tests": [
+      {
+        "id": "T06",
+        "test_name": "Date Perturbation (Multiple Formats)",
+        "prompt": "The contract was signed on January 15, 2026. The deadline is 03/30/2026. Final review: 2026-04-15.",
+        "expected_behavior": "All three dates shifted ±3-7 days. Each keeps its original format.",
+        "expected_entities": ["date", "date", "date"],
+        "verify": "Dates are different from originals but in same format. Year doesn't change."
+      },
+      {
+        "id": "T07",
+        "test_name": "Money Perturbation (Various Scales)",
+        "prompt": "The deal is worth $3.5 billion. The annual budget is $25 million. Office rent is $4,500 monthly.",
+        "expected_behavior": "All amounts multiplied ×0.85-1.15. Scale words preserved.",
+        "expected_entities": ["money_amount", "money_amount", "money_amount"],
+        "verify": "billion stays billion, million stays million. Numbers are close but different."
+      },
+      {
+        "id": "T08",
+        "test_name": "Multi-Currency Support",
+        "prompt": "The EU fine was €500 million. UK damages were £200 thousand. Japan investment: ¥1.2 billion. India allocation: ₹50 million.",
+        "expected_behavior": "All currency symbols preserved. Amounts perturbed.",
+        "expected_entities": ["money_amount", "money_amount", "money_amount", "money_amount"],
+        "verify": "€, £, ¥, ₹ symbols still present in output"
+      },
+      {
+        "id": "T09",
+        "test_name": "Year Boundary Guard",
+        "prompt": "The audit began on January 1, 2026. The fiscal year starts January 2, 2026. Year-end review: December 31, 2026.",
+        "expected_behavior": "No date shifts across year boundaries",
+        "expected_entities": ["date", "date", "date"],
+        "verify": "All dates stay in 2026"
+      },
+      {
+        "id": "T10",
+        "test_name": "Abstract Date Preservation",
+        "prompt": "The Q2 2025 earnings were strong. Revenue grew in April 2025. FY2026 projections are optimistic. The year 2025 was transformative.",
+        "expected_behavior": "Quarter notation, month-year, fiscal year, and standalone year all preserved as-is",
+        "expected_entities": [],
+        "verify": "Q2 2025, April 2025, FY2026, 2025 all unchanged"
+      }
+    ],
+
+    "tier_3_preserve_tests": [
+      {
+        "id": "T11",
+        "test_name": "Medical Context Preservation",
+        "prompt": "Dr. Sarah Chen prescribed Metformin 500mg and Lisinopril 10mg for Type 2 Diabetes and hypertension. Patient reports chest pain and shortness of breath.",
+        "expected_behavior": "Doctor name replaced. ALL medical terms preserved in output.",
+        "expected_entities": ["person"],
+        "expect_preserved": ["Metformin 500mg", "Lisinopril 10mg", "Type 2 Diabetes", "hypertension", "chest pain", "shortness of breath"],
+        "verify": "Medical terms are in the sanitized output. Doctor name is NOT."
+      },
+      {
+        "id": "T12",
+        "test_name": "Legal Concept Preservation",
+        "prompt": "Apple Inc filed a breach of contract suit citing the non-compete clause and fiduciary duty violations. The arbitration clause was also invoked.",
+        "expected_behavior": "Apple Inc replaced. Legal concepts preserved.",
+        "expected_entities": ["organization"],
+        "expect_preserved": ["breach of contract", "non-compete", "fiduciary duty", "arbitration"],
+        "verify": "Legal terms in output, company name is NOT"
+      },
+      {
+        "id": "T13",
+        "test_name": "Financial Instrument Preservation",
+        "prompt": "Goldman Sachs structured a convertible note with a SAFE agreement for the Series B round. The 401(k) restructuring was also discussed.",
+        "expected_behavior": "Goldman Sachs replaced. Financial instruments preserved.",
+        "expected_entities": ["organization"],
+        "expect_preserved": ["convertible note", "SAFE agreement", "Series B", "401(k)"],
+        "verify": "Financial terms in output, company name is NOT"
+      },
+      {
+        "id": "T14",
+        "test_name": "Regulatory Term Preservation",
+        "prompt": "Jennifer Walsh at Acme Corp reported a GDPR violation. The HIPAA compliance audit by Deloitte also found SOX deficiencies.",
+        "expected_behavior": "Person and company names replaced. Regulation names preserved.",
+        "expected_entities": ["person", "organization", "organization"],
+        "expect_preserved": ["GDPR", "HIPAA", "SOX"],
+        "verify": "Regulation names in output"
+      }
+    ],
+
+    "edge_case_tests": [
+      {
+        "id": "T15",
+        "test_name": "No Entities (Passthrough)",
+        "prompt": "What is the difference between a stock and a bond? Explain in simple terms.",
+        "expected_behavior": "No entities detected. Text passes through unchanged.",
+        "expected_entities": [],
+        "verify": "Output equals input exactly"
+      },
+      {
+        "id": "T16",
+        "test_name": "SSN Word vs SSN Number",
+        "prompt": "The SSN verification process requires submitting your SSN to the government. John's SSN is 123-45-6789.",
+        "expected_behavior": "The word 'SSN' is NOT treated as a government ID. The actual number 123-45-6789 IS replaced.",
+        "expected_entities": ["ssn", "person"],
+        "verify": "Word 'SSN' appears in output. Number does NOT."
+      },
+      {
+        "id": "T17",
+        "test_name": "Consistency Across Multiple Calls",
+        "prompt_1": "Tim Cook works at Apple.",
+        "prompt_2": "Apple announced a new product. Tim Cook presented it.",
+        "expected_behavior": "Same aliases used across both calls (session persistence)",
+        "verify": "Tim Cook gets the same fake name in both outputs"
+      },
+      {
+        "id": "T18",
+        "test_name": "Round-Trip De-sanitization",
+        "prompt": "Tim Cook and Sundar Pichai met at Apple headquarters in Cupertino to discuss a $500 million deal.",
+        "expected_behavior": "Sanitize, simulate LLM using fake names, de-sanitize → original names restored",
+        "verify": "After de-sanitize, Tim Cook and Sundar Pichai appear in the restored text"
+      },
+      {
+        "id": "T19",
+        "test_name": "Very Long Prompt",
+        "prompt": "Write a comprehensive legal brief for the case of Johnson & Johnson vs. Pfizer Inc regarding patent infringement of pharmaceutical compound ABC-123 used in treating chronic obstructive pulmonary disease. The case was filed by attorney Michael Chen at Baker McKenzie in the United States District Court for the District of Delaware on March 15, 2026. The alleged infringement relates to US Patent No. 10,234,567 filed on January 8, 2020. Johnson & Johnson claims damages of $2.8 billion based on lost revenue from their product Xarelto. Pfizer's lead counsel Sarah Williams argues that the patent claims are overly broad and cites prior art from AstraZeneca's research published in 2018. The presiding judge is the Honorable Lisa Chang. Expert witness Dr. Robert Kim from Stanford University will testify on compound specificity. Discovery deadline is June 30, 2026. Trial is set for September 15, 2026. Contact Michael Chen at m.chen@bakermckenzie.com or +1-302-555-0187.",
+        "expected_behavior": "All entities detected despite length. No crashes. Privacy score calculated.",
+        "verify": "10+ entities replaced, medical/legal terms preserved, SSN/email/phone caught"
+      }
+    ]
+  },
+
+  "part_b_real_world": {
+    "_description": "Prompts that real users would type if they used Silent-Protocol in production. These simulate actual use cases across industries.",
+
+    "healthcare": [
+      {
+        "id": "R01",
+        "scenario": "Doctor asking AI for drug interaction check",
+        "prompt": "My patient Maria Garcia, age 58, is currently on Warfarin 5mg for atrial fibrillation. She was just diagnosed with a UTI. Can I safely prescribe Ciprofloxacin 500mg? She also takes Metoprolol 25mg for blood pressure. Her labs from January 10, 2026 show INR at 2.8.",
+        "why_they_need_privacy": "Patient name and age are HIPAA-protected. Drug names and condition must stay for accurate medical advice.",
+        "expected_tiers": {"REPLACE": ["Maria Garcia"], "PERTURB": ["age 58", "January 10, 2026"], "PRESERVE": ["Warfarin 5mg", "atrial fibrillation", "UTI", "Ciprofloxacin 500mg", "Metoprolol 25mg"]}
+      },
+      {
+        "id": "R02",
+        "scenario": "Nurse documenting patient discharge summary",
+        "prompt": "Write a discharge summary for patient Robert Williams, MRN 4782910, discharged from Room 412 at Cleveland Clinic on February 15, 2026. Admitted for acute myocardial infarction. Underwent percutaneous coronary intervention with stent placement. Prescribed Aspirin 81mg, Clopidogrel 75mg, Atorvastatin 40mg. Follow-up with Dr. Lisa Park in 2 weeks. Emergency contact: wife Susan Williams at 216-555-0134.",
+        "why_they_need_privacy": "Patient name, MRN, room number, and contact info are PHI. All medications and procedures must stay.",
+        "expected_tiers": {"REPLACE": ["Robert Williams", "Cleveland Clinic", "Dr. Lisa Park", "Susan Williams", "216-555-0134"], "PERTURB": ["February 15, 2026"], "PRESERVE": ["acute myocardial infarction", "percutaneous coronary intervention", "Aspirin 81mg", "Clopidogrel 75mg", "Atorvastatin 40mg"]}
+      },
+      {
+        "id": "R03",
+        "scenario": "Therapist seeking advice on treatment plan",
+        "prompt": "I have a 34-year-old patient, Emily Davis, presenting with major depressive disorder, generalized anxiety disorder, and insomnia. She's been on Sertraline 100mg for 6 months with partial response. She reports panic attacks 2-3 times per week. Previous trials of Escitalopram and Buspirone were ineffective. What augmentation strategies would you recommend?",
+        "why_they_need_privacy": "Patient name and age protected. Mental health conditions and drug history essential for treatment recommendations.",
+        "expected_tiers": {"REPLACE": ["Emily Davis"], "PERTURB": ["34-year-old"], "PRESERVE": ["major depressive disorder", "generalized anxiety disorder", "insomnia", "Sertraline 100mg", "panic attacks", "Escitalopram", "Buspirone"]}
+      }
+    ],
+
+    "legal": [
+      {
+        "id": "R04",
+        "scenario": "Lawyer drafting contract clause",
+        "prompt": "Draft an indemnification clause for the service agreement between TechCorp Solutions and DataFlow Inc. The clause should protect the Chief Technology Officer, Sarah Kim, and board members from liability arising from data breaches. Maximum indemnification cap: $10 million. Effective date: March 1, 2026. Governing law: State of Delaware.",
+        "why_they_need_privacy": "Company names and CTO name are confidential. Legal terms and contract structure must stay.",
+        "expected_tiers": {"REPLACE": ["TechCorp Solutions", "DataFlow Inc", "Sarah Kim"], "PERTURB": ["$10 million", "March 1, 2026"], "PRESERVE": ["indemnification", "liability", "data breaches"]}
+      },
+      {
+        "id": "R05",
+        "scenario": "HR manager consulting on wrongful termination",
+        "prompt": "We terminated James Rodriguez from the Senior Product Manager position at our San Francisco office on January 22, 2026. He claims wrongful termination and breach of the implied covenant of good faith. His severance package was $150,000. His attorney at Morrison Foerster sent a demand letter. Can you help me draft a response addressing the at-will employment defense?",
+        "why_they_need_privacy": "Employee name, company details, and severance amount are confidential. Legal concepts must stay.",
+        "expected_tiers": {"REPLACE": ["James Rodriguez", "San Francisco", "Morrison Foerster"], "PERTURB": ["January 22, 2026", "$150,000"], "PRESERVE": ["wrongful termination", "breach of the implied covenant of good faith", "at-will employment"]}
+      },
+      {
+        "id": "R06",
+        "scenario": "Paralegal summarizing case documents",
+        "prompt": "Summarize the key arguments in the intellectual property dispute between Samsung Electronics and Qualcomm Technologies. Samsung alleges patent infringement on 5G modem technology under patents US-9,876,543 and US-10,234,567. Qualcomm's attorney Jennifer Park at Quinn Emanuel filed a counterclaim citing FRAND licensing obligations. Case filed in the Northern District of California. Damages sought: $1.2 billion.",
+        "why_they_need_privacy": "Company names and attorney name replaced. Patent numbers and legal concepts preserved.",
+        "expected_tiers": {"REPLACE": ["Samsung Electronics", "Qualcomm Technologies", "Jennifer Park", "Quinn Emanuel"], "PERTURB": ["$1.2 billion"], "PRESERVE": ["intellectual property", "patent infringement", "FRAND licensing"]}
+      }
+    ],
+
+    "finance": [
+      {
+        "id": "R07",
+        "scenario": "Analyst writing investment memo",
+        "prompt": "Write an investment memo for the Series C round of AirTable Inc. Lead investor: Andreessen Horowitz. Co-investors: Sequoia Capital and Tiger Global. Valuation: $11 billion pre-money. Round size: $750 million. CEO Howie Liu projects ARR of $500 million by Q4 2026. Key risk: competition from Notion and Monday.com. The term sheet includes a 1x non-participating liquidation preference.",
+        "why_they_need_privacy": "Company and person names confidential. Financial instruments and terms must stay.",
+        "expected_tiers": {"REPLACE": ["AirTable Inc", "Andreessen Horowitz", "Sequoia Capital", "Tiger Global", "Howie Liu", "Notion", "Monday.com"], "PERTURB": ["$11 billion", "$750 million", "$500 million"], "PRESERVE": ["Series C", "ARR", "liquidation preference"]}
+      },
+      {
+        "id": "R08",
+        "scenario": "CFO preparing board report",
+        "prompt": "Prepare the Q4 2025 board report for Stripe Inc. Revenue was $4.2 billion, up 28% year-over-year. EBITDA margin improved to 18.5%. CFO Dhivya Suryadevara approved the $200 million share buyback program. We're exploring a dual-class IPO on NASDAQ, targeting a $95 billion valuation. Goldman Sachs and JPMorgan are co-leads. Contact: d.suryadevara@stripe.com.",
+        "why_they_need_privacy": "Company, person names, and email replaced. Financial metrics and instruments preserved.",
+        "expected_tiers": {"REPLACE": ["Stripe Inc", "Dhivya Suryadevara", "Goldman Sachs", "JPMorgan", "d.suryadevara@stripe.com"], "PERTURB": ["$4.2 billion", "28%", "18.5%", "$200 million", "$95 billion"], "PRESERVE": ["EBITDA", "share buyback", "dual-class IPO", "NASDAQ"]}
+      },
+      {
+        "id": "R09",
+        "scenario": "Compliance officer filing SAR",
+        "prompt": "File a Suspicious Activity Report for customer Zhang Wei, account #8847291053. Over the past 90 days, we've observed 47 wire transfers totaling $8.5 million from HSBC Hong Kong to accounts in the Cayman Islands. The transactions appear structured to avoid the $10,000 reporting threshold under the Bank Secrecy Act. Zhang Wei's last login IP: 103.45.67.89. SSN: 987-65-4321.",
+        "why_they_need_privacy": "Customer name, account number, SSN, and IP replaced. AML terms and regulations preserved.",
+        "expected_tiers": {"REPLACE": ["Zhang Wei", "103.45.67.89", "987-65-4321", "HSBC"], "PERTURB": ["$8.5 million", "$10,000"], "PRESERVE": ["Suspicious Activity Report", "Bank Secrecy Act"]}
+      }
+    ],
+
+    "corporate": [
+      {
+        "id": "R10",
+        "scenario": "Manager writing performance review",
+        "prompt": "Write a performance review for Senior Software Engineer Priya Sharma at our Bangalore office. She led the migration of Project Atlas to Kubernetes, reducing deployment time by 73%. Her manager Rajesh Patel rates her as exceeds expectations. Priya mentored 3 junior engineers and presented at the internal tech summit. Recommend promotion to Staff Engineer with a 15% salary adjustment from her current $185,000 base.",
+        "why_they_need_privacy": "Employee names, salary, and office location replaced. Job titles and technical terms preserved.",
+        "expected_tiers": {"REPLACE": ["Priya Sharma", "Bangalore", "Rajesh Patel", "Project Atlas"], "PERTURB": ["73%", "15%", "$185,000"], "PRESERVE": ["Senior Software Engineer", "Kubernetes", "Staff Engineer"]}
+      },
+      {
+        "id": "R11",
+        "scenario": "Executive drafting restructuring memo",
+        "prompt": "Draft a memo from CEO Mark Johnson announcing the merger of the Cloud Services division in Seattle with the AI Research team in London. VP of Engineering Amanda Chen will lead the combined org. The restructuring affects 340 employees and will result in $45 million annual savings. The transition begins April 1, 2026 and completes by June 30, 2026. Contact HR Director Lisa Park at l.park@company.com with questions.",
+        "why_they_need_privacy": "All names, locations, and email replaced. Job titles and business terms preserved.",
+        "expected_tiers": {"REPLACE": ["Mark Johnson", "Seattle", "London", "Amanda Chen", "Lisa Park", "l.park@company.com"], "PERTURB": ["$45 million", "April 1, 2026", "June 30, 2026"], "PRESERVE": ["CEO", "VP of Engineering", "HR Director"]}
+      },
+      {
+        "id": "R12",
+        "scenario": "Recruiter drafting outreach",
+        "prompt": "Draft a recruiting email for Dr. Jennifer Liu, currently Principal Research Scientist at Google DeepMind in Mountain View. We're offering the VP of AI Research position at our startup, with a base salary of $450,000, $2 million in RSU over 4 years, and a $500,000 signing bonus. Her publication on transformer architectures had 1,200 citations. Contact: j.liu@deepmind.google.com.",
+        "why_they_need_privacy": "Candidate name, company, location, email all confidential. Job titles and compensation structure preserved.",
+        "expected_tiers": {"REPLACE": ["Dr. Jennifer Liu", "Google DeepMind", "Mountain View", "j.liu@deepmind.google.com"], "PERTURB": ["$450,000", "$2 million", "$500,000"], "PRESERVE": ["Principal Research Scientist", "VP of AI Research", "transformer architectures"]}
+      }
+    ],
+
+    "government_defense": [
+      {
+        "id": "R13",
+        "scenario": "Defense contractor writing proposal",
+        "prompt": "Prepare the technical proposal for Project Nighthawk under DARPA contract #DA-2026-0847. Program Manager Colonel James Hayes at the Pentagon requires delivery of the autonomous surveillance drone prototype by September 2026. The $350 million budget covers R&D at our facility in Palmdale, California. Subcontractor: Northrop Grumman for the radar system. Security clearance: TS/SCI required.",
+        "why_they_need_privacy": "Names, project name, location replaced. Technical and classification terms preserved.",
+        "expected_tiers": {"REPLACE": ["Project Nighthawk", "Colonel James Hayes", "Pentagon", "Palmdale, California", "Northrop Grumman"], "PERTURB": ["$350 million", "September 2026"], "PRESERVE": ["DARPA", "autonomous surveillance drone", "TS/SCI"]}
+      },
+      {
+        "id": "R14",
+        "scenario": "Policy analyst drafting cybersecurity brief",
+        "prompt": "Brief the Director of CISA, Lisa Monaco, on the latest APT threat affecting critical infrastructure. The threat actor, tracked as APT-41, has compromised systems at Pacific Gas & Electric and Duke Energy. They exploited CVE-2026-1234 in Cisco IOS-XE firmware. Recommended countermeasures align with NIST Cybersecurity Framework 2.0. Budget request: $75 million for FY2026. Contact: l.monaco@cisa.gov, +1-202-555-0100.",
+        "why_they_need_privacy": "Person names, organizations, email, phone replaced. Cybersecurity terms and frameworks preserved.",
+        "expected_tiers": {"REPLACE": ["Lisa Monaco", "Pacific Gas & Electric", "Duke Energy", "l.monaco@cisa.gov", "+1-202-555-0100"], "PERTURB": ["$75 million"], "PRESERVE": ["APT-41", "CVE-2026-1234", "NIST Cybersecurity Framework", "CISA"]}
+      }
+    ],
+
+    "education": [
+      {
+        "id": "R15",
+        "scenario": "Professor writing recommendation letter",
+        "prompt": "Write a recommendation letter for student Aayush Bankar applying to the MS in Computer Science program at Stanford University. I supervised his thesis on federated learning at the Indian Institute of Technology Bombay. His GPA is 9.2/10. He interned at Microsoft Research under Dr. Sriram Rajamani during Summer 2025. Contact me at professor.gupta@iitb.ac.in or +91-22-2572-1000.",
+        "why_they_need_privacy": "Student name, professor details, and contact info replaced. Academic terms preserved.",
+        "expected_tiers": {"REPLACE": ["Aayush Bankar", "Stanford University", "Indian Institute of Technology Bombay", "Dr. Sriram Rajamani", "Microsoft Research", "professor.gupta@iitb.ac.in", "+91-22-2572-1000"], "PRESERVE": ["MS in Computer Science", "federated learning"]}
+      },
+      {
+        "id": "R16",
+        "scenario": "Student asking AI for study help with personal context",
+        "prompt": "I'm taking Dr. Michael Brown's Advanced Algorithms class at MIT. I scored 67/100 on the midterm and need help understanding the dynamic programming section. The final exam is on March 20, 2026. Can you explain the Bellman-Ford algorithm and how it differs from Dijkstra's? My study group meets at room 32-123 in the Stata Center.",
+        "why_they_need_privacy": "Professor name, university, location replaced. Algorithmic concepts preserved.",
+        "expected_tiers": {"REPLACE": ["Dr. Michael Brown", "MIT", "Stata Center"], "PERTURB": ["March 20, 2026"], "PRESERVE": ["dynamic programming", "Bellman-Ford algorithm", "Dijkstra's"]}
+      }
+    ],
+
+    "real_estate": [
+      {
+        "id": "R17",
+        "scenario": "Agent drafting property listing",
+        "prompt": "Write a luxury listing for 1847 Pacific Heights Blvd, San Francisco, CA 94115. The property is owned by tech entrepreneur David Chen. 5-bedroom Victorian with 4,200 sq ft, renovated in 2024. Listed at $8.5 million. Agent: Jennifer Walsh, Compass Realty, j.walsh@compass.com, 415-555-0199. Open house: March 15, 2026.",
+        "why_they_need_privacy": "Owner name, agent details, specific address replaced. Property features preserved.",
+        "expected_tiers": {"REPLACE": ["David Chen", "San Francisco", "Jennifer Walsh", "Compass Realty", "j.walsh@compass.com", "415-555-0199"], "PERTURB": ["$8.5 million", "March 15, 2026"], "PRESERVE": []}
+      }
+    ],
+
+    "insurance": [
+      {
+        "id": "R18",
+        "scenario": "Claims adjuster writing assessment",
+        "prompt": "Assess liability for claim #CL-2026-48291 filed by Maria Garcia against John Smith. On January 5, 2026, a rear-end collision occurred at the intersection of Main St and Oak Ave in Portland, Oregon. Ms. Garcia sustained whiplash and a herniated disc (L4-L5). Medical bills total $47,000 from Oregon Health Sciences University. Policy limit: $250,000. Contact: adjuster Tom Wilson at t.wilson@insurance.com, 503-555-0156.",
+        "why_they_need_privacy": "Names, location, contact info replaced. Medical conditions and insurance terms preserved.",
+        "expected_tiers": {"REPLACE": ["Maria Garcia", "John Smith", "Portland, Oregon", "Oregon Health Sciences University", "Tom Wilson", "t.wilson@insurance.com", "503-555-0156"], "PERTURB": ["January 5, 2026", "$47,000", "$250,000"], "PRESERVE": ["whiplash", "herniated disc", "liability"]}
+      }
+    ],
+
+    "general_daily_use": [
+      {
+        "id": "R19",
+        "scenario": "User asking AI to write a complaint email",
+        "prompt": "Write a complaint email to customer service at United Airlines. My flight UA-847 from Chicago O'Hare to San Francisco on February 12, 2026 was cancelled without notice. I had to rebook through Delta at my own cost of $1,200. My frequent flyer number is MP-4829103. Contact me at sarah.j@gmail.com or 312-555-0187.",
+        "why_they_need_privacy": "Name, email, phone, frequent flyer number replaced. Complaint specifics preserved.",
+        "expected_tiers": {"REPLACE": ["United Airlines", "Chicago", "San Francisco", "Delta", "sarah.j@gmail.com", "312-555-0187"], "PERTURB": ["February 12, 2026", "$1,200"], "PRESERVE": []}
+      },
+      {
+        "id": "R20",
+        "scenario": "User asking for tax advice",
+        "prompt": "I'm John Smith, SSN 456-78-9012. I earned $185,000 at Google in Mountain View in 2025. I also have $50,000 in rental income from a property in Austin. My wife Sarah Smith earned $120,000 at Microsoft. We contributed $23,000 to our 401(k) plans. Can you help me estimate our federal tax liability for filing jointly?",
+        "why_they_need_privacy": "Names, SSN, employers, locations replaced. Tax concepts and financial terms preserved.",
+        "expected_tiers": {"REPLACE": ["John Smith", "456-78-9012", "Google", "Mountain View", "Austin", "Sarah Smith", "Microsoft"], "PERTURB": ["$185,000", "$50,000", "$120,000", "$23,000"], "PRESERVE": ["401(k)", "federal tax liability"]}
+      },
+      {
+        "id": "R21",
+        "scenario": "User asking AI to proofread sensitive letter",
+        "prompt": "Proofread this letter: Dear Dr. Patel, I am writing to inform you that my mother, Mrs. Ananya Sharma, was admitted to Apollo Hospital on February 1, 2026 with severe chest pain. She was diagnosed with unstable angina and underwent an angioplasty. She is currently on Clopidogrel 75mg and Atorvastatin 20mg. Please send her reports to ananya.s@gmail.com. Thank you, Vikram Sharma. Phone: +91-98765-43210.",
+        "why_they_need_privacy": "All names, hospital, email, phone replaced. Medical conditions and drugs preserved.",
+        "expected_tiers": {"REPLACE": ["Dr. Patel", "Mrs. Ananya Sharma", "Apollo Hospital", "ananya.s@gmail.com", "Vikram Sharma", "+91-98765-43210"], "PERTURB": ["February 1, 2026"], "PRESERVE": ["unstable angina", "angioplasty", "Clopidogrel 75mg", "Atorvastatin 20mg"]}
+      },
+      {
+        "id": "R22",
+        "scenario": "Freelancer writing project proposal",
+        "prompt": "Write a project proposal for a website redesign for client Acme Corp. Project Manager: David Kim (d.kim@acme.com). Budget: $35,000. Timeline: March 1 to May 15, 2026. The site currently gets 50,000 monthly visitors. They want to integrate Shopify and Stripe for the e-commerce section. I'm lead developer Sarah Chen at my agency PixelWorks in Austin.",
+        "why_they_need_privacy": "Client, people, companies, email replaced. Technical terms preserved.",
+        "expected_tiers": {"REPLACE": ["Acme Corp", "David Kim", "d.kim@acme.com", "Sarah Chen", "PixelWorks", "Austin"], "PERTURB": ["$35,000", "March 1", "May 15, 2026"], "PRESERVE": ["Shopify", "Stripe"]}
+      },
+      {
+        "id": "R23",
+        "scenario": "No PII at all — pure question",
+        "prompt": "What are the main differences between supervised learning and unsupervised learning in machine learning? Give me 3 examples of each.",
+        "why_they_need_privacy": "No sensitive data. Should pass through unchanged.",
+        "expected_tiers": {"REPLACE": [], "PERTURB": [], "PRESERVE": []}
+      },
+      {
+        "id": "R24",
+        "scenario": "Casual chat with incidental PII",
+        "prompt": "Hey, can you help me plan a birthday party for my friend Jessica at The Grand Ballroom in downtown Chicago on March 22, 2026? Budget is around $3,000. She loves Taylor Swift and Italian food. About 40 guests.",
+        "why_they_need_privacy": "Friend name and venue replaced. Party details (theme, food) preserved.",
+        "expected_tiers": {"REPLACE": ["Jessica", "The Grand Ballroom", "Chicago"], "PERTURB": ["March 22, 2026", "$3,000"], "PRESERVE": []}
+      }
+    ]
+  },
+
+  "hero_prompts": {
+    "_description": "The best prompts for live demos. Each one showcases multiple tiers and multiple domains simultaneously.",
+
+    "hero_1_medical_legal": {
+      "id": "H01",
+      "name": "The Malpractice Case (WOW moment)",
+      "prompt": "Dr. Sarah Chen at Stanford Medical Center prescribed Metformin 500mg and Lisinopril 10mg for patient John Smith's Type 2 Diabetes and hypertension. He also has a pending breach of contract lawsuit against his former employer Apex Technologies, valued at $3.5 billion. His attorney at Sullivan & Cromwell is handling the non-compete clause dispute. John's SSN: 456-78-9012, email: john.smith@personal.com, phone: +1-650-555-0199. Next appointment: January 15, 2026.",
+      "why_its_the_hero": "Hits ALL 3 tiers + ALL detection layers (regex catches SSN/email/phone, NER catches names/orgs, classifier handles tier assignment). Shows medical terms preserved, legal terms preserved, dates perturbed, money perturbed, identity replaced.",
+      "talking_points": [
+        "Notice how Metformin and Type 2 Diabetes stayed — the AI needs these to give useful medical advice",
+        "But Dr. Sarah Chen became a fake name — her identity is protected",
+        "The $3.5 billion deal amount slightly changed — the AI can still reason about scale without knowing the exact number",
+        "SSN, email, and phone were caught by our regex layer — even if GLiNER missed them",
+        "Privacy score: 100/100 — all HIPAA identifiers protected"
+      ]
+    },
+    "hero_2_financial_compliance": {
+      "id": "H02",
+      "name": "The AML Investigation",
+      "prompt": "Our Anti-Money Laundering team at Wells Fargo flagged suspicious transactions from customer Zhang Wei, totaling $8.5 million over 3 months. Compliance Officer Rachel Torres filed a Suspicious Activity Report under the Bank Secrecy Act. The transactions originated from wire transfers through HSBC in Hong Kong. IP address of last login: 103.45.67.89. SSN: 987-65-4321. Contact: r.torres@wellsfargo.com.",
+      "why_its_the_hero": "Financial investigation scenario. Shows AML terms preserved, customer identity fully replaced, multiple regex catches (IP, SSN, email).",
+      "talking_points": [
+        "Anti-Money Laundering and Bank Secrecy Act are preserved — the AI needs regulatory context",
+        "Zhang Wei gets a culturally-appropriate Asian replacement name",
+        "The $8.5 million is perturbed — still realistic, but not the real amount",
+        "IP address, SSN, and email all caught by regex — triple layer protection"
+      ]
+    },
+    "hero_3_indian_context": {
+      "id": "H03",
+      "name": "The Indian Healthcare Scenario",
+      "prompt": "Dr. Priya Sharma at Apollo Hospital Mumbai prescribed Metformin 500mg for patient Rajesh Kumar's Type 2 Diabetes. His Aadhaar number is 1234-5678-9012. Blood sugar levels from January 10, 2026 show HbA1c at 8.2%. Family member contact: wife Ananya Kumar at +91-98765-43210, email: rajesh.k@gmail.com. Insurance claim amount: ₹5,00,000 under Star Health policy.",
+      "why_its_the_hero": "Indian names get Indian replacements. Multi-currency (₹) support. Shows global applicability.",
+      "talking_points": [
+        "Priya Sharma → another Indian name (not Lisa Smith!)",
+        "₹5,00,000 stays in rupees, amount slightly changed",
+        "Medical terms like HbA1c and Metformin preserved",
+        "Phone number in Indian format caught by regex"
+      ]
+    }
+  }
+}

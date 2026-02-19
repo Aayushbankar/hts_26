@@ -5,7 +5,7 @@
 
 ---
 
-## Phase 0: Repo & Project Setup (1 hour)
+## Phase 0: Repo & Project Setup (1 hour) //done
 
 > You do this FIRST, before anyone else touches anything.
 
