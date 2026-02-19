@@ -56,14 +56,14 @@ graph TD
 
 ## 5. Technical Stack (Enterprise MVP)
 
-| Component       | Technology                        | Reasoning                                                         |
-| :-------------- | :-------------------------------- | :---------------------------------------------------------------- |
-| **Frontend**    | **Next.js 14** (React) + Tailwind | Fast, professional "SaaS" look. Shadcn/ui for components.         |
-| **Backend API** | **FastAPI** (Python)              | Native support for PyTorch/ML libraries. Async speed.             |
-| **ML Engine**   | **PyTorch** + **HuggingFace**     | Access to `bert-base-uncased` and `all-MiniLM-L6-v2` for attacks. |
-| **Attack Lib**  | **TextAttack** (Customized)       | We will build a custom "Recipe" on top of this framework.         |
-| **Vector DB**   | **ChromaDB** (Local)              | Lightweight, fast vector store to *prove* the RAG failure.        |
-| **PDF Tools**   | **PyMuPDF** / **ReportLab**       | Essential for reconstructing the "human-readable" layer.          |
+| Component       | Technology                    | Reasoning                                                         |
+| :-------------- | :---------------------------- | :---------------------------------------------------------------- |
+| **Frontend**    | **Vanilla HTML + CSS + JS**   | Simple, no build steps. Easy for Divya to edit.                   |
+| **Backend API** | **FastAPI** (Python)          | Native support for PyTorch/ML libraries. Async speed.             |
+| **ML Engine**   | **PyTorch** + **HuggingFace** | Access to `bert-base-uncased` and `all-MiniLM-L6-v2` for attacks. |
+| **Attack Lib**  | **TextAttack** (Customized)   | We will build a custom "Recipe" on top of this framework.         |
+| **Vector DB**   | **ChromaDB** (Local)          | Lightweight, fast vector store to *prove* the RAG failure.        |
+| **PDF Tools**   | **PyMuPDF** / **ReportLab**   | Essential for reconstructing the "human-readable" layer.          |
 
 ---
 

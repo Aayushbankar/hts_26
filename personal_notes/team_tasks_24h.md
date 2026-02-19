@@ -18,7 +18,7 @@
 
 | **Time** | **Aayush (Lead)**                                                                                       | **Divya (Frontend)**                                                                                            | **Aum (Backend)**                                                                                                   |
 | :------- | :------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ |
-| **0-1h** | **Repo Setup:** Init Next.js + FastAPI. Set up GitHub repo and invite team.                             | **Inspiration:** Find 3 "Cybersecurity SaaS" designs on Dribbble/Pinterest. Pick a Color Palette (Dark Mode).   | **Environment:** Install Python, VS Code, Git. Clone the repo. Run `Hello World` in FastAPI.                        |
+| **0-1h** | **Repo Setup:** Init FastAPI + `static` folder. Set up GitHub repo and invite team.                     | **Inspiration:** Find 3 "Cybersecurity SaaS" designs on Dribbble/Pinterest. Pick a Color Palette (Dark Mode).   | **Environment:** Install Python, VS Code, Git. Clone the repo. Run `Hello World` in FastAPI.                        |
 | **1-4h** | **Core Logic Start:** Initialize `TextAttack` script. Test if you can break `all-MiniLM-L6-v2` locally. | **Design (Figma/Canva):** Design the "Upload Page" and "Success Page." Don't code yet. Make it look scary good. | **Boilerplate:** Ask ChatGPT: *"Write a FastAPI main.py with a file upload endpoint."* Get it running on localhost. |
 
 ### Phase 2: The "Build" (Hours 4-14)
@@ -49,7 +49,7 @@
 
 ### For Divya (Frontend)
 *   **Tool:** `v0.dev` (by Vercel) or `ChatGPT-4 Vision`.
-*   **Prompt:** *"I am uploading a design of a cyber-security dashboard. Please write the creating React (Next.js) code using Tailwind CSS to match this pixel-perfect. Use a dark theme with neon green accents."*
+*   **Prompt:** *"I am uploading a design of a cyber-security dashboard. Please write the pure HTML, CSS, and JavaScript code to match this pixel-perfect. Use a dark theme with neon green accents. Do not use React."*
 *   **Prompt 2:** *"Add a CSS animation to this button so it glows when I hover over it."*
 
 ### For Aum (Backend)
