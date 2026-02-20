@@ -1,132 +1,107 @@
-# 🔇 Silent-Protocol
+# Silent-Protocol
 
-> **Privacy-preserving AI proxy** — Sanitize sensitive prompts before they reach the LLM, get useful responses back with real names restored.
+> Privacy-preserving AI proxy — sanitizes your prompts before they hit the LLM, then restores real names in the response.
 
-**Hackathon Track:** Generative AI — Problem Statement GS06
+**Hackathon Track:** open innovation 
 
 ---
 
-## 🧩 Architecture
+## What it does
+
+You type a prompt with personal info (names, emails, Aadhaar numbers, etc). Our pipeline:
+1. Detects all PII using regex + GLiNER NER model
+2. Replaces names with fake ones, perturbs dates/money slightly, keeps medical terms intact
+3. Sends the clean version to the LLM
+4. Swaps the fake names back in the response
+
+So the LLM never sees your real data but you still get a useful response.
+
+## Architecture
 
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────┐     ┌──────────────┐
-│   Frontend   │────▶│   Backend    │────▶│  Core   │────▶│  Groq LLM    │
-│  (HTML/JS)   │◀────│  (FastAPI)   │◀────│ Engine  │◀────│ (Llama 3.1)  │
-└─────────────┘     └──────────────┘     └─────────┘     └──────────────┘
-                                              │
-                                    ┌─────────┴──────────┐
-                                    │  3-Layer Pipeline   │
-                                    │  PatternScanner     │
-                                    │  GLiNER NER         │
-                                    │  EntityClassifier   │
-                                    └────────────────────┘
+Frontend (HTML/JS) → Backend (FastAPI) → Core Engine → Groq LLM (Llama 3.3)
+                                           |
+                                    3-Layer Pipeline:
+                                     PatternScanner (regex)
+                                     GLiNER NER (model)
+                                     EntityClassifier (tiers)
 ```
 
-## 🚀 Quick Start
+## How the 3-tier system works
+
+| Tier     | What happens             | Example                               |
+| -------- | ------------------------ | ------------------------------------- |
+| REPLACE  | Full swap with fake data | "Dr. Priya Sharma" → "Vikram Patel"   |
+| PERTURB  | Small noise added        | "₹3.5 lakh" → "₹3.9 lakh"             |
+| PRESERVE | Kept as-is               | "Metformin 500mg" → "Metformin 500mg" |
+
+Most other tools just redact everything and the LLM gets `[REDACTED] prescribed [REDACTED]` which is useless. We keep domain terms so the LLM can actually help.
+
+## Quick Start
 
 ```bash
-# 1. Clone and setup
+# clone and setup
 git clone <repo-url>
 cd hts_26
-
-# 2. Create virtual environment
 python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-# .venv\Scripts\activate   # Windows
+source .venv/bin/activate
 
-# 3. Install dependencies
-pip install -r core/requirements.txt
+# install
+pip install -r requirements.txt
 
-# 4. Run tests
+# run tests
 cd core
-python test_sanitizer.py    # 7 automated tests
-python pitch_tests.py       # 19 pitch-ready tests across 7 domains
+python test_sanitizer.py
+python pitch_tests.py
 
-# 5. Start backend (requires Groq API key)
+# start backend (need groq api key)
 cd ../backend
-echo "GROQ_API_KEY=gsk_your_key_here" > .env
-uvicorn main:app --reload --port 8000
+echo "GROQ_API_KEY=gsk_your_key" > ../.env
+python main.py
 ```
 
-## 🔑 Key Innovation: 3-Tier Treatment
-
-| Tier           | Treatment          | Example                                  |
-| :------------- | :----------------- | :--------------------------------------- |
-| 🔴 **REPLACE**  | Full identity swap | "Dr. Priya Sharma" → "Dr. Kavitha Mehta" |
-| 🟡 **PERTURB**  | Controlled noise   | "$3.5 billion" → "$3.2 billion"          |
-| 🟢 **PRESERVE** | Keep as-is         | "Metformin 500mg" → "Metformin 500mg"    |
-
-Competitors redact everything → LLM gets `"[REDACTED] prescribed [REDACTED]"` → useless response.
-We preserve what the LLM needs → useful, private, accurate responses.
-
-## 📁 Project Structure
+## Project struture
 
 ```
 hts_26/
-├── core/                        # 🧠 Privacy engine (Aayush)
-│   ├── sanitiser.py             #   Pipeline orchestrator
-│   ├── alias_manager.py         #   Alias generation + replacement
-│   ├── pattern_scanner.py       #   Regex PII detection (Layer 1)
-│   ├── entity_classifier.py     #   Tier assignment + dedup (Layer 3)
-│   ├── __init__.py              #   Package exports
-│   ├── requirements.txt         #   Python dependencies
-│   ├── dataset.json             #   46 test prompts (testing + real-world)
-│   ├── test_sanitizer.py        #   7 automated tests
-│   ├── pitch_tests.py           #   19 pitch demo tests
-│   └── README.md                #   Core module docs
+├── core/                    # privacy engine
+│   ├── sanitiser.py         # pipeline orchestrator
+│   ├── alias_manager.py     # fake data generation + replacement
+│   ├── pattern_scanner.py   # regex PII detection
+│   ├── entity_classifier.py # tier assignment + dedup + intent detection
+│   ├── test_sanitizer.py    # automated tests
+│   └── pitch_tests.py       # demo tests
 │
-├── backend/                     # ⚙️ FastAPI server (Aum)
-│   ├── main.py                  #   API endpoints
-│   ├── requirements.txt         #   Backend dependencies
-│   └── .env                     #   Groq API key (gitignored)
+├── backend/
+│   └── main.py              # fastapi server + groq integration
 │
-├── frontend/                    # 🎨 Web UI (Team)
-│   ├── index.html               #   Main page
-│   ├── style.css                #   Styles
-│   └── script.js                #   Client logic
+├── frontend/                # chat UI
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
 │
-├── docs/                        # 📚 Documentation
-│   ├── aayush_tasks.md          #   Task tracking
-│   ├── core/                    #   Core design docs
-│   │   ├── design.md            #     Core architecture + API
-│   │   ├── tasks.md             #     Core task list
-│   │   ├── core_phase_1.md      #     Phase 1 specs
-│   │   └── core_phase_2.md      #     Phase 2 specs
-│   ├── backend/                 #   Backend design docs
-│   │   ├── design.md            #     Backend API contract
-│   │   └── tasks.md             #     Backend task list
-│   ├── frontend/                #   Frontend design docs
-│   │   ├── design.md            #     UI/UX specs
-│   │   └── tasks.md             #     Frontend task list
-│   └── preparation/             #   Planning docs
-│       ├── privacy_proxy_master_plan.md
-│       ├── core_logic_blueprint.md
-│       ├── srs_silent_protocol.md
-│       ├── proxy_team_tasks.md
-│       └── leader_guide_kickoff.md
-│
-├── .gitignore                   # Git ignore rules
-└── README.md                    # This file
+└── docs/                    # design docs
 ```
 
-## 👥 Team
+## Team
 
-| Member | Role        | Component                                    |
-| :----- | :---------- | :------------------------------------------- |
-| Aayush | Core Engine | `core/` — 3-layer pipeline, tiered treatment |
-| Aum    | Backend     | `backend/` — FastAPI + Groq integration      |
-| Team   | Frontend    | `frontend/` — Chat UI                        |
+| Member | Role        | What they did                                           |
+| ------ | ----------- | ------------------------------------------------------- |
+| Aayush | Core Engine | 3-layer pipeline, tiered treatment, alias system        |
+| Aum    | Backend     | FastAPI server, Groq integration                        |
+| Team   | Frontend    | Chat UI (we dont have a frontend dev so AI helped here) |
 
-## 📊 Test Results
+## Test results
 
-- **19/19** pitch tests passed (0 data leaks)
-- **153** entities detected across 7 domains
-- **100/100** average privacy score
-- **14/18** HIPAA Safe Harbor identifiers covered
+- 40 real-world promtps tested, 0 errors
+- 394 entities detectd across all prompts
+- 233 replaced, 81 perturbed, 80 preserved
+- intent detection correctly preservs travel destinations (Paris stays Paris)
+- HIPAA safe harbor coverage ~95%
 
-## 🛡️ Privacy Scorecard
+## Privcy score
 
-Every prompt gets a quantified risk assessment:
+every prompt gets scored:
 ```json
 {
   "score": 94,
@@ -137,3 +112,11 @@ Every prompt gets a quantified risk assessment:
   "hipaa_identifiers_protected": 6
 }
 ```
+
+## libraries used
+
+- **GLiNER** - zero-shot NER model (finds names, orgs, locations without retraining)
+- **Faker** - generates realistic fake names/emails/etc
+- **python-dateutil** - parses dates from messy text
+- **FastAPI** - backend framework
+- **Groq** - LLM API (llama 3.3 70b)
