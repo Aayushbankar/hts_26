@@ -128,14 +128,22 @@ async def chat(request: ChatRequest):
 
         # send to LLM with conversation context
         conversation_history.append({"role": "user", "content": sanitized_text})
+    # 3. Process the entire conversation using existing method
+    # we just send the raw sanitised text array to groq
+        print(f"DEBUG: sending {len(conversation_history)} messages to groq")
+        try:
+            response = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=conversation_history,
+                temperature=0.7,  # TODO: tweak this maybe??
+                max_completion_tokens=1024,
+            )
+            llm_response = response.choices[0].message.content
+            print("DEBUG: got response from groq")
+        except Exception as e:
+            print(f"ERROR TALKING TO GROQ: {e}")
+            llm_response = "Sorry, hit an error connecting to Groq. " + str(e)
 
-        completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=conversation_history,
-            temperature=0.7,
-            max_tokens=2048,
-        )
-        llm_response = completion.choices[0].message.content
 
         conversation_history.append({"role": "assistant", "content": llm_response})
 

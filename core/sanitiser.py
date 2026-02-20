@@ -48,6 +48,7 @@ class Sanitizer:
 
         # layer 1 - regex
         regex_entities = self.pattern_scanner.scan(user_prompt)
+        # print("DEBUG regex found:", [e.get('text') for e in regex_entities]) # too noisy
 
         # layer 2 - NER
         ner_entities = self.model.predict_entities(
@@ -55,6 +56,8 @@ class Sanitizer:
         )
         for e in ner_entities:
             e.setdefault("source", "ner")
+            
+        # print(f"DEBUG ner found: {len(ner_entities)}")
 
         # layer 3 - classify and deduplicate
         classified = self.entity_classifier.classify(regex_entities, ner_entities)
