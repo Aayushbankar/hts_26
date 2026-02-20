@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silent-Protocol — Privacy-preserving AI proxy.">
+    <title>Silent-Protocol — Privacy AI Proxy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Source+Code+Pro:wght@400;500&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&family=Space+Grotesk:wght@400;500;700&family=Overpass+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="classified">
+
+<!-- ═══════════════════════════════════════════════════
+     LAYOUT 1: CLASSIFIED — Intelligence terminal
+     UX: Raw, technical. Controls in ASCII-style header.
+     Color: Pure black, CRT green.
+     ═══════════════════════════════════════════════════ -->
+<div id="layout-classified" class="layout-container" style="display:none">
+    <div class="cl-top-bar">
+        <div class="cl-brand">SYS_NODE // SILENT-PROTOCOL</div>
+        <div class="cl-controls">
+            <span class="cl-label">MODE:</span>
+            <select class="cl-select" data-theme-switcher>
+                <option value="classified">CLASSIFIED</option>
+                <option value="messenger">MESSENGER</option>
+                <option value="superchat">SUPERCHAT</option>
+                <option value="phantom">PHANTOM</option>
+                <option value="darkcom">DARKCOM</option>
+            </select>
+            <span class="cl-divider">|</span>
+            <label class="cl-silent-toggle">
+                [<input type="checkbox" checked data-silent-toggle> SILENT_OP]
+            </label>
+            <span class="cl-divider">|</span>
+            <button class="cl-btn" data-reset-btn>[ TERMINATE ]</button>
+        </div>
+    </div>
+    <div class="cl-main">
+        <section class="cl-chat" id="cl-chat-area">
+            <div class="empty-state" data-empty>
+                <div class="empty-icon">█</div>
+                <h2>AWAITING INPUT</h2>
+                <p>Establishing secure connection to proxy matrix...</p>
+            </div>
+            <div class="messages" data-messages></div>
+            <div class="typing-indicator" data-typing style="display:none"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+        </section>
+        <aside class="cl-debug">
+            <div class="cl-debug-block">
+                <h3>// INTERCEPT LOG</h3>
+                <pre data-sanitized>Standby...</pre>
+            </div>
+            <div class="cl-debug-block">
+                <h3>// ENTITY MATRIX</h3>
+                <div class="entity-tags" data-entities><span class="placeholder">NULL</span></div>
+            </div>
+            <div class="cl-debug-block">
+                <h3>// ALIAS TABLES</h3>
+                <div class="alias-map" data-aliases><span class="placeholder">NULL</span></div>
+            </div>
+            <div class="cl-debug-block">
+                <h3>// THREAT SCORE</h3>
+                <div data-scorecard></div>
+            </div>
+        </aside>
+    </div>
+    <footer class="cl-input">
+        <span class="cl-prompt">root@proxy:~#</span>
+        <form data-form autocomplete="off">
+            <input type="text" data-input placeholder="_" spellcheck="false" autofocus>
+            <button type="submit" class="btn-send cl-send">EXEC</button>
+        </form>
+    </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     LAYOUT 2: MESSENGER — Consumer messaging
+     UX: Soft, familiar. Controls hid in profile menu.
+     Color: Pristine white, blue accents (#007aff).
+     ═══════════════════════════════════════════════════ -->
+<div id="layout-messenger" class="layout-container" style="display:none">
+    <div class="ms-main">
+        <aside class="ms-sidebar">
+            <div class="ms-profile">
+                <div class="ms-avatar">🛡️</div>
+                <div class="ms-profile-info">
+                    <span class="ms-profile-name">Silent-Protocol</span>
+                    <span class="ms-profile-status">Privacy Engine</span>
+                </div>
+                <!-- Native Settings Dropdown -->
+                <div class="ms-settings">
+                    <select class="ms-select" data-theme-switcher>
+                        <option value="messenger">Messenger</option>
+                        <option value="classified">Classified</option>
+                        <option value="superchat">SuperChat</option>
+                        <option value="phantom">Phantom</option>
+                        <option value="darkcom">DarkCom</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ms-search">
+                <span class="ms-search-icon">🔍</span>
+                <span data-sanitized class="ms-search-text">Sanitized output...</span>
+            </div>
+            <!-- Tabs -->
+            <div class="ms-tabs">
+                <button class="ms-tab ms-tab-active" data-ms-tab="entities">Entities</button>
+                <button class="ms-tab" data-ms-tab="aliases">Aliases</button>
+                <button class="ms-tab" data-ms-tab="score">Score</button>
+            </div>
+            <div class="ms-tab-content ms-tab-entities active" data-ms-panel="entities">
+                <div class="entity-tags" data-entities><span class="placeholder">No entities</span></div>
+            </div>
+            <div class="ms-tab-content ms-tab-aliases" data-ms-panel="aliases">
+                <div class="alias-map" data-aliases><span class="placeholder">No mappings</span></div>
+            </div>
+            <div class="ms-tab-content ms-tab-score" data-ms-panel="score">
+                <div data-scorecard></div>
+            </div>
+        </aside>
+
+        <div class="ms-chat-wrapper">
+            <div class="ms-chat-header">
+                <div class="ms-chat-header-left">
+                    <div class="ms-chat-avatar">🤖</div>
+                    <div>
+                        <div class="ms-chat-name">Secure AI</div>
+                        <div class="ms-chat-typing" data-typing style="display:none">typing...</div>
+                    </div>
+                </div>
+                <div class="ms-chat-header-right">
+                    <label class="ms-toggle-lbl">
+                        Silent <input type="checkbox" checked data-silent-toggle class="ms-toggle">
+                    </label>
+                    <button class="ms-btn-clear" data-reset-btn>Clear Chat</button>
+                    <span class="ms-header-action" title="Privacy Score">🛡️ <span data-global-score>--</span></span>
+                </div>
+            </div>
+            <section class="ms-chat" id="ms-chat-area">
+                <div class="empty-state" data-empty>
+                    <div class="empty-icon">💬</div>
+                    <h2>Start a secure conversation</h2>
+                    <p>Names, dates, and sensitive data are protected.</p>
+                </div>
+                <div class="messages" data-messages></div>
+            </section>
+            <footer class="ms-input">
+                <form data-form autocomplete="off">
+                    <input type="text" data-input placeholder="Message..." spellcheck="false">
+                    <button type="submit" class="btn-send ms-send">↑</button>
+                </form>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     LAYOUT 3: SUPERCHAT — Modern AI SaaS (Indigo/Slate)
+     UX: Top navigation bar, clear actions. 
+     Color: Slate #0f172a / White #ffffff / Indigo #4f46e5.
+     ═══════════════════════════════════════════════════ -->
+<div id="layout-superchat" class="layout-container" style="display:none">
+    <nav class="sc-nav">
+        <div class="sc-nav-left">
+            <span class="sc-nav-logo">⚡</span>
+            <span class="sc-brand">Silent-Protocol</span>
+        </div>
+        <div class="sc-nav-center">
+            <button class="sc-nav-tab sc-nav-active">Chat</button>
+            <button class="sc-nav-tab">Privacy Log</button>
+            <button class="sc-nav-tab">Entities</button>
+        </div>
+        <div class="sc-nav-right">
+            <!-- Native SaaS Dropdown -->
+            <select class="sc-select" data-theme-switcher>
+                <option value="superchat">SuperChat UI</option>
+                <option value="classified">Classified UI</option>
+                <option value="messenger">Messenger UI</option>
+                <option value="phantom">Phantom UI</option>
+                <option value="darkcom">DarkCom UI</option>
+            </select>
+            <label class="sc-silent-toggle">
+                Auto-Protect <input type="checkbox" checked data-silent-toggle>
+            </label>
+            <button class="sc-btn-reset" data-reset-btn>New Session</button>
+            <span class="sc-nav-score">Score: <span data-global-score>--</span></span>
+        </div>
+    </nav>
+    <div class="sc-body">
+        <aside class="sc-sidebar">
+            <div class="sc-sidebar-section">
+                <h4>🏷️ Detected Entities</h4>
+                <div class="entity-tags" data-entities><span class="placeholder">No entities</span></div>
+            </div>
+            <div class="sc-sidebar-section">
+                <h4>🔗 Alias Map</h4>
+                <div class="alias-map" data-aliases><span class="placeholder">No mappings</span></div>
+            </div>
+            <div class="sc-sidebar-section">
+                <h4>📡 AI Input Sync</h4>
+                <pre data-sanitized class="sc-sanitized-pre">Waiting...</pre>
+            </div>
+            <div class="sc-sidebar-section">
+                <h4>🛡️ Assessment</h4>
+                <div data-scorecard></div>
+            </div>
+        </aside>
+        <div class="sc-chat-column">
+            <section class="sc-chat" id="sc-chat-area">
+                <div class="empty-state" data-empty>
+                    <div class="empty-icon">✨</div>
+                    <h2>Ask anything privately</h2>
+                    <p>Your PII is replaced with realistic fakes before reaching the AI.</p>
+                </div>
+                <div class="messages" data-messages></div>
+                <div class="typing-indicator" data-typing style="display:none"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+            </section>
+            <footer class="sc-input">
+                <form data-form autocomplete="off">
+                    <input type="text" data-input placeholder="Ask or search anything" spellcheck="false">
+                    <button type="submit" class="btn-send sc-send">Send ↗</button>
+                </form>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     LAYOUT 4: PHANTOM — Luxury Stealth 
+     UX: Minimalist floating bar.
+     Color: Obsidian #05020a, Rose Gold #e0bfb8. Glass.
+     ═══════════════════════════════════════════════════ -->
+<div id="layout-phantom" class="layout-container" style="display:none">
+    <div class="ph-top-bar">
+        <span class="ph-logo">SILENT-PROTOCOL</span>
+        <div class="ph-controls">
+            <label class="ph-toggle">Silent <input type="checkbox" checked data-silent-toggle></label>
+            <select class="ph-select" data-theme-switcher>
+                <option value="phantom">Phantom</option>
+                <option value="classified">Classified</option>
+                <option value="messenger">Messenger</option>
+                <option value="superchat">SuperChat</option>
+                <option value="darkcom">DarkCom</option>
+            </select>
+            <button class="ph-btn-txt" data-reset-btn>Reset</button>
+        </div>
+    </div>
+    <div class="ph-stage">
+        <div class="ph-float ph-float-left">
+            <div class="ph-glass-card">
+                <h4>AI Feed</h4>
+                <pre data-sanitized>Waiting...</pre>
+            </div>
+            <div class="ph-glass-card">
+                <h4>Identities</h4>
+                <div class="alias-map" data-aliases><span class="placeholder">—</span></div>
+            </div>
+        </div>
+        <div class="ph-center">
+            <section class="ph-chat" id="ph-chat-area">
+                <div class="empty-state" data-empty>
+                    <h2>Phantom Mode</h2>
+                    <p>Your identity is invisible.</p>
+                </div>
+                <div class="messages" data-messages></div>
+                <div class="typing-indicator" data-typing style="display:none"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+            </section>
+            <footer class="ph-input"><form data-form autocomplete="off"><input type="text" data-input placeholder="Whisper..." spellcheck="false"><button type="submit" class="btn-send ph-send">→</button></form></footer>
+        </div>
+        <div class="ph-float ph-float-right">
+            <div class="ph-glass-card">
+                <h4>Entities</h4>
+                <div class="entity-tags" data-entities><span class="placeholder">—</span></div>
+            </div>
+            <div class="ph-glass-card">
+                <h4>Score: <span data-global-score>--</span></h4>
+                <div data-scorecard></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     LAYOUT 5: DARKCOM — NOC Dashboard
+     UX: Dense control panel.
+     Color: Deep Navy #040d1a, Cyan #00e5ff.
+     ═══════════════════════════════════════════════════ -->
+<div id="layout-darkcom" class="layout-container" style="display:none">
+    <div class="dk-main">
+        <nav class="dk-icon-bar">
+            <div class="dk-icon-top">
+                <div class="dk-icon dk-icon-active" title="Comm Link">📡</div>
+                <div class="dk-icon" title="Entity Tracker">🎯</div>
+                <div class="dk-icon" title="System Status">📊</div>
+            </div>
+            <div class="dk-icon-bottom">
+                <button class="dk-icon" title="Clear Session" data-reset-btn>⏏</button>
+            </div>
+        </nav>
+        <aside class="dk-panel">
+            <div class="dk-panel-header">
+                <div>
+                    <div class="dk-panel-name">NOC.SECURE</div>
+                    <div class="dk-panel-sub">Silent-Protocol</div>
+                </div>
+                <!-- Native Dropdown -->
+                <select class="dk-select" data-theme-switcher>
+                    <option value="darkcom">DARKCOM</option>
+                    <option value="classified">CLASSIFIED</option>
+                    <option value="messenger">MESSENGER</option>
+                    <option value="superchat">SUPERCHAT</option>
+                    <option value="phantom">PHANTOM</option>
+                </select>
+            </div>
+            <div class="dk-panel-toggle">
+                <span>Stealth Mode</span>
+                <input type="checkbox" checked data-silent-toggle class="dk-checkbox">
+            </div>
+            <div class="dk-panel-section">
+                <div class="dk-panel-section-title">Intercepted I/O</div>
+                <pre data-sanitized class="dk-sanitized-text">Standby...</pre>
+            </div>
+            <div class="dk-panel-section">
+                <div class="dk-panel-section-title">Targets <span class="dk-count" data-entity-count>0</span></div>
+                <div class="entity-tags" data-entities><span class="placeholder">—</span></div>
+            </div>
+            <div class="dk-panel-section">
+                <div class="dk-panel-section-title">Alias Registry</div>
+                <div class="alias-map" data-aliases><span class="placeholder">—</span></div>
+            </div>
+            <div class="dk-panel-section">
+                <div class="dk-panel-section-title">Threat Assessment (<span data-global-score>--</span>)</div>
+                <div data-scorecard></div>
+            </div>
+        </aside>
+        <div class="dk-chat-wrapper">
+            <div class="dk-chat-header">
+                <span class="dk-chat-name">TX/RX Feed #8000</span>
+                <span class="dk-chat-status" data-typing style="display:none">Receiving...</span>
+            </div>
+            <section class="dk-chat" id="dk-chat-area">
+                <div class="empty-state" data-empty>
+                    <div class="empty-icon">⎈</div>
+                    <h2>Channel Open</h2>
+                    <p>All transmissions actively sanitized.</p>
+                </div>
+                <div class="messages" data-messages></div>
+            </section>
+            <footer class="dk-input"><form data-form autocomplete="off"><input type="text" data-input placeholder="> Transmit..." spellcheck="false"><button type="submit" class="btn-send dk-send">TX</button></form></footer>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

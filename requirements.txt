@@ -1,0 +1,17 @@
+# Silent-Protocol — Unified Requirements
+# Install: pip install -r requirements.txt
+
+# ── Core Engine ──
+gliner>=0.2.25
+faker==30.0.0
+python-dateutil==2.9.0
+torch
+transformers
+
+# ── Backend API ──
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+groq==0.11.0
+python-dotenv==1.0.1
+pydantic==2.9.2
+httpx<0.28.0

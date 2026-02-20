@@ -1,0 +1,210 @@
+{
+  "_meta": {
+    "description": "Real-world prompts simulating how actual users would type into an AI chatbot — casual, messy, multi-topic, with incidental PII leakage. These supplement dataset.json.",
+    "total": 40,
+    "categories": ["casual_daily", "work_emails", "student_life", "freelance_gig", "family_health", "travel_planning", "job_hunting", "startup_founder", "immigrant_life", "small_business", "social_media", "relationship_advice", "parenting", "housing", "side_hustle"]
+  },
+
+  "prompts": [
+    {
+      "id": "RP01",
+      "category": "casual_daily",
+      "prompt": "Hey can you rewrite this message to sound more professional? 'Hey Mike, it's Priya here. I saw your LinkedIn post about the opening at Salesforce. I've been at Infosys Bangalore for 3 years now making about ₹18 lakh and I think I'm ready for a move. My number is +91-99887-76655 if you wanna chat. Also can you not tell anyone at Infosys I'm looking lol.'"
+    },
+    {
+      "id": "RP02",
+      "category": "work_emails",
+      "prompt": "Draft an email to my boss Karen Mitchell. I need to request 2 weeks off starting March 10, 2026 because my dad, Ramesh Gupta, is having bypass surgery at Fortis Hospital in Delhi. I don't want to share too many personal details but I need her to approve it ASAP. CC my HR rep Tina Rodriguez at t.rodriguez@company.com."
+    },
+    {
+      "id": "RP03",
+      "category": "student_life",
+      "prompt": "I just got my grade back for Prof. Anderson's CS 229 Machine Learning class at Stanford and I got a C+. My GPA dropped to 3.1. I'm on an F-1 visa and I think I might lose my scholarship if it drops below 3.0. My student ID is 08472910. Can you help me write an appeal letter? My advisor is Dr. Emily Zhang at ezhang@stanford.edu."
+    },
+    {
+      "id": "RP04",
+      "category": "freelance_gig",
+      "prompt": "I'm a freelance graphic designer. My client Tom Fraser at Nike just sent me a contract for $12,000 to redesign their Portland office lobby branding. But he wants me to sign a non-compete that says I can't work with Adidas or Puma for 2 years. Is that even legal? His email is t.fraser@nike.com. My business is registered as 'PixelCraft Studios' in Austin, TX, EIN 84-2938471."
+    },
+    {
+      "id": "RP05",
+      "category": "family_health",
+      "prompt": "My mom Sunita Devi, age 67, was just diagnosed with Stage 2 breast cancer at AIIMS Delhi. Dr. Rakesh Mehta recommended a lumpectomy followed by radiation therapy and Tamoxifen 20mg for 5 years. She's already on Amlodipine 5mg for hypertension and Metformin 500mg for diabetes. Her insurance through Star Health only covers ₹10 lakh but the treatment will cost around ₹15 lakh. What questions should I ask the oncologist? Her next appointment is February 28, 2026."
+    },
+    {
+      "id": "RP06",
+      "category": "travel_planning",
+      "prompt": "Plan a 10-day Europe trip for me and my wife Neha starting April 5, 2026. Flying out of Mumbai on Emirates. Budget is around $5,000 total. We want to hit Paris, Amsterdam, and Barcelona. My passport number is K8472910 and it expires December 2028. We're vegetarian. Can you also suggest travel insurance? I'm 32, she's 29."
+    },
+    {
+      "id": "RP07",
+      "category": "job_hunting",
+      "prompt": "Rewrite my resume summary. Currently I'm: 'Amit Patel, Senior Software Engineer at Amazon Web Services in Hyderabad. 6 years experience in distributed systems and Kubernetes. Led a team of 12 engineers on Project Thunderbolt which saved $4.2 million in infrastructure costs. Previously at Wipro and TCS. BTech from NIT Warangal, 2019. Contact: amit.p@gmail.com, +91-87654-32100.' Make it sound more impactful for a Google L5 application."
+    },
+    {
+      "id": "RP08",
+      "category": "startup_founder",
+      "prompt": "Help me draft a pitch deck script. I'm Rohan Kapoor, CEO of FinGuard AI. We're a Bangalore-based startup building anti-fraud ML models for Indian banks. We just closed a $2 million seed round led by Accel Partners and Blume Ventures. Our pilot with HDFC Bank caught ₹47 crore in fraudulent transactions last quarter. CTO is Sneha Reddy, ex-Razorpay. We're raising Series A at a $25 million valuation. Target 50 banks by 2027."
+    },
+    {
+      "id": "RP09",
+      "category": "immigrant_life",
+      "prompt": "I'm on an H-1B visa sponsored by Microsoft in Redmond. My wife Deepika just got laid off from her H-4 EAD job at Deloitte. Our joint income dropped from $280,000 to $175,000. Mortgage on our Bellevue house is $4,200/month. We have $45,000 in savings. Her SSN is 654-32-1098. Should we refinance? Our current loan is with Wells Fargo at 6.8% interest. Can she apply for unemployment benefits on H-4?"
+    },
+    {
+      "id": "RP10",
+      "category": "small_business",
+      "prompt": "I own a restaurant called 'Spice Garden' in Edison, NJ. We made $820,000 in revenue last year but only $95,000 profit. My accountant Lisa Chen at H&R Block says I should restructure as an S-Corp instead of LLC. My partner Vikram Malhotra owns 40%. We're also being sued by a former employee named Derek Ruiz for $75,000 in unpaid overtime. Our business account is at Chase, routing 021000021. Is the S-Corp conversion worth it?"
+    },
+    {
+      "id": "RP11",
+      "category": "casual_daily",
+      "prompt": "Can you help me write a complaint to my apartment complex? I live at Prestige Lakeside Habitat in Whitefield, Bangalore. Unit 1204, Tower C. My neighbor in 1205, some guy named Rakesh, plays loud music till 2am every night. I've complained to the building manager Mrs. Fernandes 3 times already. My rent is ₹45,000/month and I shouldn't have to deal with this. My resident ID is PLH-2024-1204."
+    },
+    {
+      "id": "RP12",
+      "category": "parenting",
+      "prompt": "My son Arjun is 8 years old and was just diagnosed with ADHD by Dr. Kavitha Nair at Rainbow Children's Hospital. She wants to start him on Methylphenidate 10mg but I'm worried about side effects. He also has mild asthma and uses an Albuterol inhaler. My wife and I disagree — she thinks we should try behavioral therapy first. His school teacher Ms. Patricia says he's falling behind in class. Can you give me balanced info on ADHD medication for kids?"
+    },
+    {
+      "id": "RP13",
+      "category": "social_media",
+      "prompt": "Help me write a LinkedIn post about my new job. I just joined Google as a Senior Product Manager in their Cloud AI division in Sunnyvale. Previously I was at Flipkart for 4 years in Bangalore where I launched the AI-powered search feature that increased conversion by 23%. My manager there was VP of Product Ankur Jain. I have an MBA from ISB Hyderabad, batch of 2020. Don't make it too braggy but I want people to know."
+    },
+    {
+      "id": "RP14",
+      "category": "housing",
+      "prompt": "Should I buy or rent in the current market? Here's my situation: I'm 31, working at JPMorgan in Mumbai making ₹35 lakh/year. Wife Meera works at TCS making ₹18 lakh. We have ₹25 lakh in savings and ₹12 lakh in mutual funds. Looking at a 2BHK in Powai for ₹1.8 crore or renting in Andheri for ₹55,000/month. Home loan rate from SBI is 8.5%. We plan to have kids in 2 years. Parents say buying is always better but I'm not sure."
+    },
+    {
+      "id": "RP15",
+      "category": "work_emails",
+      "prompt": "I need to write a difficult email. I found out my coworker James Liu has been taking credit for my work on the Prometheus project at Cisco. Three separate times he presented my analysis to VP of Engineering Sarah Thompson as his own. I have emails proving it. I want to escalate this to HR Director Maria Santos at m.santos@cisco.com without burning bridges. I've been at Cisco San Jose for 2 years. My employee ID is CSC-84729."
+    },
+    {
+      "id": "RP16",
+      "category": "side_hustle",
+      "prompt": "I'm starting a dropshipping business on the side. My day job is at Accenture in Pune making ₹12 lakh. I want to sell phone accessories on Amazon India and Meesho. I've invested ₹3 lakh so far. My supplier is a guy named Wang Li from Shenzhen, his WhatsApp is +86-138-0013-8000. My GST number is 27AABCU9603R1ZX. Do I need to tell Accenture about this? My employment contract has a moonlighting clause."
+    },
+    {
+      "id": "RP17",
+      "category": "family_health",
+      "prompt": "My father Suresh Iyer, 72, had a mild stroke last week. He's at Manipal Hospital Bangalore under Dr. Ashwin Rao, neurologist. CT scan showed a small ischemic stroke in the left MCA territory. He's on Aspirin 325mg, Clopidogrel 75mg, and Atorvastatin 80mg. His blood pressure was 168/95 on admission. He also has chronic kidney disease Stage 3, eGFR 42. My mom is panicking. What should we expect for recovery? He's a retired professor from IISc."
+    },
+    {
+      "id": "RP18",
+      "category": "job_hunting",
+      "prompt": "I just got offer letters from two companies and I can't decide. Company A: Meta, E5 level, TC $385,000 (base $210K + RSU $140K + bonus $35K) in Menlo Park. Company B: Stripe, L4, TC $340,000 (base $195K + RSU $120K + bonus $25K) in San Francisco, but fully remote option. I'm currently at Uber in Seattle making $290,000. My wife Anita works remotely for Thoughtworks. We have a 2-year-old. Visa is on H-1B transferred to Uber, priority date Dec 2021, EB-2 India. Which offer is better for green card timeline?"
+    },
+    {
+      "id": "RP19",
+      "category": "student_life",
+      "prompt": "I need help with my college application essay. I'm Ananya Krishnan from Chennai. I want to apply to Carnegie Mellon's School of Computer Science. My SAT score is 1520, GPA 3.9 from DAV School. I did a research internship at IIT Madras under Prof. Balaraman Ravindran on reinforcement learning. I also built an app called 'StudyBuddy' that has 10,000 downloads on Play Store. My backup schools are UIUC and Purdue. How do I make my essay stand out? My Common App ID is 2026-847291."
+    },
+    {
+      "id": "RP20",
+      "category": "relationship_advice",
+      "prompt": "My boyfriend Karthik and I have been dating for 3 years. He works at Goldman Sachs in Mumbai making ₹40 lakh and I'm at a nonprofit making ₹8 lakh. He wants us to move in together in a place in Bandra that costs ₹90,000/month rent and says we should split 50/50. That's more than half my salary. His parents don't know we're dating because I'm from a different community. I'm 27, he's 30. Am I being unreasonable for wanting him to pay more?"
+    },
+    {
+      "id": "RP21",
+      "category": "casual_daily",
+      "prompt": "Can you check if this scam email is real? It says: 'Dear Customer, your SBI account ending in 4729 has been locked due to suspicious activity. Click here to verify: http://sbi-secure-verify.xyz/login. Contact customer care at 1800-425-3800 or email support@sbi-helpdesk.com. Your pending transaction of ₹84,500 to Rajesh Traders has been held. Reference: TXN2026021584729. Verify within 24 hours or account will be permanently locked.'"
+    },
+    {
+      "id": "RP22",
+      "category": "work_emails",
+      "prompt": "Help me draft a message to my team. I'm Project Lead at Zoho Corporations in Chennai. I need to inform my team of 15 that we're switching from our internal tool to Jira for Project Mercury starting March 1, 2026. The migration will be handled by our DevOps engineer Kiran Rao. I also need to mention that team member Divya Nair has been promoted to Senior Developer. Don't make it sound too corporate. My Slack is @arun.s"
+    },
+    {
+      "id": "RP23",
+      "category": "startup_founder",
+      "prompt": "Review this cold email I'm sending to investors: 'Hi Mr. Kunal Shah, I'm Neha Agarwal, founder of MedTrack, a health-tech startup from Pune. We built an AI pill reminder app for elderly patients that reduced medication non-adherence by 40% in our pilot with 500 patients at Ruby Hall Clinic. We're looking to raise ₹5 crore pre-seed. Our MRR is ₹3.2 lakh and growing 25% month over month. I previously worked at PhonePe for 3 years. Can I get 15 minutes on your calendar? neha@medtrack.in / +91-90123-45678'"
+    },
+    {
+      "id": "RP24",
+      "category": "freelance_gig",
+      "prompt": "A client named Rebecca Torres at NBC Universal wants me to shoot a corporate video for their New York office. She's offering $8,500 for a 3-day shoot March 18-20, 2026. But the contract says they own all footage forever including B-roll, and I can't use any clips in my portfolio. My videography business is 'FrameStory Productions' based in Brooklyn. Normal rate would be $12,000 for this scope. Should I negotiate or walk away? Her direct line is 212-555-0847."
+    },
+    {
+      "id": "RP25",
+      "category": "immigrant_life",
+      "prompt": "I'm on OPT after graduating from UT Austin with an MS in Data Science. My OPT EAD expires September 30, 2026. I just got a job offer from Palantir in Denver at $145,000 but they said they don't sponsor H-1B. My SEVIS ID is N0012847291. My DSO advisor is Jennifer Adams at j.adams@utexas.edu. Should I take the job and hope they change their mind? Or wait for another offer? I also applied to Databricks and Snowflake. My I-20 needs to be updated if I accept."
+    },
+    {
+      "id": "RP26",
+      "category": "small_business",
+      "prompt": "I run a tuition center called 'BrightMinds Academy' in Kota, Rajasthan with 200 students. Revenue is about ₹85 lakh/year. I want to expand and open a branch in Jaipur. My business partner Manish Saini wants to bring in an investor but I'm worried about losing control. A local businessman Sunil Agarwal offered ₹50 lakh for 30% equity. Our current setup is a partnership firm. Should we convert to a Pvt Ltd? My CA is Dinesh Joshi, dinesh@joshiassociates.com."
+    },
+    {
+      "id": "RP27",
+      "category": "casual_daily",
+      "prompt": "Okay so I need to split expenses with my roommates. There's me (Rahul), Sneha, and Aditya. Our apartment at Manyata Residency in Bangalore costs ₹36,000 rent. Electricity was ₹4,200 last month, WiFi is ₹1,500, maid is ₹3,000, and grocery spending was ₹12,800. Sneha was away for 10 days so she thinks she should pay less for groceries. Aditya uses the AC all night which jacks up the electricity. Can you help me make a fair splitting spreadsheet formula?"
+    },
+    {
+      "id": "RP28",
+      "category": "family_health",
+      "prompt": "My grandmother Kamala Devi, 81, has been forgetting things lately. Yesterday she forgot my name and couldn't find her way home from the temple. She lives alone in Lucknow. Dr. Ajay Mishra at KGMU did an MRI and suspects early Alzheimer's disease. He wants to start Donepezil 5mg. She's already on Levothyroxine 50mcg for hypothyroidism and Calcium supplements. My uncle Vinod wants to move her to an old age home but my mom disagrees. What are the early stage care options?"
+    },
+    {
+      "id": "RP29",
+      "category": "work_emails",
+      "prompt": "I need to report a sexual harassment incident to HR. My colleague Derek Walsh made inappropriate comments about my appearance at the team dinner on February 14, 2026 at the Marriott Downtown. Two witnesses were present: Priya Malhotra and Kevin O'Brien. I'm filing a formal complaint under our company's Title VII policy. I work at Deloitte Consulting in Chicago. My manager is Senior Director Ryan Cooper. I have screenshots of a follow-up WhatsApp message from Derek. My employee ID is DT-48291. I want this taken seriously."
+    },
+    {
+      "id": "RP30",
+      "category": "parenting",
+      "prompt": "My daughter Ishita is 15 and I just found out she's been talking to a 22-year-old guy named Aryan on Instagram. She's in Class 10 at DPS Noida. I saw messages where he asked for her school address and phone number. She already shared that she lives in Sector 50, Noida. I'm scared but I don't want to overreact and push her away. My wife Pooja and I want to handle this carefully. Should we involve the school counselor Mrs. Sharma? Or report to cybercrime? We're also worried about her board exams in March."
+    },
+    {
+      "id": "RP31",
+      "category": "housing",
+      "prompt": "I'm looking to buy my first home. I make $95,000/year as a Data Analyst at Capital One in McLean, VA. My credit score is 742. Student loans: $34,000 remaining. Car payment: $450/month. I'm pre-approved for $380,000 by Navy Federal Credit Union at 6.2%. Found a townhouse at 3847 Oak Valley Drive in Fairfax for $395,000. My realtor Angela Simmons at Keller Williams (a.simmons@kw.com, 703-555-0294) says I should offer $385K. Is this a good first home purchase?"
+    },
+    {
+      "id": "RP32",
+      "category": "student_life",
+      "prompt": "I'm doing my MBA at IIM Ahmedabad, PGP batch of 2027. My summer placement is at McKinsey Mumbai, stipend ₹3.5 lakh/month. The problem is my Section B study group — specifically Rahul Saxena who keeps free-riding on our group case submissions. Prof. Saral Mukherjee's Strategic Management course requires group work worth 40% of the grade. Three of us (me, Meera Iyer, and Arjun Reddy) are doing all the work. Should I talk to the professor directly? My roll number is 2026PGP089."
+    },
+    {
+      "id": "RP33",
+      "category": "casual_daily",
+      "prompt": "Can you help me figure out my taxes? I'm a content creator on YouTube. Channel name 'TechWithVikram'. Made about ₹22 lakh from AdSense in 2025, plus ₹8 lakh from brand deals with OnePlus, Boat, and Mamaearth. I also have a day job at Cognizant making ₹9 lakh. Total income roughly ₹39 lakh. My CA charges ₹15,000 but I want to understand the basics first. PAN number is ABCPV1234K. I invested ₹1.5 lakh in ELSS mutual funds for 80C deduction."
+    },
+    {
+      "id": "RP34",
+      "category": "work_emails",
+      "prompt": "Draft a resignation letter for me. I'm quitting my job as Marketing Manager at HCL Technologies in Noida after 4 years. My last day will be March 15, 2026 per my 60-day notice period. Reporting manager is Sanjay Kapoor, VP Marketing. HR contact is Nisha Bhatia. I'm leaving because I got an offer from Adobe in Bangalore at 80% hike. I don't want to mention the new job or badmouth HCL. Keep it graceful. Send to s.kapoor@hcl.com and nisha.b@hcl.com."
+    },
+    {
+      "id": "RP35",
+      "category": "startup_founder",
+      "prompt": "I need legal advice about my co-founder situation. I'm Arjun Mehta, I started 'DeliverEase' with my college friend Ravi Shankar 2 years ago. We split equity 50/50 but I've been doing 80% of the work. Ravi hasn't shown up to work in 3 months. Our registered office is in HSR Layout Bangalore, CIN U72200KA2024PTC184729. We have 8 employees and ₹1.2 crore in annual revenue. Investors Kalaari Capital want to put in ₹10 crore but won't invest until the co-founder issue is resolved. My lawyer is Adv. Preethi Rao at preethi@lexadvisors.in."
+    },
+    {
+      "id": "RP36",
+      "category": "casual_daily",
+      "prompt": "I'm planning my wedding and everything is going wrong. Venue: Taj Falaknuma Palace in Hyderabad on December 20, 2026. My fiancée is Aditi Sharma. Guest list is 350 people. Budget was ₹50 lakh but we're already at ₹65 lakh. The caterer 'Royal Kitchens' cancelled last minute. Photographer Suresh from 'ClickStudio' wants ₹3.5 lakh which is double what we agreed on. My mom wants to invite 50 more relatives. Can you help me make a checklist and figure out where to cut costs?"
+    },
+    {
+      "id": "RP37",
+      "category": "family_health",
+      "prompt": "Help me understand this lab report for my husband Arun, age 45. Fasting blood sugar: 186 mg/dL. HbA1c: 8.4%. Total cholesterol: 247. LDL: 162. HDL: 38. Triglycerides: 310. Creatinine: 1.4. He's been eating badly and doesn't exercise. Dr. Sunita Rao at Apollo Clinic wants to start him on Metformin 1000mg, Atorvastatin 20mg, and Fenofibrate 160mg. He's scared of taking so many pills. He already takes Telmisartan 40mg for BP. Is this normal for someone his age?"
+    },
+    {
+      "id": "RP38",
+      "category": "immigrant_life",
+      "prompt": "My parents want to visit me in the US on B-2 visa. They're retired — Dad Mohan Krishnan, 68, gets a pension of ₹45,000/month from Indian Railways. Mom Lakshmi, 65, no income. I'll sponsor their trip. I'm on a green card, work at Apple in Cupertino making $195,000. I'll send them an invitation letter and sponsor affidavit. Their passport numbers are K4782910 and L8291047. They want to stay for 4 months. Previous US visa was denied in 2019. What should they prepare for the interview at the Chennai consulate?"
+    },
+    {
+      "id": "RP39",
+      "category": "casual_daily",
+      "prompt": "I think my identity was stolen. Someone opened a credit card in my name — I got a letter from ICICI Bank saying I owe ₹2.3 lakh on a card I never applied for. My Aadhaar number is 8847-2910-5384. PAN is BXKPS4729R. I already filed an FIR at Koramangala Police Station, FIR number 847/2026. The fraud happened around January 25, 2026. I called ICICI customer care at 1800-200-3344 and they said I need to send a written dispute. My actual bank accounts are with HDFC and SBI. What else should I do?"
+    },
+    {
+      "id": "RP40",
+      "category": "casual_daily",
+      "prompt": "Write an apology email to my ex-boss Jennifer Park at McKinsey. I left abruptly 6 months ago for a startup and I didn't give proper notice. She was a great mentor and I burned that bridge. I'm now at a Series A startup called 'DataNova' in Gurgaon but honestly I miss the structure of consulting. I want to reconnect without making it seem like I want my old job back (even though I kinda do). Her email is j.park@mckinsey.com."
+    }
+  ]
+}

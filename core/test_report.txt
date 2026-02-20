@@ -1,0 +1,975 @@
+
+================================================================================
+[RP01] casual_daily
+================================================================================
+  Time: 0.718s
+  Entities found: 8
+    🔴 [REPLACE ] phone number         | '+91-99887-76655' → '+1-817-619-3208'
+    🔴 [REPLACE ] organization         | 'Salesforce' → 'Romero Systems'
+    🔴 [REPLACE ] location             | 'Bangalore' → 'Jacobsport'
+    🟡 [PERTURB ] money amount         | '₹18 lakh' → '₹15'
+    🔴 [REPLACE ] organization         | 'Infosys' → 'Anderson Ventures'
+    🔴 [REPLACE ] organization         | 'Infosys' → 'Anderson Ventures'
+    🔴 [REPLACE ] person               | 'Priya' → 'Arjun Mehta'
+    🔴 [REPLACE ] person               | 'Mike' → 'Albert Daniels'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  Hey can you rewrite this message to sound more professional? 'Hey Mike, it's Priya here. I saw your LinkedIn post about the opening at Salesforce. I've been at Infosys Bangalore for 3 years now making...
+  SANITIZED: Hey can you rewrite this message to sound more professional? 'Hey Albert Daniels, it's Arjun Mehta here. I saw your LinkedIn post about the opening at Romero Systems. I've been at Anderson Ventures Ja...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP02] work_emails
+================================================================================
+  Time: 0.538s
+  Entities found: 8
+    🔴 [REPLACE ] email                | 't.rodriguez@company.com' → 'allen.gilbert@proton.me'
+    🔴 [REPLACE ] organization         | 'Fortis Hospital' → 'Cross Solutions'
+    🔴 [REPLACE ] person               | 'Karen Mitchell' → 'Evan Abbott'
+    🟡 [PERTURB ] date                 | 'March 10, 2026' → 'March 7, 2026'
+    🟢 [PRESERVE] medical procedure    | 'bypass surgery' → 'bypass surgery'
+    🔴 [REPLACE ] person               | 'Tina Rodriguez' → 'Benjamin Mccoy'
+    🔴 [REPLACE ] person               | 'Ramesh Gupta' → 'Priya Nair'
+    🔴 [REPLACE ] location             | 'Delhi' → 'Millerberg'
+  Score: 100/100 (LOW)
+  HIPAA: 6/6
+
+  ORIGINAL:  Draft an email to my boss Karen Mitchell. I need to request 2 weeks off starting March 10, 2026 because my dad, Ramesh Gupta, is having bypass surgery at Fortis Hospital in Delhi. I don't want to shar...
+  SANITIZED: Draft an email to my boss Evan Abbott. I need to request 2 weeks off starting March 7, 2026 because my dad, Priya Nair, is having bypass surgery at Cross Solutions in Millerberg. I don't want to share...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP03] student_life
+================================================================================
+  Time: 0.538s
+  Entities found: 5
+    🔴 [REPLACE ] email                | 'ezhang@stanford.edu' → 'shelia.thompson@mail.com'
+    🔴 [REPLACE ] person               | 'Dr. Emily Zhang' → 'Yan Lin'
+    🔴 [REPLACE ] person               | 'Prof. Anderson' → 'Megan Frederick'
+    🔴 [REPLACE ] organization         | 'Stanford' → 'Castillo Ventures'
+    🔴 [REPLACE ] government id        | '08472910' → '112-81-1991'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  I just got my grade back for Prof. Anderson's CS 229 Machine Learning class at Stanford and I got a C+. My GPA dropped to 3.1. I'm on an F-1 visa and I think I might lose my scholarship if it drops be...
+  SANITIZED: I just got my grade back for Megan Frederick's CS 229 Machine Learning class at Castillo Ventures and I got a C+. My GPA dropped to 3.1. I'm on an F-1 visa and I think I might lose my scholarship if i...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP04] freelance_gig
+================================================================================
+  Time: 0.395s
+  Entities found: 9
+    🔴 [REPLACE ] email                | 't.fraser@nike.com' → 'colin.wolfe@email.com'
+    🔴 [REPLACE ] organization         | 'PixelCraft Studios' → 'King Industries'
+    🔴 [REPLACE ] government id        | 'EIN 84-2938471' → '212-48-6741'
+    🔴 [REPLACE ] person               | 'Tom Fraser' → 'Thomas Lewis'
+    🔴 [REPLACE ] location             | 'Austin, TX' → 'South Dianeton'
+    🟡 [PERTURB ] money amount         | '$12,000' → '$12,394'
+    🔴 [REPLACE ] organization         | 'Adidas' → 'Cook Labs'
+    🔴 [REPLACE ] organization         | 'Nike' → 'Wood Industries'
+    🔴 [REPLACE ] organization         | 'Puma' → 'Jackson Partners'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  I'm a freelance graphic designer. My client Tom Fraser at Nike just sent me a contract for $12,000 to redesign their Portland office lobby branding. But he wants me to sign a non-compete that says I c...
+  SANITIZED: I'm a freelance graphic designer. My client Thomas Lewis at Wood Industries just sent me a contract for $12,394 to redesign their Portland office lobby branding. But he wants me to sign a non-compete ...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP05] family_health
+================================================================================
+  Time: 0.482s
+  Entities found: 14
+    🟢 [PRESERVE] medical condition    | 'Stage 2 breast cancer' → 'Stage 2 breast cancer'
+    🟢 [PRESERVE] medical procedure    | 'radiation therapy' → 'radiation therapy'
+    🟡 [PERTURB ] date                 | 'February 28, 2026' → 'February 24, 2026'
+    🔴 [REPLACE ] person               | 'Dr. Rakesh Mehta' → 'Deepa Gupta'
+    🟢 [PRESERVE] drug name            | 'Metformin 500mg' → 'Metformin 500mg'
+    🟢 [PRESERVE] drug name            | 'Tamoxifen 20mg' → 'Tamoxifen 20mg'
+    🟢 [PRESERVE] drug name            | 'Amlodipine 5mg' → 'Amlodipine 5mg'
+    🟢 [PRESERVE] medical condition    | 'hypertension' → 'hypertension'
+    🔴 [REPLACE ] person               | 'Sunita Devi' → 'Susan Rodgers'
+    🔴 [REPLACE ] location             | 'AIIMS Delhi' → 'Kennethburgh'
+    🔴 [REPLACE ] organization         | 'Star Health' → 'Walker Technologies'
+    🟢 [PRESERVE] medical procedure    | 'lumpectomy' → 'lumpectomy'
+    🟡 [PERTURB ] money amount         | '₹10 lakh' → '₹10'
+    🟡 [PERTURB ] money amount         | '₹15 lakh' → '₹13'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  My mom Sunita Devi, age 67, was just diagnosed with Stage 2 breast cancer at AIIMS Delhi. Dr. Rakesh Mehta recommended a lumpectomy followed by radiation therapy and Tamoxifen 20mg for 5 years. She's ...
+  SANITIZED: My mom Susan Rodgers, age 67, was just diagnosed with Stage 2 breast cancer at Kennethburgh. Deepa Gupta recommended a lumpectomy followed by radiation therapy and Tamoxifen 20mg for 5 years. She's al...
+
+  ✅ No obvious issues
+    ⚠️  Roundtrip failed: '₹10' still in restored text
+
+================================================================================
+[RP06] travel_planning
+================================================================================
+  Time: 0.685s
+  Entities found: 10
+    🟡 [PERTURB ] date                 | 'April 5, 2026' → 'April 1, 2026'
+    🟡 [PERTURB ] date                 | 'December 2028' → 'December 2028'
+    🔴 [REPLACE ] location             | 'Amsterdam' → 'West Michelleton'
+    🔴 [REPLACE ] location             | 'Barcelona' → 'New Anamouth'
+    🔴 [REPLACE ] organization         | 'Emirates' → 'Anderson Ventures'
+    🔴 [REPLACE ] government id        | 'K8472910' → '731-59-6251'
+    🔴 [REPLACE ] location             | 'Mumbai' → 'Gonzalezstad'
+    🟡 [PERTURB ] money amount         | '$5,000' → '$4,593'
+    🔴 [REPLACE ] location             | 'Paris' → 'Joanside'
+    🔴 [REPLACE ] person               | 'Neha' → 'Ananya Reddy'
+  Score: 100/100 (LOW)
+  HIPAA: 8/8
+
+  ORIGINAL:  Plan a 10-day Europe trip for me and my wife Neha starting April 5, 2026. Flying out of Mumbai on Emirates. Budget is around $5,000 total. We want to hit Paris, Amsterdam, and Barcelona. My passport n...
+  SANITIZED: Plan a 10-day Europe trip for me and my wife Ananya Reddy starting April 1, 2026. Flying out of Gonzalezstad on Anderson Ventures. Budget is around $4,593 total. We want to hit Joanside, West Michelle...
+
+  🚩 ISSUES DETECTED (3):
+    ⚠️  Common city 'Paris' was replaced — may break context
+    ⚠️  Common city 'Amsterdam' was replaced — may break context
+    ⚠️  Common city 'Barcelona' was replaced — may break context
+    ⚠️  Roundtrip failed: 'December 2028' still in restored text
+
+================================================================================
+[RP07] job_hunting
+================================================================================
+  Time: 0.433s
+  Entities found: 13
+    🟢 [PRESERVE] job title            | 'Senior Software Engineer' → 'Senior Software Engineer'
+    🔴 [REPLACE ] organization         | 'Amazon Web Services' → 'Mooney Solutions'
+    🔴 [REPLACE ] project name         | 'Project Thunderbolt' → 'Project Compass'
+    🔴 [REPLACE ] email                | 'amit.p@gmail.com' → 'amanda.reyes@mail.com'
+    🔴 [REPLACE ] phone number         | '+91-87654-32100' → '+1-618-900-2459'
+    🟡 [PERTURB ] money amount         | '$4.2 million' → '$4.3 million'
+    🔴 [REPLACE ] organization         | 'NIT Warangal' → 'Mitchell Systems'
+    🔴 [REPLACE ] person               | 'Amit Patel' → 'Ananya Singh'
+    🔴 [REPLACE ] location             | 'Hyderabad' → 'Port Danielleland'
+    🔴 [REPLACE ] organization         | 'Google' → 'Chambers Partners'
+    🔴 [REPLACE ] organization         | 'Wipro' → 'Martin Industries'
+    🟡 [PERTURB ] date                 | '2019' → '2019'
+    🔴 [REPLACE ] organization         | 'TCS' → 'Riley Dynamics'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  Rewrite my resume summary. Currently I'm: 'Amit Patel, Senior Software Engineer at Amazon Web Services in Hyderabad. 6 years experience in distributed systems and Kubernetes. Led a team of 12 engineer...
+  SANITIZED: Rewrite my resume summary. Currently I'm: 'Ananya Singh, Senior Software Engineer at Mooney Solutions in Port Danielleland. 6 years experience in distributed systems and Kubernetes. Led a team of 12 e...
+
+  🚩 ISSUES DETECTED (2):
+    ⚠️  Known product/platform 'Amazon' was replaced
+    ⚠️  Known product/platform 'Google' was replaced
+    ⚠️  Roundtrip failed: '2019' still in restored text
+
+================================================================================
+[RP08] startup_founder
+================================================================================
+  Time: 0.451s
+  Entities found: 13
+    🔴 [REPLACE ] location             | 'Bangalore-based' → 'Stacymouth'
+    🔴 [REPLACE ] organization         | 'Accel Partners' → 'Delacruz Labs'
+    🔴 [REPLACE ] organization         | 'Blume Ventures' → 'Erickson Solutions'
+    🔴 [REPLACE ] person               | 'Rohan Kapoor' → 'Deepa Patel'
+    🔴 [REPLACE ] organization         | 'Indian banks' → 'Norris Inc'
+    🔴 [REPLACE ] organization         | 'FinGuard AI' → 'Gibson Labs'
+    🔴 [REPLACE ] person               | 'Sneha Reddy' → 'Rohan Nair'
+    🟡 [PERTURB ] money amount         | '$25 million' → '$24.5 million'
+    🟡 [PERTURB ] money amount         | '$2 million' → '$2.1 million'
+    🔴 [REPLACE ] organization         | 'HDFC Bank' → 'Hale Partners'
+    🟡 [PERTURB ] money amount         | '₹47 crore' → '₹52'
+    🟢 [PRESERVE] job title            | 'CEO' → 'CEO'
+    🟢 [PRESERVE] job title            | 'CTO' → 'CTO'
+  Score: 100/100 (LOW)
+  HIPAA: 3/3
+
+  ORIGINAL:  Help me draft a pitch deck script. I'm Rohan Kapoor, CEO of FinGuard AI. We're a Bangalore-based startup building anti-fraud ML models for Indian banks. We just closed a $2 million seed round led by A...
+  SANITIZED: Help me draft a pitch deck script. I'm Deepa Patel, CEO of Gibson Labs. We're a Stacymouth startup building anti-fraud ML models for Norris Inc. We just closed a $2.1 million seed round led by Delacru...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP09] immigrant_life
+================================================================================
+  Time: 0.452s
+  Entities found: 12
+    🔴 [REPLACE ] ssn                  | '654-32-1098' → '709-15-9182'
+    🔴 [REPLACE ] organization         | 'Wells Fargo' → 'Taylor Inc'
+    🔴 [REPLACE ] organization         | 'Microsoft' → 'Brown Holdings'
+    🔴 [REPLACE ] organization         | 'Deloitte' → 'Miller Ventures'
+    🟡 [PERTURB ] money amount         | '$280,000' → '$273,366'
+    🟡 [PERTURB ] money amount         | '$175,000' → '$176,374'
+    🟢 [PRESERVE] financial instrument | 'Mortgage' → 'Mortgage'
+    🔴 [REPLACE ] location             | 'Bellevue' → 'West Carolineshire'
+    🔴 [REPLACE ] location             | 'Redmond' → 'South Eric'
+    🔴 [REPLACE ] person               | 'Deepika' → 'Kristen Wheeler'
+    🟡 [PERTURB ] money amount         | '$45,000' → '$45,852'
+    🟡 [PERTURB ] money amount         | '$4,200' → '$4,406'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  I'm on an H-1B visa sponsored by Microsoft in Redmond. My wife Deepika just got laid off from her H-4 EAD job at Deloitte. Our joint income dropped from $280,000 to $175,000. Mortgage on our Bellevue ...
+  SANITIZED: I'm on an H-1B visa sponsored by Brown Holdings in South Eric. My wife Kristen Wheeler just got laid off from her H-4 EAD job at Miller Ventures. Our joint income dropped from $273,366 to $176,374. Mo...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP10] small_business
+================================================================================
+  Time: 0.514s
+  Entities found: 12
+    🔴 [REPLACE ] person               | 'Vikram Malhotra' → 'Priya Gupta'
+    🔴 [REPLACE ] location             | 'Edison, NJ' → 'North Megan'
+    🔴 [REPLACE ] person               | 'Derek Ruiz' → 'Maria Carrillo'
+    🔴 [REPLACE ] person               | 'Lisa Chen' → 'Jun Wang'
+    🔴 [REPLACE ] organization         | 'H&R Block' → 'Bradford Ventures'
+    🟡 [PERTURB ] money amount         | '$820,000' → '$811,182'
+    🟡 [PERTURB ] money amount         | '$95,000' → '$80,998'
+    🟡 [PERTURB ] money amount         | '$75,000' → '$78,864'
+    🟢 [PRESERVE] financial instrument | 'S-Corp' → 'S-Corp'
+    🟢 [PRESERVE] financial instrument | 'S-Corp' → 'S-Corp'
+    🔴 [REPLACE ] organization         | 'Chase' → 'Stone Industries'
+    🟢 [PRESERVE] financial instrument | 'LLC' → 'LLC'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  I own a restaurant called 'Spice Garden' in Edison, NJ. We made $820,000 in revenue last year but only $95,000 profit. My accountant Lisa Chen at H&R Block says I should restructure as an S-Corp inste...
+  SANITIZED: I own a restaurant called 'Spice Garden' in North Megan. We made $811,182 in revenue last year but only $80,998 profit. My accountant Jun Wang at Bradford Ventures says I should restructure as an S-Co...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP11] casual_daily
+================================================================================
+  Time: 0.454s
+  Entities found: 8
+    🔴 [REPLACE ] organization         | 'Prestige Lakeside Habitat' → 'Wyatt Solutions'
+    🔴 [REPLACE ] person               | 'Mrs. Fernandes' → 'Joanna Finley'
+    🟡 [PERTURB ] money amount         | '₹45,000/month' → '₹49,799'
+    🔴 [REPLACE ] government id        | 'PLH-2024-1204' → '885-52-3843'
+    🔴 [REPLACE ] location             | 'Whitefield' → 'Andrewchester'
+    🔴 [REPLACE ] location             | 'Bangalore' → 'Gardnerburgh'
+    🔴 [REPLACE ] location             | 'Tower C' → 'South Deanburgh'
+    🔴 [REPLACE ] person               | 'Rakesh' → 'Michael Barker'
+  Score: 100/100 (LOW)
+  HIPAA: 6/6
+
+  ORIGINAL:  Can you help me write a complaint to my apartment complex? I live at Prestige Lakeside Habitat in Whitefield, Bangalore. Unit 1204, Tower C. My neighbor in 1205, some guy named Rakesh, plays loud musi...
+  SANITIZED: Can you help me write a complaint to my apartment complex? I live at Wyatt Solutions in Andrewchester, Gardnerburgh. Unit 1204, South Deanburgh. My neighbor in 1205, some guy named Michael Barker, pla...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP12] parenting
+================================================================================
+  Time: 0.430s
+  Entities found: 7
+    🔴 [REPLACE ] organization         | 'Rainbow Children's Hospital' → 'Murphy Industries'
+    🟢 [PRESERVE] medical procedure    | 'behavioral therapy' → 'behavioral therapy'
+    🔴 [REPLACE ] person               | 'Dr. Kavitha Nair' → 'Priya Iyer'
+    🔴 [REPLACE ] person               | 'Ms. Patricia' → 'Victor Ellis'
+    🟢 [PRESERVE] medical condition    | 'mild asthma' → 'mild asthma'
+    🟢 [PRESERVE] medical condition    | 'ADHD' → 'ADHD'
+    🟢 [PRESERVE] medical condition    | 'ADHD' → 'ADHD'
+  Score: 100/100 (LOW)
+  HIPAA: 2/2
+
+  ORIGINAL:  My son Arjun is 8 years old and was just diagnosed with ADHD by Dr. Kavitha Nair at Rainbow Children's Hospital. She wants to start him on Methylphenidate 10mg but I'm worried about side effects. He a...
+  SANITIZED: My son Arjun is 8 years old and was just diagnosed with ADHD by Priya Iyer at Murphy Industries. She wants to start him on Methylphenidate 10mg but I'm worried about side effects. He also has mild ast...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP13] social_media
+================================================================================
+  Time: 0.428s
+  Entities found: 7
+    🟢 [PRESERVE] job title            | 'Senior Product Manager' → 'Senior Product Manager'
+    🟢 [PRESERVE] job title            | 'VP of Product' → 'VP of Product'
+    🔴 [REPLACE ] person               | 'Ankur Jain' → 'Michael James'
+    🔴 [REPLACE ] location             | 'Sunnyvale' → 'North Jacob'
+    🔴 [REPLACE ] location             | 'Bangalore' → 'Castromouth'
+    🔴 [REPLACE ] organization         | 'Flipkart' → 'Silva Holdings'
+    🔴 [REPLACE ] organization         | 'Google' → 'Perkins Ventures'
+  Score: 100/100 (LOW)
+  HIPAA: 3/3
+
+  ORIGINAL:  Help me write a LinkedIn post about my new job. I just joined Google as a Senior Product Manager in their Cloud AI division in Sunnyvale. Previously I was at Flipkart for 4 years in Bangalore where I ...
+  SANITIZED: Help me write a LinkedIn post about my new job. I just joined Perkins Ventures as a Senior Product Manager in their Cloud AI division in North Jacob. Previously I was at Silva Holdings for 4 years in ...
+
+  🚩 ISSUES DETECTED (1):
+    ⚠️  Known product/platform 'Google' was replaced
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP14] housing
+================================================================================
+  Time: 0.530s
+  Entities found: 14
+    🟢 [PRESERVE] financial instrument | 'mutual funds' → 'mutual funds'
+    🟡 [PERTURB ] money amount         | '₹1.8 crore' → '₹2'
+    🔴 [REPLACE ] organization         | 'JPMorgan' → 'Sandoval Technologies'
+    🟡 [PERTURB ] money amount         | '₹35 lakh' → '₹31'
+    🟡 [PERTURB ] money amount         | '₹18 lakh' → '₹19'
+    🟡 [PERTURB ] money amount         | '₹25 lakh' → '₹22'
+    🟡 [PERTURB ] money amount         | '₹12 lakh' → '₹10'
+    🔴 [REPLACE ] location             | 'Andheri' → 'North William'
+    🟡 [PERTURB ] money amount         | '₹55,000' → '₹60,331'
+    🔴 [REPLACE ] location             | 'Mumbai' → 'New Joshua'
+    🔴 [REPLACE ] person               | 'Meera' → 'Laura Andrews'
+    🔴 [REPLACE ] location             | 'Powai' → 'Lorifort'
+    🔴 [REPLACE ] organization         | 'TCS' → 'Thompson Industries'
+    🔴 [REPLACE ] organization         | 'SBI' → 'Riley Holdings'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  Should I buy or rent in the current market? Here's my situation: I'm 31, working at JPMorgan in Mumbai making ₹35 lakh/year. Wife Meera works at TCS making ₹18 lakh. We have ₹25 lakh in savings and ₹1...
+  SANITIZED: Should I buy or rent in the current market? Here's my situation: I'm 31, working at Sandoval Technologies in New Joshua making ₹31/year. Wife Laura Andrews works at Thompson Industries making ₹19. We ...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP15] work_emails
+================================================================================
+  Time: 0.509s
+  Entities found: 10
+    🔴 [REPLACE ] email                | 'm.santos@cisco.com' → 'yolanda.mcguire@email.com'
+    🔴 [REPLACE ] project name         | 'Prometheus project' → 'Project Onyx'
+    🟢 [PRESERVE] job title            | 'VP of Engineering' → 'VP of Engineering'
+    🔴 [REPLACE ] person               | 'Sarah Thompson' → 'Michael Wiggins'
+    🔴 [REPLACE ] person               | 'Maria Santos' → 'Susan Murphy'
+    🟢 [PRESERVE] job title            | 'HR Director' → 'HR Director'
+    🔴 [REPLACE ] person               | 'James Liu' → 'Jun Zhang'
+    🔴 [REPLACE ] government id        | 'CSC-84729' → '183-44-6436'
+    🔴 [REPLACE ] organization         | 'Cisco' → 'Pacheco Technologies'
+    🔴 [REPLACE ] organization         | 'Cisco' → 'Pacheco Technologies'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  I need to write a difficult email. I found out my coworker James Liu has been taking credit for my work on the Prometheus project at Cisco. Three separate times he presented my analysis to VP of Engin...
+  SANITIZED: I need to write a difficult email. I found out my coworker Jun Zhang has been taking credit for my work on the Project Onyx at Pacheco Technologies. Three separate times he presented my analysis to VP...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP16] side_hustle
+================================================================================
+  Time: 0.530s
+  Entities found: 11
+    🔴 [REPLACE ] phone number         | '+86-138-0013-8000' → '+1-497-264-4316'
+    🔴 [REPLACE ] phone number         | '27AABCU9603R1ZX' → '+1-252-375-8542'
+    🔴 [REPLACE ] organization         | 'Amazon India' → 'Soto Technologies'
+    🔴 [REPLACE ] organization         | 'Accenture' → 'Hale Holdings'
+    🔴 [REPLACE ] organization         | 'Accenture' → 'Hale Holdings'
+    🟡 [PERTURB ] money amount         | '₹12 lakh' → '₹13'
+    🔴 [REPLACE ] location             | 'Shenzhen' → 'Robinborough'
+    🔴 [REPLACE ] email address        | 'WhatsApp' → 'brett.glover@mail.com'
+    🟡 [PERTURB ] money amount         | '₹3 lakh' → '₹3'
+    🔴 [REPLACE ] person               | 'Wang Li' → 'Fang Chen'
+    🔴 [REPLACE ] location             | 'Pune' → 'Lake Mary'
+  Score: 100/100 (LOW)
+  HIPAA: 6/6
+
+  ORIGINAL:  I'm starting a dropshipping business on the side. My day job is at Accenture in Pune making ₹12 lakh. I want to sell phone accessories on Amazon India and Meesho. I've invested ₹3 lakh so far. My supp...
+  SANITIZED: I'm starting a dropshipping business on the side. My day job is at Hale Holdings in Lake Mary making ₹13. I want to sell phone accessories on Soto Technologies and Meesho. I've invested ₹3 so far. My ...
+
+  🚩 ISSUES DETECTED (2):
+    ⚠️  Known product/platform 'WhatsApp' was replaced
+    ⚠️  Known product/platform 'Amazon' was replaced
+    ⚠️  Roundtrip failed: '₹3' still in restored text
+
+================================================================================
+[RP17] family_health
+================================================================================
+  Time: 0.563s
+  Entities found: 10
+    🟢 [PRESERVE] medical condition    | 'chronic kidney disease Stage 3' → 'chronic kidney disease Stage 3'
+    🔴 [REPLACE ] organization         | 'Manipal Hospital Bangalore' → 'Robinson Corp'
+    🟢 [PRESERVE] medical condition    | 'ischemic stroke' → 'ischemic stroke'
+    🔴 [REPLACE ] person               | 'Dr. Ashwin Rao' → 'Sherry Ponce'
+    🔴 [REPLACE ] location             | 'MCA territory' → 'Hartfurt'
+    🔴 [REPLACE ] person               | 'Suresh Iyer' → 'Ananya Nair'
+    🟢 [PRESERVE] job title            | 'neurologist' → 'neurologist'
+    🟢 [PRESERVE] medical procedure    | 'CT scan' → 'CT scan'
+    🟢 [PRESERVE] medical condition    | 'eGFR 42' → 'eGFR 42'
+    🔴 [REPLACE ] organization         | 'IISc' → 'Carpenter Technologies'
+  Score: 100/100 (LOW)
+  HIPAA: 3/3
+
+  ORIGINAL:  My father Suresh Iyer, 72, had a mild stroke last week. He's at Manipal Hospital Bangalore under Dr. Ashwin Rao, neurologist. CT scan showed a small ischemic stroke in the left MCA territory. He's on ...
+  SANITIZED: My father Ananya Nair, 72, had a mild stroke last week. He's at Robinson Corp under Sherry Ponce, neurologist. CT scan showed a small ischemic stroke in the left Hartfurt. He's on Aspirin 325mg, Clopi...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP18] job_hunting
+================================================================================
+  Time: 0.651s
+  Entities found: 15
+    🔴 [REPLACE ] location             | 'San Francisco' → 'Jonesland'
+    🔴 [REPLACE ] organization         | 'Thoughtworks' → 'Thornton Solutions'
+    🔴 [REPLACE ] location             | 'Menlo Park' → 'Brianfurt'
+    🔴 [REPLACE ] organization         | 'Company B' → 'Romero Holdings'
+    🟡 [PERTURB ] money amount         | '$385,000' → '$377,285'
+    🟡 [PERTURB ] money amount         | '$340,000' → '$365,931'
+    🟡 [PERTURB ] money amount         | '$290,000' → '$290,531'
+    🟡 [PERTURB ] date                 | 'Dec 2021' → 'Dec 2021'
+    🔴 [REPLACE ] location             | 'Seattle' → 'Franciston'
+    🔴 [REPLACE ] organization         | 'Stripe' → 'Lee Systems'
+    🔴 [REPLACE ] person               | 'Anita' → 'Emily Wood'
+    🔴 [REPLACE ] organization         | 'Meta' → 'Chen Dynamics'
+    🔴 [REPLACE ] organization         | 'Uber' → 'Taylor Group'
+    🟢 [PRESERVE] financial instrument | 'H-1B' → 'H-1B'
+    🔴 [REPLACE ] organization         | 'Uber' → 'Taylor Group'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  I just got offer letters from two companies and I can't decide. Company A: Meta, E5 level, TC $385,000 (base $210K + RSU $140K + bonus $35K) in Menlo Park. Company B: Stripe, L4, TC $340,000 (base $19...
+  SANITIZED: I just got offer letters from two companies and I can't decide. Company A: Chen Dynamics, E5 level, TC $377,285 (base $210K + RSU $140K + bonus $35K) in Brianfurt. Romero Holdings: Lee Systems, L4, TC...
+
+  🚩 ISSUES DETECTED (2):
+    ⚠️  Known product/platform 'Stripe' was replaced
+    ⚠️  Known product/platform 'Uber' was replaced
+    ⚠️  Roundtrip failed: 'Dec 2021' still in restored text
+
+================================================================================
+[RP19] student_life
+================================================================================
+  Time: 0.565s
+  Entities found: 10
+    🔴 [REPLACE ] organization         | 'School of Computer Science' → 'Hernandez Systems'
+    🔴 [REPLACE ] person               | 'Prof. Balaraman Ravindran' → 'Brendan Harris'
+    🔴 [REPLACE ] person               | 'Ananya Krishnan' → 'Kavitha Kumar'
+    🔴 [REPLACE ] organization         | 'Carnegie Mellon' → 'Miller Industries'
+    🔴 [REPLACE ] government id        | '2026-847291' → '341-25-6442'
+    🔴 [REPLACE ] organization         | 'DAV School' → 'Kelley Inc'
+    🔴 [REPLACE ] organization         | 'IIT Madras' → 'Cabrera Ventures'
+    🔴 [REPLACE ] location             | 'Chennai' → 'Robinsonmouth'
+    🔴 [REPLACE ] organization         | 'Purdue' → 'Booth Industries'
+    🔴 [REPLACE ] organization         | 'UIUC' → 'Lee Partners'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  I need help with my college application essay. I'm Ananya Krishnan from Chennai. I want to apply to Carnegie Mellon's School of Computer Science. My SAT score is 1520, GPA 3.9 from DAV School. I did a...
+  SANITIZED: I need help with my college application essay. I'm Kavitha Kumar from Robinsonmouth. I want to apply to Miller Industries's Hernandez Systems. My SAT score is 1520, GPA 3.9 from Kelley Inc. I did a re...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP20] relationship_advice
+================================================================================
+  Time: 0.571s
+  Entities found: 9
+    🔴 [REPLACE ] organization         | 'Goldman Sachs' → 'Miller Solutions'
+    🔴 [REPLACE ] organization         | 'nonprofit' → 'Adams Holdings'
+    🟡 [PERTURB ] money amount         | '₹40 lakh' → '₹44'
+    🔴 [REPLACE ] person               | 'Karthik' → 'Keith Anderson'
+    🟡 [PERTURB ] money amount         | '₹8 lakh' → '₹7'
+    🟡 [PERTURB ] money amount         | '₹90,000' → '₹101,992'
+    🔴 [REPLACE ] location             | 'Mumbai' → 'Johnsonchester'
+    🔴 [REPLACE ] location             | 'Bandra' → 'Williamschester'
+    🔴 [REPLACE ] person               | 'I' → 'Todd Barrett'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  My boyfriend Karthik and I have been dating for 3 years. He works at Goldman Sachs in Mumbai making ₹40 lakh and I'm at a nonprofit making ₹8 lakh. He wants us to move in together in a place in Bandra...
+  SANITIZED: My boyfriend Keith Anderson and I have been dating for 3 years. He works at Miller Solutions in Johnsonchester making ₹44 and I'm at a Adams Holdings making ₹7. He wants us to move in together in a pl...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP21] casual_daily
+================================================================================
+  Time: 0.559s
+  Entities found: 7
+    🔴 [REPLACE ] url                  | 'http://sbi-secure-verify.xyz/login' → 'https://example-fletcher.com/page'
+    🔴 [REPLACE ] email                | 'support@sbi-helpdesk.com' → 'scott.rose@inbox.org'
+    🟢 [PRESERVE] financial instrument | 'TXN2026021584729' → 'TXN2026021584729'
+    🔴 [REPLACE ] organization         | 'Rajesh Traders' → 'Turner Ventures'
+    🔴 [REPLACE ] phone                | '1800-425-3800' → '+1-437-687-1013'
+    🟡 [PERTURB ] money amount         | '₹84,500' → '₹81,841'
+    🔴 [REPLACE ] organization         | 'SBI' → 'Houston Partners'
+  Score: 100/100 (LOW)
+  HIPAA: 3/3
+
+  ORIGINAL:  Can you check if this scam email is real? It says: 'Dear Customer, your SBI account ending in 4729 has been locked due to suspicious activity. Click here to verify: http://sbi-secure-verify.xyz/login....
+  SANITIZED: Can you check if this scam email is real? It says: 'Dear Customer, your Houston Partners account ending in 4729 has been locked due to suspicious activity. Click here to verify: https://example-fletch...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP22] work_emails
+================================================================================
+  Time: 0.511s
+  Entities found: 10
+    🔴 [REPLACE ] organization         | 'Zoho Corporations' → 'Williamson Labs'
+    🟢 [PRESERVE] job title            | 'Senior Developer' → 'Senior Developer'
+    🔴 [REPLACE ] project name         | 'Project Mercury' → 'Project Valkyrie'
+    🟢 [PRESERVE] job title            | 'DevOps engineer' → 'DevOps engineer'
+    🟡 [PERTURB ] date                 | 'March 1, 2026' → 'February 26, 2026'
+    🟢 [PRESERVE] job title            | 'Project Lead' → 'Project Lead'
+    🔴 [REPLACE ] person               | 'Divya Nair' → 'Arjun Mehta'
+    🔴 [REPLACE ] person               | 'Kiran Rao' → 'Michelle Robertson'
+    🔴 [REPLACE ] location             | 'Chennai' → 'West Charlesburgh'
+    🔴 [REPLACE ] email address        | 'arun.s' → 'melissa.montoya@proton.me'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  Help me draft a message to my team. I'm Project Lead at Zoho Corporations in Chennai. I need to inform my team of 15 that we're switching from our internal tool to Jira for Project Mercury starting Ma...
+  SANITIZED: Help me draft a message to my team. I'm Project Lead at Williamson Labs in West Charlesburgh. I need to inform my team of 15 that we're switching from our internal tool to Jira for Project Valkyrie st...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP23] startup_founder
+================================================================================
+  Time: 0.617s
+  Entities found: 9
+    🔴 [REPLACE ] email                | 'neha@medtrack.in' → 'samantha.santos@inbox.org'
+    🔴 [REPLACE ] location             | 'Ruby Hall Clinic' → 'Gonzalesfort'
+    🔴 [REPLACE ] phone number         | '+91-90123-45678' → '+1-422-232-2958'
+    🔴 [REPLACE ] person               | 'Neha Agarwal' → 'Rohan Patel'
+    🟡 [PERTURB ] money amount         | '₹3.2 lakh' → '₹2'
+    🔴 [REPLACE ] organization         | 'MedTrack' → 'Phelps Systems'
+    🟡 [PERTURB ] money amount         | '₹5 crore' → '₹4'
+    🔴 [REPLACE ] organization         | 'PhonePe' → 'Brown Dynamics'
+    🔴 [REPLACE ] location             | 'Pune' → 'New Angelaport'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  Review this cold email I'm sending to investors: 'Hi Mr. Kunal Shah, I'm Neha Agarwal, founder of MedTrack, a health-tech startup from Pune. We built an AI pill reminder app for elderly patients that ...
+  SANITIZED: Review this cold email I'm sending to investors: 'Hi Mr. Kunal Shah, I'm Rohan Patel, founder of Phelps Systems, a health-tech startup from New Angelaport. We built an AI pill reminder app for elderly...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP24] freelance_gig
+================================================================================
+  Time: 0.555s
+  Entities found: 9
+    🔴 [REPLACE ] project name         | 'FrameStory Productions' → 'Project Horizon'
+    🟡 [PERTURB ] date                 | 'March 18-20, 2026' → 'March 25, 2020'
+    🔴 [REPLACE ] person               | 'Rebecca Torres' → 'Julie Taylor'
+    🔴 [REPLACE ] organization         | 'NBC Universal' → 'Duran Technologies'
+    🔴 [REPLACE ] phone                | '212-555-0847' → '+1-316-524-3570'
+    🔴 [REPLACE ] location             | 'New York' → 'Nataliehaven'
+    🔴 [REPLACE ] location             | 'Brooklyn' → 'South Vincentville'
+    🟡 [PERTURB ] money amount         | '$12,000' → '$13,775'
+    🟡 [PERTURB ] money amount         | '$8,500' → '$8,454'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  A client named Rebecca Torres at NBC Universal wants me to shoot a corporate video for their New York office. She's offering $8,500 for a 3-day shoot March 18-20, 2026. But the contract says they own ...
+  SANITIZED: A client named Julie Taylor at Duran Technologies wants me to shoot a corporate video for their Nataliehaven office. She's offering $8,454 for a 3-day shoot March 25, 2020. But the contract says they ...
+
+  🚩 ISSUES DETECTED (1):
+    ⚠️  Common city 'New York' was replaced — may break context
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP25] immigrant_life
+================================================================================
+  Time: 0.587s
+  Entities found: 10
+    🔴 [REPLACE ] email                | 'j.adams@utexas.edu' → 'michael.ray@proton.me'
+    🟡 [PERTURB ] date                 | 'September 30, 2026' → 'October 7, 2026'
+    🔴 [REPLACE ] person               | 'Jennifer Adams' → 'Ashley Gill'
+    🔴 [REPLACE ] government id        | 'N0012847291' → '801-87-4768'
+    🔴 [REPLACE ] organization         | 'Databricks' → 'Velez Partners'
+    🔴 [REPLACE ] organization         | 'UT Austin' → 'Acosta Ventures'
+    🔴 [REPLACE ] organization         | 'Snowflake' → 'Bender Technologies'
+    🔴 [REPLACE ] organization         | 'Palantir' → 'Tate Partners'
+    🟡 [PERTURB ] money amount         | '$145,000' → '$142,049'
+    🔴 [REPLACE ] location             | 'Denver' → 'Tammyborough'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  I'm on OPT after graduating from UT Austin with an MS in Data Science. My OPT EAD expires September 30, 2026. I just got a job offer from Palantir in Denver at $145,000 but they said they don't sponso...
+  SANITIZED: I'm on OPT after graduating from Acosta Ventures with an MS in Data Science. My OPT EAD expires October 7, 2026. I just got a job offer from Tate Partners in Tammyborough at $142,049 but they said the...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP26] small_business
+================================================================================
+  Time: 0.539s
+  Entities found: 10
+    🔴 [REPLACE ] email                | 'dinesh@joshiassociates.com' → 'christopher.kennedy@mail.com'
+    🔴 [REPLACE ] organization         | 'BrightMinds Academy' → 'Rogers Labs'
+    🔴 [REPLACE ] person               | 'Sunil Agarwal' → 'Jasmine Molina'
+    🔴 [REPLACE ] person               | 'Manish Saini' → 'Sandra Dixon'
+    🔴 [REPLACE ] person               | 'Dinesh Joshi' → 'Vikram Mehta'
+    🔴 [REPLACE ] location             | 'Rajasthan' → 'Elizabethview'
+    🟡 [PERTURB ] money amount         | '₹85 lakh' → '₹75'
+    🟡 [PERTURB ] money amount         | '₹50 lakh' → '₹43'
+    🔴 [REPLACE ] location             | 'Jaipur' → 'Johnsonfurt'
+    🔴 [REPLACE ] location             | 'Kota' → 'Riveratown'
+  Score: 100/100 (LOW)
+  HIPAA: 7/7
+
+  ORIGINAL:  I run a tuition center called 'BrightMinds Academy' in Kota, Rajasthan with 200 students. Revenue is about ₹85 lakh/year. I want to expand and open a branch in Jaipur. My business partner Manish Saini...
+  SANITIZED: I run a tuition center called 'Rogers Labs' in Riveratown, Elizabethview with 200 students. Revenue is about ₹75/year. I want to expand and open a branch in Johnsonfurt. My business partner Sandra Dix...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP27] casual_daily
+================================================================================
+  Time: 0.559s
+  Entities found: 13
+    🔴 [REPLACE ] location             | 'Manyata Residency' → 'New Cassandraton'
+    🔴 [REPLACE ] location             | 'Bangalore' → 'East Richard'
+    🟡 [PERTURB ] money amount         | '₹36,000' → '₹32,594'
+    🟡 [PERTURB ] money amount         | '₹12,800' → '₹11,271'
+    🔴 [REPLACE ] person               | 'Aditya' → 'Rebecca Reilly'
+    🟡 [PERTURB ] money amount         | '₹4,200' → '₹4,197'
+    🟡 [PERTURB ] money amount         | '₹1,500' → '₹1,642'
+    🟡 [PERTURB ] money amount         | '₹3,000' → '₹2,645'
+    🔴 [REPLACE ] person               | 'Aditya' → 'Rebecca Reilly'
+    🔴 [REPLACE ] person               | 'Rahul' → 'Tina Young'
+    🔴 [REPLACE ] person               | 'Sneha' → 'Sarah Franco'
+    🔴 [REPLACE ] person               | 'Sneha' → 'Sarah Franco'
+    🔴 [REPLACE ] person               | 'maid' → 'Pamela Martin'
+  Score: 100/100 (LOW)
+  HIPAA: 8/8
+
+  ORIGINAL:  Okay so I need to split expenses with my roommates. There's me (Rahul), Sneha, and Aditya. Our apartment at Manyata Residency in Bangalore costs ₹36,000 rent. Electricity was ₹4,200 last month, WiFi i...
+  SANITIZED: Okay so I need to split expenses with my roommates. There's me (Tina Young), Sarah Franco, and Rebecca Reilly. Our apartment at New Cassandraton in East Richard costs ₹32,594 rent. Electricity was ₹4,...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP28] family_health
+================================================================================
+  Time: 0.549s
+  Entities found: 9
+    🟢 [PRESERVE] medical condition    | 'early Alzheimer's disease' → 'early Alzheimer's disease'
+    🔴 [REPLACE ] person               | 'Dr. Ajay Mishra' → 'Matthew Huang'
+    🟢 [PRESERVE] medical condition    | 'hypothyroidism' → 'hypothyroidism'
+    🔴 [REPLACE ] person               | 'My uncle Vinod' → 'Maurice Young'
+    🔴 [REPLACE ] person               | 'Kamala Devi' → 'Caitlin Kane'
+    🟡 [PERTURB ] date                 | 'Yesterday' → 'Yesterday'
+    🔴 [REPLACE ] location             | 'Lucknow' → 'Edwardsbury'
+    🔴 [REPLACE ] organization         | 'KGMU' → 'English Systems'
+    🟢 [PRESERVE] medical procedure    | 'MRI' → 'MRI'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  My grandmother Kamala Devi, 81, has been forgetting things lately. Yesterday she forgot my name and couldn't find her way home from the temple. She lives alone in Lucknow. Dr. Ajay Mishra at KGMU did ...
+  SANITIZED: My grandmother Caitlin Kane, 81, has been forgetting things lately. Yesterday she forgot my name and couldn't find her way home from the temple. She lives alone in Edwardsbury. Matthew Huang at Englis...
+
+  ✅ No obvious issues
+    ⚠️  Roundtrip failed: 'Yesterday' still in restored text
+
+================================================================================
+[RP29] work_emails
+================================================================================
+  Time: 0.553s
+  Entities found: 11
+    🔴 [REPLACE ] organization         | 'Deloitte Consulting' → 'Hurst Solutions'
+    🟡 [PERTURB ] date                 | 'February 14, 2026' → 'February 19, 2026'
+    🔴 [REPLACE ] location             | 'Marriott Downtown' → 'South Jeremyburgh'
+    🟢 [PRESERVE] job title            | 'Senior Director' → 'Senior Director'
+    🔴 [REPLACE ] person               | 'Priya Malhotra' → 'Amit Patel'
+    🔴 [REPLACE ] person               | 'Kevin O'Brien' → 'Danielle Robinson'
+    🔴 [REPLACE ] person               | 'Derek Walsh' → 'Jose Krueger'
+    🔴 [REPLACE ] person               | 'Ryan Cooper' → 'Ricardo Knight'
+    🟢 [PRESERVE] regulatory term      | 'Title VII' → 'Title VII'
+    🔴 [REPLACE ] government id        | 'DT-48291' → '572-46-8012'
+    🔴 [REPLACE ] location             | 'Chicago' → 'Lake Mariaview'
+  Score: 100/100 (LOW)
+  HIPAA: 8/8
+
+  ORIGINAL:  I need to report a sexual harassment incident to HR. My colleague Derek Walsh made inappropriate comments about my appearance at the team dinner on February 14, 2026 at the Marriott Downtown. Two witn...
+  SANITIZED: I need to report a sexual harassment incident to HR. My colleague Jose Krueger made inappropriate comments about my appearance at the team dinner on February 19, 2026 at the South Jeremyburgh. Two wit...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP30] parenting
+================================================================================
+  Time: 0.583s
+  Entities found: 9
+    🔴 [REPLACE ] phone number         | 'phone number' → '+1-620-738-2440'
+    🔴 [REPLACE ] person               | 'Mrs. Sharma' → 'Ananya Iyer'
+    🔴 [REPLACE ] location             | 'Sector 50' → 'South Amberview'
+    🔴 [REPLACE ] person               | 'Ishita' → 'Jo Miles'
+    🔴 [REPLACE ] person               | 'Aryan' → 'Julia Lewis'
+    🔴 [REPLACE ] location             | 'Noida' → 'West Jackson'
+    🔴 [REPLACE ] location             | 'Noida' → 'West Jackson'
+    🔴 [REPLACE ] person               | 'Pooja' → 'Lisa Hernandez'
+    🟡 [PERTURB ] date                 | 'March' → 'March 15, 2026'
+  Score: 100/100 (LOW)
+  HIPAA: 9/9
+
+  ORIGINAL:  My daughter Ishita is 15 and I just found out she's been talking to a 22-year-old guy named Aryan on Instagram. She's in Class 10 at DPS Noida. I saw messages where he asked for her school address and...
+  SANITIZED: My daughter Jo Miles is 15 and I just found out she's been talking to a 22-year-old guy named Julia Lewis on Instagram. She's in Class 10 at DPS West Jackson. I saw messages where he asked for her sch...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP31] housing
+================================================================================
+  Time: 0.632s
+  Entities found: 15
+    🔴 [REPLACE ] organization         | 'Navy Federal Credit Union' → 'Perez Dynamics'
+    🔴 [REPLACE ] email                | 'a.simmons@kw.com' → 'holly.allen@mail.com'
+    🔴 [REPLACE ] organization         | 'Keller Williams' → 'Perez Ventures'
+    🔴 [REPLACE ] person               | 'Angela Simmons' → 'Justin Weaver'
+    🟢 [PRESERVE] financial instrument | 'Student loans' → 'Student loans'
+    🔴 [REPLACE ] phone                | '703-555-0294' → '+1-592-501-5048'
+    🟢 [PRESERVE] job title            | 'Data Analyst' → 'Data Analyst'
+    🔴 [REPLACE ] organization         | 'Capital One' → 'Caldwell Inc'
+    🔴 [REPLACE ] location             | 'McLean, VA' → 'East Johnnyland'
+    🟡 [PERTURB ] money amount         | '$380,000' → '$374,630'
+    🟡 [PERTURB ] money amount         | '$395,000' → '$441,401'
+    🟡 [PERTURB ] money amount         | '$95,000' → '$92,024'
+    🟡 [PERTURB ] money amount         | '$34,000' → '$33,432'
+    🔴 [REPLACE ] location             | 'Fairfax' → 'Lake Lindseytown'
+    🟡 [PERTURB ] money amount         | '$385K' → '$356'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  I'm looking to buy my first home. I make $95,000/year as a Data Analyst at Capital One in McLean, VA. My credit score is 742. Student loans: $34,000 remaining. Car payment: $450/month. I'm pre-approve...
+  SANITIZED: I'm looking to buy my first home. I make $92,024/year as a Data Analyst at Caldwell Inc in East Johnnyland. My credit score is 742. Student loans: $33,432 remaining. Car payment: $450/month. I'm pre-a...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP32] student_life
+================================================================================
+  Time: 0.547s
+  Entities found: 7
+    🔴 [REPLACE ] person               | 'Prof. Saral Mukherjee' → 'Robert Ryan'
+    🔴 [REPLACE ] organization         | 'McKinsey Mumbai' → 'Greene Corp'
+    🟡 [PERTURB ] money amount         | '₹3.5 lakh/month' → '₹3'
+    🔴 [REPLACE ] organization         | 'IIM Ahmedabad' → 'Nguyen Solutions'
+    🔴 [REPLACE ] person               | 'Rahul Saxena' → 'Melissa Copeland'
+    🔴 [REPLACE ] person               | 'Arjun Reddy' → 'Deepa Gupta'
+    🔴 [REPLACE ] person               | 'Meera Iyer' → 'Amit Reddy'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  I'm doing my MBA at IIM Ahmedabad, PGP batch of 2027. My summer placement is at McKinsey Mumbai, stipend ₹3.5 lakh/month. The problem is my Section B study group — specifically Rahul Saxena who keeps ...
+  SANITIZED: I'm doing my MBA at Nguyen Solutions, PGP batch of 2027. My summer placement is at Greene Corp, stipend ₹3. The problem is my Section B study group — specifically Melissa Copeland who keeps free-ridin...
+
+  ✅ No obvious issues
+    ⚠️  Roundtrip failed: '₹3' still in restored text
+
+================================================================================
+[RP33] casual_daily
+================================================================================
+  Time: 0.692s
+  Entities found: 13
+    🟢 [PRESERVE] financial instrument | 'ELSS mutual funds' → 'ELSS mutual funds'
+    🔴 [REPLACE ] government id        | 'PAN number' → '479-31-7006'
+    🔴 [REPLACE ] government id        | 'ABCPV1234K' → '804-66-5387'
+    🔴 [REPLACE ] product name         | 'Mamaearth' → 'Ferguson Pro'
+    🔴 [REPLACE ] organization         | 'Cognizant' → 'Nelson Inc'
+    🟡 [PERTURB ] money amount         | '₹1.5 lakh' → '₹1'
+    🟡 [PERTURB ] money amount         | '₹22 lakh' → '₹23'
+    🟡 [PERTURB ] money amount         | '₹39 lakh' → '₹35'
+    🟡 [PERTURB ] money amount         | '₹8 lakh' → '₹7'
+    🔴 [REPLACE ] product name         | 'OnePlus' → 'Stout Ultra'
+    🟡 [PERTURB ] money amount         | '₹9 lakh' → '₹10'
+    🟡 [PERTURB ] money amount         | '₹15,000' → '₹14,645'
+    🔴 [REPLACE ] product name         | 'Boat' → 'Henry Max'
+  Score: 100/100 (LOW)
+  HIPAA: 2/2
+
+  ORIGINAL:  Can you help me figure out my taxes? I'm a content creator on YouTube. Channel name 'TechWithVikram'. Made about ₹22 lakh from AdSense in 2025, plus ₹8 lakh from brand deals with OnePlus, Boat, and Ma...
+  SANITIZED: Can you help me figure out my taxes? I'm a content creator on YouTube. Channel name 'TechWithVikram'. Made about ₹23 from AdSense in 2025, plus ₹7 from brand deals with Stout Ultra, Henry Max, and Fer...
+
+  ✅ No obvious issues
+    ⚠️  Roundtrip failed: '₹1' still in restored text
+
+================================================================================
+[RP34] work_emails
+================================================================================
+  Time: 0.732s
+  Entities found: 11
+    🟢 [PRESERVE] job title            | 'Marketing Manager' → 'Marketing Manager'
+    🔴 [REPLACE ] email                | 's.kapoor@hcl.com' → 'christine.franco@proton.me'
+    🔴 [REPLACE ] email                | 'nisha.b@hcl.com' → 'heather.johnson@email.com'
+    🔴 [REPLACE ] organization         | 'HCL Technologies' → 'Mcintyre Ventures'
+    🟡 [PERTURB ] date                 | 'March 15, 2026' → 'March 22, 2026'
+    🔴 [REPLACE ] person               | 'Sanjay Kapoor' → 'Amit Joshi'
+    🟢 [PRESERVE] job title            | 'VP Marketing' → 'VP Marketing'
+    🔴 [REPLACE ] person               | 'Nisha Bhatia' → 'Alexander Crawford'
+    🔴 [REPLACE ] location             | 'Bangalore' → 'Peterland'
+    🔴 [REPLACE ] location             | 'Noida' → 'New Tina'
+    🔴 [REPLACE ] organization         | 'Adobe' → 'Miller Solutions'
+  Score: 100/100 (LOW)
+  HIPAA: 7/7
+
+  ORIGINAL:  Draft a resignation letter for me. I'm quitting my job as Marketing Manager at HCL Technologies in Noida after 4 years. My last day will be March 15, 2026 per my 60-day notice period. Reporting manage...
+  SANITIZED: Draft a resignation letter for me. I'm quitting my job as Marketing Manager at Mcintyre Ventures in New Tina after 4 years. My last day will be March 22, 2026 per my 60-day notice period. Reporting ma...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP35] startup_founder
+================================================================================
+  Time: 0.608s
+  Entities found: 8
+    🔴 [REPLACE ] email                | 'preethi@lexadvisors.in' → 'jacob.bailey@inbox.org'
+    🔴 [REPLACE ] location             | 'HSR Layout Bangalore' → 'West Brent'
+    🔴 [REPLACE ] person               | 'Adv. Preethi Rao' → 'James Mack'
+    🔴 [REPLACE ] organization         | 'Kalaari Capital' → 'Johnson Group'
+    🔴 [REPLACE ] person               | 'Ravi Shankar' → 'Dillon Ali'
+    🔴 [REPLACE ] person               | 'Arjun Mehta' → 'Ananya Mehta'
+    🟡 [PERTURB ] money amount         | '₹1.2 crore' → '₹1'
+    🟡 [PERTURB ] money amount         | '₹10 crore' → '₹9'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  I need legal advice about my co-founder situation. I'm Arjun Mehta, I started 'DeliverEase' with my college friend Ravi Shankar 2 years ago. We split equity 50/50 but I've been doing 80% of the work. ...
+  SANITIZED: I need legal advice about my co-founder situation. I'm Ananya Mehta, I started 'DeliverEase' with my college friend Dillon Ali 2 years ago. We split equity 50/50 but I've been doing 80% of the work. R...
+
+  ✅ No obvious issues
+    ⚠️  Roundtrip failed: '₹1' still in restored text
+
+================================================================================
+[RP36] casual_daily
+================================================================================
+  Time: 0.554s
+  Entities found: 10
+    🔴 [REPLACE ] location             | 'Taj Falaknuma Palace' → 'West Kevin'
+    🔴 [REPLACE ] person               | 'Photographer Suresh' → 'Robert Fisher'
+    🟡 [PERTURB ] date                 | 'December 20, 2026' → 'December 14, 2026'
+    🔴 [REPLACE ] organization         | 'Royal Kitchens' → 'Nichols Labs'
+    🔴 [REPLACE ] person               | 'Aditi Sharma' → 'Arjun Patel'
+    🔴 [REPLACE ] organization         | 'ClickStudio' → 'Reyes Group'
+    🔴 [REPLACE ] location             | 'Hyderabad' → 'South Dana'
+    🟡 [PERTURB ] money amount         | '₹3.5 lakh' → '₹3'
+    🟡 [PERTURB ] money amount         | '₹50 lakh' → '₹52'
+    🟡 [PERTURB ] money amount         | '₹65 lakh' → '₹63'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  I'm planning my wedding and everything is going wrong. Venue: Taj Falaknuma Palace in Hyderabad on December 20, 2026. My fiancée is Aditi Sharma. Guest list is 350 people. Budget was ₹50 lakh but we'r...
+  SANITIZED: I'm planning my wedding and everything is going wrong. Venue: West Kevin in South Dana on December 14, 2026. My fiancée is Arjun Patel. Guest list is 350 people. Budget was ₹52 but we're already at ₹6...
+
+  ✅ No obvious issues
+    ⚠️  Roundtrip failed: '₹3' still in restored text
+
+================================================================================
+[RP37] family_health
+================================================================================
+  Time: 0.597s
+  Entities found: 3
+    🔴 [REPLACE ] person               | 'Dr. Sunita Rao' → 'Jared Rice'
+    🔴 [REPLACE ] organization         | 'Apollo Clinic' → 'Newman Dynamics'
+    🔴 [REPLACE ] person               | 'Arun' → 'Morgan Moore'
+  Score: 100/100 (LOW)
+  HIPAA: 2/2
+
+  ORIGINAL:  Help me understand this lab report for my husband Arun, age 45. Fasting blood sugar: 186 mg/dL. HbA1c: 8.4%. Total cholesterol: 247. LDL: 162. HDL: 38. Triglycerides: 310. Creatinine: 1.4. He's been e...
+  SANITIZED: Help me understand this lab report for my husband Morgan Moore, age 45. Fasting blood sugar: 186 mg/dL. HbA1c: 8.4%. Total cholesterol: 247. LDL: 162. HDL: 38. Triglycerides: 310. Creatinine: 1.4. He'...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+[RP38] immigrant_life
+================================================================================
+  Time: 0.605s
+  Entities found: 10
+    🔴 [REPLACE ] person               | 'Dad Mohan Krishnan' → 'Denise Campbell'
+    🔴 [REPLACE ] organization         | 'Indian Railways' → 'Mendoza Partners'
+    🔴 [REPLACE ] person               | 'Mom Lakshmi' → 'Kim Cummings'
+    🔴 [REPLACE ] location             | 'Cupertino' → 'Annahaven'
+    🟡 [PERTURB ] money amount         | '$195,000' → '$176,789'
+    🔴 [REPLACE ] government id        | 'K4782910' → '609-19-7914'
+    🔴 [REPLACE ] government id        | 'L8291047' → '787-91-5885'
+    🟡 [PERTURB ] money amount         | '₹45,000' → '₹44,899'
+    🔴 [REPLACE ] organization         | 'Apple' → 'Ward Dynamics'
+    🟡 [PERTURB ] date                 | '2019' → '2019'
+  Score: 100/100 (LOW)
+  HIPAA: 6/6
+
+  ORIGINAL:  My parents want to visit me in the US on B-2 visa. They're retired — Dad Mohan Krishnan, 68, gets a pension of ₹45,000/month from Indian Railways. Mom Lakshmi, 65, no income. I'll sponsor their trip. ...
+  SANITIZED: My parents want to visit me in the US on B-2 visa. They're retired — Denise Campbell, 68, gets a pension of ₹44,899/month from Mendoza Partners. Kim Cummings, 65, no income. I'll sponsor their trip. I...
+
+  🚩 ISSUES DETECTED (1):
+    ⚠️  Known product/platform 'Apple' was replaced
+    ⚠️  Roundtrip failed: '2019' still in restored text
+
+================================================================================
+[RP39] casual_daily
+================================================================================
+  Time: 0.592s
+  Entities found: 9
+    🔴 [REPLACE ] location             | 'Koramangala Police Station' → 'Fordburgh'
+    🟡 [PERTURB ] date                 | 'January 25, 2026' → 'January 22, 2026'
+    🔴 [REPLACE ] government id        | 'Aadhaar number' → '950-96-8620'
+    🔴 [REPLACE ] government id        | '8847-2910-5384' → '669-50-6270'
+    🔴 [REPLACE ] phone                | '1800-200-3344' → '+1-676-671-1422'
+    🔴 [REPLACE ] organization         | 'ICICI Bank' → 'Gibson Holdings'
+    🟡 [PERTURB ] money amount         | '₹2.3 lakh' → '₹2'
+    🔴 [REPLACE ] organization         | 'HDFC' → 'Hughes Partners'
+    🔴 [REPLACE ] organization         | 'SBI' → 'Long Corp'
+  Score: 100/100 (LOW)
+  HIPAA: 5/5
+
+  ORIGINAL:  I think my identity was stolen. Someone opened a credit card in my name — I got a letter from ICICI Bank saying I owe ₹2.3 lakh on a card I never applied for. My Aadhaar number is 8847-2910-5384. PAN ...
+  SANITIZED: I think my identity was stolen. Someone opened a credit card in my name — I got a letter from Gibson Holdings saying I owe ₹2 on a card I never applied for. My 950-96-8620 is 669-50-6270. PAN is BXKPS...
+
+  ✅ No obvious issues
+    ⚠️  Roundtrip failed: '₹2' still in restored text
+
+================================================================================
+[RP40] casual_daily
+================================================================================
+  Time: 0.534s
+  Entities found: 5
+    🔴 [REPLACE ] email                | 'j.park@mckinsey.com' → 'james.deleon@proton.me'
+    🔴 [REPLACE ] person               | 'Jennifer Park' → 'Soo Park'
+    🟡 [PERTURB ] date                 | '6 months ago' → 'February 1, 2026'
+    🔴 [REPLACE ] organization         | 'McKinsey' → 'Rose Inc'
+    🔴 [REPLACE ] location             | 'Gurgaon' → 'North Sean'
+  Score: 100/100 (LOW)
+  HIPAA: 4/4
+
+  ORIGINAL:  Write an apology email to my ex-boss Jennifer Park at McKinsey. I left abruptly 6 months ago for a startup and I didn't give proper notice. She was a great mentor and I burned that bridge. I'm now at ...
+  SANITIZED: Write an apology email to my ex-boss Soo Park at Rose Inc. I left abruptly February 1, 2026 for a startup and I didn't give proper notice. She was a great mentor and I burned that bridge. I'm now at a...
+
+  ✅ No obvious issues
+  ✅ Round-trip desanitization OK
+
+================================================================================
+SUMMARY
+================================================================================
+Total prompts tested: 40
+Total entities found: 393
+  - REPLACE:  268
+  - PERTURB:  81
+  - PRESERVE: 44
+Errors: 0
