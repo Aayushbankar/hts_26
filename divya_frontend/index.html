@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="Screenshot 2026-02-19 141844.png" type="image/x-icon">
+    <title>Silent Protocol</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+
+</head>
+<body>
+    <div id="landing-page" class="page active">
+        <div class="background-overlay"></div>
+        <div class="hero-content">
+            <div class="main-logo-container">
+
+                    <img src="Screenshot_2026-02-19_141844-removebg-preview.png" alt="Logo" class="logo-img">
+                </div>
+            </div>
+           
+            <p>Secure AI Communication Interface</p>
+            <button id="start-btn">Start Chatting &rarr;</button>
+        </div>
+    </div>
+
+    <div id="chat-page" class="page">
+        <header class="chat-header">
+            <div class="header-left">
+                <div class="small-logo-ring">
+                    <img src="Screenshot_2026-02-19_180716-removebg-preview.png" alt="S" width="200">
+                </div>
+              
+            </div>
+            <div class="header-right">
+                <div class="status-dot"></div>
+                <button class="reset-btn">Reset</button>
+            </div>
+        </header>
+
+        <main class="chat-container">
+            <div class="chat-main-view">
+                <div class="empty-state">
+                    <i data-lucide="lock" class="lock-icon"></i>
+                    <h2>Secure Channel Ready</h2>
+                    <p>Start typing to initiate encrypted conversation</p>
+                </div>
+                <div id="chat-messages"></div>
+            </div>
+
+            <aside class="chat-sidebar">
+                <ul>
+                    <li><span class="bullet">•</span> What AI Sees</li>
+                    <li><span class="bullet">•</span> Entities Detected</li>
+                    <li><span class="bullet">•</span> Alias Map</li>
+                </ul>
+            </aside>
+        </main>
+
+        <footer class="chat-input-area">
+            <div class="input-wrapper">
+                <input type="text" id="user-input" placeholder="Type your secure message....">
+                <button id="send-btn">
+                    <i data-lucide="arrow-up"></i>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
