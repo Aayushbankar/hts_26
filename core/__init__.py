@@ -1,8 +1,4 @@
-"""
-Silent-Protocol Core Module
-Import: from core.sanitiser import Sanitizer
-"""
-
+"""Silent-Protocol Core"""
 from .sanitiser import Sanitizer
 
 __all__ = ["Sanitizer"]

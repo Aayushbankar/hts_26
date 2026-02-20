@@ -1,16 +1,15 @@
 """
-Sanitizer: The orchestrator of the 3-layer anonymization pipeline.
+Sanitizer - main orchestrator for the anonymization pipeline.
 
 Pipeline:
-  Layer 1: PatternScanner (regex) → structured PII
-  Layer 2: GLiNER NER (model)    → semantic PII + domain entities
-  Layer 3: EntityClassifier      → dedup, tier assignment, privacy score
-  Output:  AliasManager          → offset-based replacement + alias map
+  1. PatternScanner (regex)  -> structured PII
+  2. GLiNER NER (model)      -> semantic entities  
+  3. EntityClassifier         -> dedup + tier assignment + scoring
+  4. AliasManager             -> offset-based replacement
 """
 
 from gliner import GLiNER
 
-# Dual-mode imports: works as package (from core.sanitiser) AND standalone
 try:
     from .alias_manager import AliasManager
     from .pattern_scanner import PatternScanner
@@ -28,16 +27,16 @@ class Sanitizer:
         self.pattern_scanner = PatternScanner()
         self.entity_classifier = EntityClassifier()
 
-        # Expanded labels: identity + structural + domain-critical
+        # labels we want GLiNER to look for
         self.labels = [
-            # Tier 1: REPLACE (identity)
+            # identity (will be replaced)
             "person", "organization", "location",
             "email address", "phone number",
             "project name", "product name",
             "government id",
-            # Tier 2: PERTURB (structural)
+            # structural (will be perturbed slightly)
             "date", "money amount",
-            # Tier 3: PRESERVE (domain-critical)
+            # domain-critical (kept as-is)
             "medical condition", "drug name",
             "symptom", "medical procedure",
             "legal concept", "financial instrument",
@@ -45,44 +44,39 @@ class Sanitizer:
         ]
 
     def sanitize_prompt(self, user_prompt: str) -> tuple:
-        """
-        Run the full 3-layer anonymization pipeline.
-        
-        Returns:
-            (sanitized_text, classified_entities, alias_map, privacy_score)
-        """
-        # Layer 1: Regex scan for structured PII
+        """Run the full pipeline. Returns (sanitized_text, entities, alias_map, score)."""
+
+        # layer 1 - regex
         regex_entities = self.pattern_scanner.scan(user_prompt)
 
-        # Layer 2: GLiNER NER for semantic entities
+        # layer 2 - NER
         ner_entities = self.model.predict_entities(
-            user_prompt,
-            self.labels,
-            threshold=0.6,  # Tuned to reduce false positives
+            user_prompt, self.labels, threshold=0.6
         )
-        # Add start/end offsets to NER entities (GLiNER already provides them)
         for e in ner_entities:
             e.setdefault("source", "ner")
 
-        # Layer 3: Classify — merge, dedup, assign tiers
+        # layer 3 - classify and deduplicate
         classified = self.entity_classifier.classify(regex_entities, ner_entities)
 
-        # Privacy scorecard
+        # layer 3.5 - intent override (so travel destinations etc. don't get replaced)
+        classified = self.entity_classifier.apply_intent_overrides(classified, user_prompt)
+
+        # scoring
         privacy_score = self.entity_classifier.compute_privacy_score(classified)
 
-        # Offset-based replacement (right-to-left)
+        # replace entities in the text
         sanitized_text = self.alias_manager.sanitize_by_offsets(user_prompt, classified)
 
         return sanitized_text, classified, self.alias_manager.get_mapping(), privacy_score
 
     def desanitize_response(self, llm_response: str) -> str:
-        """Reverse all aliases in the LLM response back to original values."""
+        """Reverse aliases in LLM response back to originals."""
         return self.alias_manager.desanitize(llm_response)
 
     def get_alias_map(self) -> dict:
-        """Get the current real→fake mapping."""
         return self.alias_manager.get_mapping()
 
     def clear(self):
-        """Reset all mappings for a new session."""
+        """Reset for new session."""
         self.alias_manager.clear()

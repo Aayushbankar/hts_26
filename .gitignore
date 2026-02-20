@@ -1,67 +1,38 @@
-# ──────────────────────────────────────────
-#  Silent-Protocol .gitignore
-# ──────────────────────────────────────────
-
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 *.egg-info/
-*.egg
 dist/
 build/
-*.whl
 
-# Virtual environments
+# venv
 .venv/
 venv/
 env/
-ENV/
 
-# IDE / Editor configs
+# IDE
 .vscode/
 .idea/
 *.swp
-*.swo
 *~
 .DS_Store
-Thumbs.db
 
-# AI Agent configs (per-agent workspace settings)
-.agent/
-.agents/
-.claude/
-.cline/
-.crush/
-.windsurf/
-.gemini/
-.cursor/
-.copilot/
-
-# Environment variables (contain API keys!)
+# env files (API keys)
 .env
 .env.local
-.env.production
 
-# GLiNER model cache (large, auto-downloaded)
+# model files (auto-downloaded)
 *.bin
 *.safetensors
 *.onnx
 
-# Node.js (frontend)
+# node
 node_modules/
-npm-debug.log*
-yarn-error.log
 
-# OS files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Logs
+# misc
 *.log
-
-# Jupyter
 .ipynb_checkpoints/
-gemini_curl_requset.txt
+test_report.txt
+docs/insider_docs/
