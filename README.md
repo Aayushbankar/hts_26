@@ -89,7 +89,7 @@ hts_26/
 | ------ | ----------- | ------------------------------------------------------- |
 | Aayush | Core Engine | 3-layer pipeline, tiered treatment, alias system        |
 | Aum    | Backend     | FastAPI server, Groq integration                        |
-| Team   | Frontend    | Chat UI (we dont have a frontend dev so AI helped here) |
+| Divya   | Frontend    | designer + ui/ux |
 
 ## Test results
 
