@@ -9,7 +9,7 @@
 ## What it does
 
 You type a prompt with personal info (names, emails, Aadhaar numbers, etc). Our pipeline:
-1. Detects all PII using regex + GLiNER NER model
+1. Detects all PII using regex + GLiNER NERmodel
 2. Replaces names with fake ones, perturbs dates/money slightly, keeps medical terms intact
 3. Sends the clean version to the LLM
 4. Swaps the fake names back in the response

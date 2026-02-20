@@ -97,23 +97,51 @@ class AliasManager:
         self.real_to_fake = {}
         self.fake_to_real = {}
 
-    # --- name generation (culturally aware) ---
+    # --- name generation (culturally + gender aware) ---
 
+    # split into male and female so we can match gender
     _SOUTH_ASIAN_LAST = ["Sharma", "Patel", "Kumar", "Singh", "Gupta", "Mehta", "Joshi", "Nair", "Reddy", "Iyer"]
-    _SOUTH_ASIAN_FIRST = ["Arjun", "Priya", "Vikram", "Ananya", "Rohan", "Kavitha", "Sanjay", "Deepa", "Amit", "Neha"]
+    _SOUTH_ASIAN_MALE = ["Arjun", "Vikram", "Rohan", "Sanjay", "Amit", "Karthik", "Arun", "Dinesh"]
+    _SOUTH_ASIAN_FEMALE = ["Priya", "Ananya", "Kavitha", "Deepa", "Neha", "Meera", "Pooja", "Ishita"]
+
     _EAST_ASIAN_LAST = ["Chen", "Wang", "Li", "Zhang", "Liu", "Yang", "Huang", "Wu", "Lin", "Sun"]
-    _EAST_ASIAN_FIRST = ["Wei", "Ming", "Jing", "Hui", "Lei", "Xin", "Yan", "Fang", "Jun", "Ting"]
+    _EAST_ASIAN_MALE = ["Wei", "Ming", "Lei", "Jun", "Hao", "Feng"]
+    _EAST_ASIAN_FEMALE = ["Jing", "Hui", "Xin", "Yan", "Fang", "Ting"]
+
     _KOREAN_LAST = ["Kim", "Park", "Lee", "Choi", "Jung", "Kang", "Yoon", "Shin", "Han", "Seo"]
-    _KOREAN_FIRST = ["Joon", "Soo", "Hyun", "Min", "Ji", "Yeon", "Woo", "Eun", "Dong", "Hee"]
+    _KOREAN_MALE = ["Joon", "Woo", "Dong", "Min", "Tae", "Hyun"]
+    _KOREAN_FEMALE = ["Ji", "Yeon", "Eun", "Hee", "Soo", "Nari"]
+
     _ARABIC_LAST = ["Al-Rashid", "Hassan", "Ibrahim", "Khalil", "Mansour", "Nasser", "Saleh", "Farouk"]
-    _ARABIC_FIRST = ["Omar", "Fatima", "Ahmed", "Layla", "Tariq", "Nour", "Youssef", "Amira"]
+    _ARABIC_MALE = ["Omar", "Ahmed", "Tariq", "Youssef", "Khalid", "Faisal"]
+    _ARABIC_FEMALE = ["Fatima", "Layla", "Nour", "Amira", "Yasmin", "Mariam"]
+
     _HISPANIC_LAST = ["Rodriguez", "Garcia", "Martinez", "Lopez", "Hernandez", "Torres", "Ramirez", "Flores"]
-    _HISPANIC_FIRST = ["Carlos", "Maria", "Diego", "Isabella", "Alejandro", "Valentina", "Mateo", "Sofia"]
+    _HISPANIC_MALE = ["Carlos", "Diego", "Alejandro", "Mateo", "Santiago", "Rafael"]
+    _HISPANIC_FEMALE = ["Maria", "Isabella", "Valentina", "Sofia", "Camila", "Lucia"]
+
     _JAPANESE_LAST = ["Tanaka", "Suzuki", "Watanabe", "Sato", "Yamamoto", "Nakamura", "Kobayashi", "Kato"]
-    _JAPANESE_FIRST = ["Yuki", "Haruto", "Sakura", "Ren", "Hina", "Sota", "Mei", "Takumi"]
+    _JAPANESE_MALE = ["Haruto", "Ren", "Sota", "Takumi", "Kaito", "Yuto"]
+    _JAPANESE_FEMALE = ["Yuki", "Sakura", "Hina", "Mei", "Aoi", "Mio"]
+
+    # simple female name detection - not perfect but good enough for hackathon
+    # we just check if the first name is in any of our female pools
+    _KNOWN_FEMALE = {
+        "priya", "ananya", "kavitha", "deepa", "neha", "meera", "pooja", "ishita",
+        "sunita", "kamala", "lakshmi", "sneha", "swati", "divya", "riya",
+        "jing", "hui", "xin", "yan", "fang", "ting",
+        "ji", "yeon", "eun", "hee", "soo", "nari",
+        "fatima", "layla", "nour", "amira", "yasmin", "mariam",
+        "maria", "isabella", "valentina", "sofia", "camila", "lucia",
+        "yuki", "sakura", "hina", "mei", "aoi", "mio",
+        # common western female names
+        "sarah", "jennifer", "jessica", "emily", "emma", "olivia", "sophia",
+        "lisa", "mary", "patricia", "linda", "elizabeth", "susan", "karen",
+        "nancy", "betty", "rachel", "laura", "anna", "claire", "catherine",
+    }
 
     def _detect_cultural_origin(self, name):
-        """Try to figure out where a name is from so we can generate something similar."""
+        """Try to figure out where a name is from so we can match the culture."""
         clean = re.sub(r'^(Dr\.?|Mr\.?|Mrs\.?|Ms\.?|Prof\.?|General|Colonel|Judge|VP|CEO|CFO|CTO|Adv\.?)\s+', '', name, flags=re.IGNORECASE).strip()
         parts = clean.split()
 
@@ -144,23 +172,48 @@ class AliasManager:
                 return "japanese"
         return "default"
 
-    def _generate_person_name(self, original):
-        """Generate a culturally-appropriate fake name."""
-        origin = self._detect_cultural_origin(original)
+    def _detect_gender(self, name):
+        """dumb but works: check if first name is in our female list"""
+        clean = re.sub(r'^(Dr\.?|Mr\.?|Mrs\.?|Ms\.?|Prof\.?)[\s]+', '', name, flags=re.IGNORECASE).strip()
+        parts = clean.split()
+        if not parts:
+            return "unknown"
+        first = parts[0].lower().strip(",.")
 
+        # mrs/ms prefix is a dead giveaway
+        if re.match(r'^(mrs?\.?|ms\.?)$', name.split()[0], re.I):
+            return "female"
+        if re.match(r'^mr\.?$', name.split()[0], re.I):
+            return "male"
+
+        if first in self._KNOWN_FEMALE:
+            return "female"
+        return "male"  # default to male, not great but safer for hackathon
+
+    def _generate_person_name(self, original):
+        """Generate a culturally-appropriate, gender-matching fake name."""
+        origin = self._detect_cultural_origin(original)
+        gender = self._detect_gender(original)
+
+        # pick the right gendered pool
         pools = {
-            "south_asian": (self._SOUTH_ASIAN_FIRST, self._SOUTH_ASIAN_LAST),
-            "east_asian": (self._EAST_ASIAN_FIRST, self._EAST_ASIAN_LAST),
-            "korean": (self._KOREAN_FIRST, self._KOREAN_LAST),
-            "arabic": (self._ARABIC_FIRST, self._ARABIC_LAST),
-            "hispanic": (self._HISPANIC_FIRST, self._HISPANIC_LAST),
-            "japanese": (self._JAPANESE_FIRST, self._JAPANESE_LAST),
+            "south_asian": (self._SOUTH_ASIAN_MALE, self._SOUTH_ASIAN_FEMALE, self._SOUTH_ASIAN_LAST),
+            "east_asian": (self._EAST_ASIAN_MALE, self._EAST_ASIAN_FEMALE, self._EAST_ASIAN_LAST),
+            "korean": (self._KOREAN_MALE, self._KOREAN_FEMALE, self._KOREAN_LAST),
+            "arabic": (self._ARABIC_MALE, self._ARABIC_FEMALE, self._ARABIC_LAST),
+            "hispanic": (self._HISPANIC_MALE, self._HISPANIC_FEMALE, self._HISPANIC_LAST),
+            "japanese": (self._JAPANESE_MALE, self._JAPANESE_FEMALE, self._JAPANESE_LAST),
         }
 
         if origin in pools:
-            first, last = pools[origin]
-            return f"{random.choice(first)} {random.choice(last)}"
-        return f"{self.fake.first_name()} {self.fake.last_name()}"
+            male_pool, female_pool, last_pool = pools[origin]
+            first_pool = female_pool if gender == "female" else male_pool
+            return f"{random.choice(first_pool)} {random.choice(last_pool)}"
+
+        # default: use faker but match gender
+        if gender == "female":
+            return f"{self.fake.first_name_female()} {self.fake.last_name()}"
+        return f"{self.fake.first_name_male()} {self.fake.last_name()}"
 
     # --- REPLACE tier ---
 

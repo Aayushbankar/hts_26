@@ -62,8 +62,9 @@ class Sanitizer:
         # layer 3 - classify and deduplicate
         classified = self.entity_classifier.classify(regex_entities, ner_entities)
 
-        # layer 3.5 - intent override (so travel destinations etc. don't get replaced)
-        classified = self.entity_classifier.apply_intent_overrides(classified, user_prompt)
+        # layer 3.5 - intent override
+        # tries local LLM (qwen2.5) first, falls back to heuristic rules
+        classified = self.entity_classifier.apply_llm_intent_overrides(classified, user_prompt)
 
         # scoring
         privacy_score = self.entity_classifier.compute_privacy_score(classified)

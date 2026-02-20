@@ -6,6 +6,11 @@ assigns tiers (REPLACE/PERTURB/PRESERVE), and scores privacy.
 
 import re
 
+try:
+    from .intent_classifier import IntentClassifier
+except ImportError:
+    from intent_classifier import IntentClassifier
+
 
 class EntityClassifier:
 
@@ -70,6 +75,27 @@ class EntityClassifier:
         "government id": {"ssn", "dob", "ein", "tin", "id", "itin", "vin"},
     }
 
+    # P3: well-known entities that should almost never be replaced
+    # these are public knowledge, not PII by themselves
+    WHITELISTED_ORGS = {
+        "google", "apple", "microsoft", "amazon", "meta", "netflix", "uber",
+        "stripe", "shopify", "linkedin", "whatsapp", "youtube", "instagram",
+        "slack", "zoom", "github", "docker", "kubernetes", "aws", "azure",
+        "gcp", "openai", "chatgpt", "tesla", "samsung", "sony", "tiktok",
+        "spotify", "twitter", "reddit", "wikipedia", "stack overflow",
+        "infosys", "tcs", "wipro", "reliance", "tata", "hdfc", "icici",
+        "sbi", "paytm", "flipkart", "swiggy", "zomato",
+    }
+
+    WHITELISTED_CITIES = {
+        "paris", "london", "new york", "tokyo", "berlin", "rome",
+        "singapore", "dubai", "barcelona", "amsterdam", "san francisco",
+        "los angeles", "chicago", "seattle", "boston", "toronto",
+        "mumbai", "delhi", "bangalore", "chennai", "hyderabad",
+        "kolkata", "pune", "hong kong", "sydney", "melbourne",
+        "shanghai", "beijing",
+    }
+
     def classify(self, regex_entities: list[dict], ner_entities: list[dict]) -> list[dict]:
         """
         Merge regex + NER entities, deduplicate overlapping spans, assign tiers.
@@ -111,6 +137,20 @@ class EntityClassifier:
                 continue
             label = entity["label"].lower()
             entity["tier"] = self.TIER_MAP.get(label, "REPLACE")
+
+            # P3: check whitelist - if this is a well-known thing, preserve it
+            # (the LLM intent classifier might override this later anyway,
+            #  but this catches cases even when ollama is down)
+            text_lower = entity["text"].lower().strip()
+            if label in ("organization", "product name"):
+                if text_lower in self.WHITELISTED_ORGS:
+                    entity["tier"] = "PRESERVE"
+                    entity["whitelist"] = True
+            elif label == "location":
+                if text_lower in self.WHITELISTED_CITIES:
+                    entity["tier"] = "PRESERVE"
+                    entity["whitelist"] = True
+
             kept.append(entity)
             occupied |= span
 
@@ -180,6 +220,53 @@ class EntityClassifier:
                 if self._is_task_relevant(entity["text"], entity["label"], full_prompt):
                     entity["tier"] = "PRESERVE"
                     entity["intent_override"] = True
+        return entities
+
+    def apply_llm_intent_overrides(self, entities, full_prompt):
+        """
+        use the local LLM (qwen2.5 via ollama) to classify entities
+        as task vs identity. if ollama isnt running or fails,
+        fall back to the heuristic rules above
+        """
+        # only bother with entities that would be REPLACED
+        replaceable = [e for e in entities if e.get("tier") == "REPLACE"]
+        if not replaceable:
+            return entities
+
+        # try the local llm (lazy init - only check ollama once)
+        if not hasattr(self, '_intent_clf'):
+            try:
+                self._intent_clf = IntentClassifier()
+            except Exception as e:
+                print(f"[intent-llm] couldnt init: {e}")
+                self._intent_clf = None
+
+        try:
+            if self._intent_clf and self._intent_clf.available:
+                entity_texts = [e["text"] for e in replaceable]
+                result = self._intent_clf.classify(full_prompt, entity_texts)
+            else:
+                result = None
+        except Exception as e:
+            print(f"[intent-llm] error: {e}, falling back to heuristics")
+            result = None
+
+        if result is None:
+            # ollama failed or not available, use heuristic fallback
+            # print("[intent-llm] falling back to heuristic rules")
+            return self.apply_intent_overrides(entities, full_prompt)
+
+        # apply the LLM's classification
+        task_entities = [t.lower() for t in result.get("task", [])]
+
+        for entity in entities:
+            if entity.get("tier") == "REPLACE":
+                if entity["text"].lower() in task_entities:
+                    entity["tier"] = "PRESERVE"
+                    entity["intent_override"] = True
+                    entity["intent_source"] = "llm"
+                    # print(f"[intent-llm] PRESERVED: {entity['text']}")
+
         return entities
 
     def compute_privacy_score(self, classified_entities: list[dict]) -> dict:
