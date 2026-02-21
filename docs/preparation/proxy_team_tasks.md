@@ -106,7 +106,7 @@
 
 ---
 
-## 🎯 AI Prompts Cheat Sheet
+##  AI Prompts Cheat Sheet
 
 ### For Divya
 | Task            | Prompt to Use                                                                                    |

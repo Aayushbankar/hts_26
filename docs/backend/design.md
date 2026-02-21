@@ -174,7 +174,7 @@ When the server starts, it should print a confirmation message to the console sh
 1. Call `sanitizer.clear()` — this resets the alias mappings WITHOUT reloading the GLiNER model (instant, no 5-second wait)
 2. Return success
 
-> ⚠️ **v2 Change:** In v1, reset created a new Sanitizer instance (5-second delay). Now use `sanitizer.clear()` for instant reset.
+>  **v2 Change:** In v1, reset created a new Sanitizer instance (5-second delay). Now use `sanitizer.clear()` for instant reset.
 
 **Response (200):**
 ```json

@@ -1,11 +1,6 @@
 """
-Sanitizer - main orchestrator for the anonymization pipeline.
-
-Pipeline:
-  1. PatternScanner (regex)  -> structured PII
-  2. GLiNER NER (model)      -> semantic entities  
-  3. EntityClassifier         -> dedup + tier assignment + scoring
-  4. AliasManager             -> offset-based replacement
+sanitiser.py - main pipeline that ties everything together
+regex -> NER -> classify -> intent -> score -> replace
 """
 
 from gliner import GLiNER
@@ -44,7 +39,7 @@ class Sanitizer:
         ]
 
     def sanitize_prompt(self, user_prompt: str) -> tuple:
-        """Run the full pipeline. Returns (sanitized_text, entities, alias_map, score)."""
+        """run the full pipeline, returns (sanitized_text, entities, alias_map, score)"""
 
         # layer 1 - regex
         regex_entities = self.pattern_scanner.scan(user_prompt)
@@ -75,7 +70,7 @@ class Sanitizer:
         return sanitized_text, classified, self.alias_manager.get_mapping(), privacy_score
 
     def desanitize_response(self, llm_response: str) -> str:
-        """Reverse aliases in LLM response back to originals."""
+        """swap fake names back to real ones in the LLM response"""
         return self.alias_manager.desanitize(llm_response)
 
     def get_alias_map(self) -> dict:

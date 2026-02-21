@@ -16,7 +16,7 @@
 - [ ] **1.7** Run `pip install -r requirements.txt` — this will take 5-10 min (the torch/transformers packages are large) (10 min)
 - [ ] **1.8** Sign up at https://console.groq.com, create an API key, save it in `.env` file as `GROQ_API_KEY=gsk_xxx` (5 min)
 
-**✅ Checkpoint:** `python -c "import fastapi; import groq; print('OK')"` prints OK.
+** Checkpoint:** `python -c "import fastapi; import groq; print('OK')"` prints OK.
 
 ---
 
@@ -30,7 +30,7 @@
 - [ ] **2.6** Test in browser: open `http://localhost:8000/docs` — Swagger UI should show the `/chat` endpoint (5 min)
 - [ ] **2.7** Test with curl: `curl -X POST http://localhost:8000/chat -H "Content-Type: application/json" -d '{"message":"Hello"}'` should return the echo response (15 min)
 
-**✅ Checkpoint:** Server running, Swagger docs visible, curl returns echo response.
+** Checkpoint:** Server running, Swagger docs visible, curl returns echo response.
 
 ---
 
@@ -44,7 +44,7 @@
 - [ ] **3.6** Add try/except around the Groq call. If it fails, return a JSON error with status 500 (20 min)
 - [ ] **3.7** Test error handling: temporarily set a wrong API key, send a request, verify you get a clean error JSON (10 min)
 
-**✅ Checkpoint:** Server forwards messages to Groq and returns real AI responses. Errors are handled gracefully.
+** Checkpoint:** Server forwards messages to Groq and returns real AI responses. Errors are handled gracefully.
 
 ---
 
@@ -55,13 +55,13 @@
 - [ ] **4.3** Create `POST /reset` endpoint that returns `{"status": "reset", "message": "All aliases cleared"}` — placeholder (10 min)
 - [ ] **4.4** Test all 3 endpoints via Swagger UI or curl (15 min)
 
-**✅ Checkpoint:** All 4 endpoints (`/chat`, `/health`, `/aliases`, `/reset`) respond correctly.
+** Checkpoint:** All 4 endpoints (`/chat`, `/health`, `/aliases`, `/reset`) respond correctly.
 
 ---
 
 ## Task 5: Sanitizer Integration (2 hours)
 
-> ⚠️ **This task depends on Aayush completing the core logic.** Wait for him to push `core/sanitizer.py` and `core/alias_manager.py` before starting.
+>  **This task depends on Aayush completing the core logic.** Wait for him to push `core/sanitizer.py` and `core/alias_manager.py` before starting.
 
 - [ ] **5.1** Add the `core/` directory to the Python path so `from sanitizer import Sanitizer` works (15 min)
 - [ ] **5.2** Create a global `Sanitizer` instance at module level (this loads the GLiNER model — takes ~5 seconds) (10 min)
@@ -76,7 +76,7 @@
 - [ ] **5.7** Update `/reset` to create a new `Sanitizer()` instance (5 min)
 - [ ] **5.8** Test end-to-end: send "Tim Cook works at Apple" and verify the response contains fake names in `sanitized_prompt` and real names in `response` (20 min)
 
-**✅ Checkpoint:** Full pipeline works. Debug info (sanitized prompt, entities, aliases) all present in API response.
+** Checkpoint:** Full pipeline works. Debug info (sanitized prompt, entities, aliases) all present in API response.
 
 ---
 
@@ -86,7 +86,7 @@
 - [ ] **6.2** Add print/log statements in the `/chat` flow: "Received message", "Sanitized → ...", "Groq responded", "Desanitized → ..." (15 min)
 - [ ] **6.3** Test: watch the terminal output while sending a request — all steps should be logged (5 min)
 
-**✅ Checkpoint:** Console clearly logs each step of the pipeline when a request comes in.
+** Checkpoint:** Console clearly logs each step of the pipeline when a request comes in.
 
 ---
 
@@ -103,7 +103,7 @@
   - Step 2: Add `GROQ_API_KEY` to `.env`
   - Step 3: `uvicorn main:app --reload --port 8000`
 
-**✅ Checkpoint:** All edge cases handled. README written. Ready for demo.
+** Checkpoint:** All edge cases handled. README written. Ready for demo.
 
 ---
 

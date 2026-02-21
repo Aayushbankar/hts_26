@@ -35,17 +35,17 @@ Silent-Protocol is a **privacy proxy** that sits between the user and any public
 ### The 3-Step Pipeline
 
 ```
-┌──────────────┐     ┌──────────────────────┐     ┌──────────┐
-│   USER       │     │   SILENT-PROTOCOL    │     │  PUBLIC   │
-│              │     │                      │     │  LLM      │
-│ "Draft NDA   │────>│ 1. DETECT entities   │     │           │
-│  for Apple"  │     │ 2. REPLACE with      │────>│ Sees only│
-│              │     │    fake aliases      │     │ "Orion   │
-│              │     │ 3. STORE the mapping │     │  Corp"   │
-│              │<────│ 4. REBUILD response  │<────│          │
-│ Gets back    │     │    with real names   │     │          │
-│ "Apple..."   │     └──────────────────────┘     └──────────┘
-└──────────────┘
+----------------     ------------------------     ------------
+-   USER       -     -   SILENT-PROTOCOL    -     -  PUBLIC   -
+-              -     -                      -     -  LLM      -
+- "Draft NDA   ----->- 1. DETECT entities   -     -           -
+-  for Apple"  -     - 2. REPLACE with      ----->- Sees only-
+-              -     -    fake aliases      -     - "Orion   -
+-              -     - 3. STORE the mapping -     -  Corp"   -
+-              -<----- 4. REBUILD response  -<-----          -
+- Gets back    -     -    with real names   -     -          -
+- "Apple..."   -     ------------------------     ------------
+----------------
 ```
 
 ### Step-by-Step Breakdown
@@ -76,7 +76,7 @@ graph TD
     A[User types prompt] --> B[Frontend Chat UI]
     B -->|POST /chat| C[FastAPI Backend]
     
-    subgraph "🔒 The Sanitization Engine"
+    subgraph " The Sanitization Engine"
         C --> D[GLiNER NER Model]
         D -->|Detected Entities| E[Alias Manager]
         E -->|Generate Fakes| F[Faker Library]
@@ -86,7 +86,7 @@ graph TD
     G -->|API Call| H[Groq / OpenAI API]
     H -->|Raw Response| I[De-Anonymizer]
     
-    subgraph "🔓 The Reconstruction Engine"
+    subgraph " The Reconstruction Engine"
         I -->|Reverse Lookup| E
         I --> J[Clean Response with Real Names]
     end
@@ -140,14 +140,14 @@ graph TD
 
 ## 7. Pros & Cons
 
-### ✅ Pros
+###  Pros
 - **Universally Needed:** Every company using AI has this problem.
 - **"Wow" Demo:** The side-by-side (What You Typed vs What AI Saw) is instantly compelling.
 - **Tech Depth:** GLiNER + Faker + Streaming + Reverse Mapping = Non-trivial engineering.
 - **Sellable SaaS:** $29/mo per seat. API pricing model.
 - **Regulatory Tailwind:** GDPR, HIPAA, CCPA all push companies toward this.
 
-### ❌ Cons
+###  Cons
 - **Imperfect NER:** GLiNER may miss custom entities (e.g., internal codenames).
   - *Mitigation:* Add a "Manual Redact" button for edge cases.
 - **Context Drift:** If the LLM references "Orion Corp's history", it might hallucinate fake history.

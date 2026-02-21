@@ -1,4 +1,4 @@
-# 🧠 Core Logic Blueprint: The Sanitization Engine
+#  Core Logic Blueprint: The Sanitization Engine
 
 > **This is Aayush's domain.** This document explains **exactly** how the Python code works.
 

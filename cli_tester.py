@@ -10,7 +10,7 @@ try:
     from fastapi.testclient import TestClient
     from main import app
 except ImportError:
-    print("❌ Error: Could not import backend. Please run this script from the project root.")
+    print("Error: Could not import backend. Run from project root.")
     sys.exit(1)
 
 # Initialize FastAPI Test Client (simulates frontend requests without needing uvicorn running)
@@ -31,7 +31,7 @@ def print_header(title):
     print(f"{C_CYAN}{C_BOLD}{'='*80}{C_RESET}")
 
 def run_prompt_test(test_id, name_or_scenario, prompt_text, expected_behavior="", wait_time=0.5):
-    """Sends a single prompt to the backend and prints the result beautifully."""
+    """send a prompt to the backend and print results"""
     # Reset session before each independent test
     client.post("/reset")
 
@@ -46,7 +46,7 @@ def run_prompt_test(test_id, name_or_scenario, prompt_text, expected_behavior=""
     latency = time.time() - start_time
 
     if response.status_code != 200:
-        print(f"  {C_RED}❌ ERROR {response.status_code}:{C_RESET} {response.text}")
+        print(f"  {C_RED}ERROR {response.status_code}:{C_RESET} {response.text}")
         return False
 
     res = response.json()
@@ -115,7 +115,7 @@ def run_all_tests():
     heroes = ds["hero_prompts"]
     for key, hero in heroes.items():
         if key.startswith("_"): continue
-        run_prompt_test(hero["id"], hero["name"], hero["prompt"], "HERO PROMTP - Full Pipeline Test")
+        run_prompt_test(hero["id"], hero["name"], hero["prompt"], "HERO PROMPT - Full Pipeline Test")
 
     print_header("CLI TESTS COMPLETE")
 

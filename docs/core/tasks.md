@@ -1,4 +1,4 @@
-# 🧠 Core Logic Tasks — Aayush
+#  Core Logic Tasks — Aayush
 
 **Total Estimated Time:** 8–10 hours
 **Deliverables:** `core/sanitizer.py`, `core/alias_manager.py`, `core/test_sanitizer.py`
@@ -15,7 +15,7 @@
 - [ ] **1.6** Decide on the entity labels list (11 labels as per design doc) and the detection threshold (0.5) (5 min)
 - [ ] **1.7** Test GLiNER with each label individually — send a sentence containing that entity type and confirm detection. Note any labels that perform poorly and adjust threshold. (15 min)
 
-**✅ Checkpoint:** GLiNER model cached. Can detect entities. Faker generates convincing fakes.
+** Checkpoint:** GLiNER model cached. Can detect entities. Faker generates convincing fakes.
 
 ---
 
@@ -29,7 +29,7 @@
 - [ ] **2.6** Implement `get_mapping()` and `clear()` utility methods. (5 min)
 - [ ] **2.7** Manual test: create an AliasManager instance, call `get_or_create` with "Apple" → ORG, call again with "Apple" → should return the same alias. Call with "Google" → ORG → should return a DIFFERENT alias. (10 min)
 
-**✅ Checkpoint:** AliasManager works standalone. Aliases are consistent and bidirectional.
+** Checkpoint:** AliasManager works standalone. Aliases are consistent and bidirectional.
 
 ---
 
@@ -42,7 +42,7 @@
 - [ ] **3.5** Implement `get_alias_map()`: delegate to `alias_manager.get_mapping()` (5 min)
 - [ ] **3.6** Manual test: create a Sanitizer, sanitize "Tim Cook works at Apple in Cupertino", print the output, confirm 3 entities replaced (15 min)
 
-**✅ Checkpoint:** Full sanitize→desanitize pipeline works. Entity detection + alias replacement verified.
+** Checkpoint:** Full sanitize→desanitize pipeline works. Entity detection + alias replacement verified.
 
 ---
 
@@ -55,7 +55,7 @@
 - [ ] **4.5** Write Test 4 — Partial Match Edge Case: input "Apple Inc bought Samsung Electronics in San Francisco." Verify "Apple" doesn't get replaced inside "Apple Inc" incorrectly. (10 min)
 - [ ] **4.6** Run all tests. Fix any failures. (5 min)
 
-**✅ Checkpoint:** `python test_sanitizer.py` prints "ALL TESTS PASSED". Push to Git.
+** Checkpoint:** `python test_sanitizer.py` prints "ALL TESTS PASSED". Push to Git.
 
 ---
 
@@ -69,13 +69,13 @@
 - [ ] **5.6** Identify any entity types that GLiNER consistently misses. Document them as known limitations. (15 min)
 - [ ] **5.7** If any entity types are unreliable, consider adding regex fallback patterns for emails, phone numbers, and dates. (15 min)
 
-**✅ Checkpoint:** Sanitizer handles legal, medical, and financial prompts. Known limitations documented.
+** Checkpoint:** Sanitizer handles legal, medical, and financial prompts. Known limitations documented.
 
 ---
 
 ## Task 6: Integration with Backend (1.5 hours)
 
-> ⚠️ **Coordinate with Aum.** He needs your code pushed to Git first.
+>  **Coordinate with Aum.** He needs your code pushed to Git first.
 
 - [ ] **6.1** Ensure `core/` folder has an `__init__.py` file (even if empty) so Python can import from it (5 min)
 - [ ] **6.2** Push `sanitizer.py`, `alias_manager.py`, and `test_sanitizer.py` to Git (5 min)
@@ -85,13 +85,13 @@
 - [ ] **6.6** Test `/reset` endpoint: confirm aliases are cleared and new ones are generated on next message (10 min)
 - [ ] **6.7** Fix any bugs found during integration (30 min buffer)
 
-**✅ Checkpoint:** Backend API returns correct sanitized/desanitized data. All endpoints work with real Sanitizer.
+** Checkpoint:** Backend API returns correct sanitized/desanitized data. All endpoints work with real Sanitizer.
 
 ---
 
 ## Task 7: Frontend Integration Support (1 hour)
 
-> ⚠️ **Coordinate with Divya.** She will call you when her JS is ready to connect.
+>  **Coordinate with Divya.** She will call you when her JS is ready to connect.
 
 - [ ] **7.1** Help Divya test the `/chat` endpoint from her JavaScript fetch code. Debug CORS, JSON parsing, or response format issues. (20 min)
 - [ ] **7.2** Verify the debug panel receives and renders `sanitized_prompt` and `entities_detected` correctly (15 min)
@@ -99,7 +99,7 @@
 - [ ] **7.4** Verify reset clears everything in both backend and frontend (10 min)
 - [ ] **7.5** Fix any pipeline bugs end-to-end (5 min buffer)
 
-**✅ Checkpoint:** Full app works: type message → see response → debug panel shows sanitized version + entities + alias map.
+** Checkpoint:** Full app works: type message → see response → debug panel shows sanitized version + entities + alias map.
 
 ---
 
@@ -111,7 +111,7 @@
 - [ ] **8.4** Prepare the 60-second pitch script (from the master plan) (10 min)
 - [ ] **8.5** Do a full dry-run with the team: Divya opens the frontend, you narrate, Aum handles the terminal (10 min)
 
-**✅ Checkpoint:** Demo rehearsed. Backup ready. Pitch memorized.
+** Checkpoint:** Demo rehearsed. Backup ready. Pitch memorized.
 
 ---
 

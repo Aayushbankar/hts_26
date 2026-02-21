@@ -1,4 +1,4 @@
-# 🎨 Frontend Tasks — Divya
+#  Frontend Tasks — Divya
 
 **Total Estimated Time:** 10–12 hours
 **Deliverables:** `frontend/index.html`, `frontend/style.css`, `frontend/script.js`
@@ -24,7 +24,7 @@
 - [ ] **2.5** Build the Input Bar: `<form>` with text input and send button at the bottom (15 min)
 - [ ] **2.6** Build the Debug Panel: 3 sections with headers ("What AI Sees", "Entities Detected", "Alias Map") (15 min)
 
-**✅ Checkpoint:** Open in Live Server. You should see the full page layout (ugly but structured).
+** Checkpoint:** Open in Live Server. You should see the full page layout (ugly but structured).
 
 ---
 
@@ -38,7 +38,7 @@
 - [ ] **3.6** Style the Debug Panel: background, left border, section padding, section headers, separator borders (20 min)
 - [ ] **3.7** Style the Empty State: centered vertically and horizontally, icon size, text colors (15 min)
 
-**✅ Checkpoint:** Page should look like the wireframe in the design doc — dark theme, correct layout, correct fonts.
+** Checkpoint:** Page should look like the wireframe in the design doc — dark theme, correct layout, correct fonts.
 
 ---
 
@@ -51,7 +51,7 @@
 - [ ] **4.5** Style Alias Map rows: monospace text, green arrow between real→fake names (15 min)
 - [ ] **4.6** Style the custom Toggle Switch: track, knob, ON/OFF states, label (20 min)
 
-**✅ Checkpoint:** Add a couple of hardcoded test message divs to the HTML. They should render as proper styled bubbles.
+** Checkpoint:** Add a couple of hardcoded test message divs to the HTML. They should render as proper styled bubbles.
 
 ---
 
@@ -64,7 +64,7 @@
 - [ ] **5.5** Input field focus transition: border color change + shadow (5 min)
 - [ ] **5.6** Toggle switch slide animation: knob moves left/right, 150ms (5 min)
 
-**✅ Checkpoint:** Hover over the send button (glow), click the toggle (slides), see the dots bounce.
+** Checkpoint:** Hover over the send button (glow), click the toggle (slides), see the dots bounce.
 
 ---
 
@@ -78,7 +78,7 @@
 - [ ] **6.6** `toggleSilentMode()`: toggle visual state (for MVP, cosmetic only) (10 min)
 - [ ] **6.7** Wire up all event listeners: form submit, reset button click, toggle change (5 min)
 
-**✅ Checkpoint:** Type a message, see a user bubble appear, see typing dots, see an AI response (requires backend running). Debug panel updates.
+** Checkpoint:** Type a message, see a user bubble appear, see typing dots, see an AI response (requires backend running). Debug panel updates.
 
 ---
 
@@ -91,7 +91,7 @@
 - [ ] **7.5** Mobile responsiveness: debug panel collapses on narrow screens (20 min)
 - [ ] **7.6** Final visual polish: spacing, alignment, font sizes, color consistency (30 min)
 
-**✅ Checkpoint:** The app looks premium and handles edge cases gracefully.
+** Checkpoint:** The app looks premium and handles edge cases gracefully.
 
 ---
 

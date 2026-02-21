@@ -1,4 +1,4 @@
-# 📋 Silent-Protocol: Software Requirements Specification (SRS)
+#  Silent-Protocol: Software Requirements Specification (SRS)
 
 **Version:** 1.0
 **Project:** Silent-Protocol — The Context-Aware Privacy Proxy
@@ -31,12 +31,12 @@ A **privacy proxy** that sits between the user and a public LLM (Groq/OpenAI). I
 4. **Reconstructs** the response by swapping fakes back to real values
 
 ### 1.2 What We Are NOT Building
-- ❌ User authentication / login
-- ❌ Database / persistent storage
-- ❌ Cloud deployment (localhost only)
-- ❌ Multi-user support
-- ❌ Payment / billing
-- ❌ File upload (text chat only)
+-  User authentication / login
+-  Database / persistent storage
+-  Cloud deployment (localhost only)
+-  Multi-user support
+-  Payment / billing
+-  File upload (text chat only)
 
 ---
 
@@ -45,14 +45,14 @@ A **privacy proxy** that sits between the user and a public LLM (Groq/OpenAI). I
 ### 2.1 High-Level Flow
 ```
 User → [Frontend] → POST /chat → [FastAPI Backend]
-                                       │
-                                       ├── 1. GLiNER (detect entities)
-                                       ├── 2. AliasManager (replace with fakes)
-                                       ├── 3. Groq API (get LLM response)
-                                       ├── 4. AliasManager (reverse fakes)
-                                       │
+                                       -
+                                       --- 1. GLiNER (detect entities)
+                                       --- 2. AliasManager (replace with fakes)
+                                       --- 3. Groq API (get LLM response)
+                                       --- 4. AliasManager (reverse fakes)
+                                       -
                                   ← JSON Response ← [FastAPI Backend]
-                                       │
+                                       -
 User ← [Frontend] ← Display response + debug info
 ```
 
@@ -337,27 +337,27 @@ alias_manager.fake_to_real = {
 
 ### 6.1 Page Layout
 ```
-┌──────────────────────────────────────────────────────────────┐
-│  🔒 Silent-Protocol          [Silent Mode: ON/OFF] [Reset]  │
-├────────────────────────────────────┬─────────────────────────┤
-│                                    │  📊 Debug Panel         │
-│  💬 Chat Area                      │                         │
-│                                    │  What AI Saw:           │
-│  ┌─────────────────────────┐      │  "Draft NDA for         │
-│  │ 🟢 User: Draft NDA for  │      │   Orion Corp..."        │
-│  │    Apple and Samsung     │      │                         │
-│  └─────────────────────────┘      │  Detected Entities:     │
-│                                    │  [Apple Inc] → ORG      │
-│  ┌─────────────────────────┐      │  [Samsung]   → ORG      │
-│  │ ⚪ AI: This NDA between  │      │  [Titan]     → PROJECT  │
-│  │    Apple Inc ("Party A") │      │                         │
-│  │    and Samsung ("Party B")│     │  Alias Map:             │
-│  └─────────────────────────┘      │  Apple → Orion Corp     │
-│                                    │  Samsung → Vega Ind.    │
-│  ┌──────────────────────┐  [Send] │                         │
-│  │ Type your message...  │         │                         │
-│  └──────────────────────┘         │                         │
-└────────────────────────────────────┴─────────────────────────┘
+----------------------------------------------------------------
+-   Silent-Protocol          [Silent Mode: ON/OFF] [Reset]  -
+----------------------------------------------------------------
+-                                    -   Debug Panel         -
+-  💬 Chat Area                      -                         -
+-                                    -  What AI Saw:           -
+-  ---------------------------      -  "Draft NDA for         -
+-  -  User: Draft NDA for  -      -   Orion Corp..."        -
+-  -    Apple and Samsung     -      -                         -
+-  ---------------------------      -  Detected Entities:     -
+-                                    -  [Apple Inc] → ORG      -
+-  ---------------------------      -  [Samsung]   → ORG      -
+-  - ⚪ AI: This NDA between  -      -  [Titan]     → PROJECT  -
+-  -    Apple Inc ("Party A") -      -                         -
+-  -    and Samsung ("Party B")-     -  Alias Map:             -
+-  ---------------------------      -  Apple → Orion Corp     -
+-                                    -  Samsung → Vega Ind.    -
+-  ------------------------  [Send] -                         -
+-  - Type your message...  -         -                         -
+-  ------------------------         -                         -
+----------------------------------------------------------------
 ```
 
 ### 6.2 UI Components
@@ -436,23 +436,23 @@ async function sendMessage() {
 
 ```
 /silent-protocol
-│
-├── /backend                    ← Aum's domain
-│   ├── main.py                 # FastAPI app: endpoints, CORS, Groq calls
-│   ├── requirements.txt        # fastapi, uvicorn, groq, gliner, faker
-│   └── .env                    # GROQ_API_KEY=gsk_xxx
-│
-├── /core                       ← Aayush's domain
-│   ├── sanitizer.py            # Sanitizer class (GLiNER + AliasManager)
-│   ├── alias_manager.py        # AliasManager class (Faker + bidirectional dict)
-│   └── test_sanitizer.py       # Manual test script
-│
-├── /frontend                   ← Divya's domain
-│   ├── index.html              # Page structure
-│   ├── style.css               # Dark theme, animations
-│   └── script.js               # fetch calls, DOM manipulation
-│
-└── README.md                   # How to run (3 steps)
+-
+--- /backend                    ← Aum's domain
+-   --- main.py                 # FastAPI app: endpoints, CORS, Groq calls
+-   --- requirements.txt        # fastapi, uvicorn, groq, gliner, faker
+-   --- .env                    # GROQ_API_KEY=gsk_xxx
+-
+--- /core                       ← Aayush's domain
+-   --- sanitizer.py            # Sanitizer class (GLiNER + AliasManager)
+-   --- alias_manager.py        # AliasManager class (Faker + bidirectional dict)
+-   --- test_sanitizer.py       # Manual test script
+-
+--- /frontend                   ← Divya's domain
+-   --- index.html              # Page structure
+-   --- style.css               # Dark theme, animations
+-   --- script.js               # fetch calls, DOM manipulation
+-
+--- README.md                   # How to run (3 steps)
 ```
 
 ---

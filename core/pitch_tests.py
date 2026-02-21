@@ -1,67 +1,38 @@
 """
-Silent-Protocol — Complete Pitch Dataset & Test Suite
-=====================================================
-Covers ALL designed scenarios across 7 domains.
-Demonstrates every feature:  3-tier treatment, privacy scorecard,
-offset-based replacement, HIPAA alignment, context preservation.
+pitch tests for the demo - runs all our test scenarios across
+multiple domains to show the 3-tier treatment in action
 
-This IS the demo. Each test is a slide in the pitch deck.
-
-Run: python pitch_tests.py
+run: python pitch_tests.py
 """
 
 from sanitiser import Sanitizer
 import json
 
-# ─────────────────────────────────────────────────────────
-#  UTILITIES
-# ─────────────────────────────────────────────────────────
-
 results = []
 test_num = 0
 
 
-def print_banner(title, subtitle=""):
-    print("\n\n" + "█" * 70)
-    print(f"  {title}")
-    if subtitle:
-        print(f"  {subtitle}")
-    print("█" * 70)
-
-
-def print_scorecard(score):
-    """Display the privacy scorecard in a bordered box."""
+def show_score(score):
+    """print the privacy score in a readable way"""
     s = score
-    print(f"\n  ┌──────────────────────────────────────────────┐")
-    print(f"  │  🛡️  Privacy Score: {s['score']}/100{' ' * (24 - len(str(s['score'])))}│")
-    print(f"  │                                              │")
-    print(f"  │  Entities Detected: {s['total_entities']:<25}│")
-    print(f"  │  ├── 🔴 Replaced (identity): {s['replaced']:<17}│")
-    print(f"  │  ├── 🟡 Perturbed (structural): {s['perturbed']:<13}│")
-    print(f"  │  └── 🟢 Preserved (domain-critical): {s['preserved']:<7}│")
-    print(f"  │                                              │")
-    print(f"  │  Risk Level: {s['risk_level']:<32}│")
-    print(f"  │  HIPAA: {s['hipaa_identifiers_found']} found, {s['hipaa_identifiers_protected']} protected{' ' * (21 - len(str(s['hipaa_identifiers_found'])) - len(str(s['hipaa_identifiers_protected'])))}│")
-    print(f"  └──────────────────────────────────────────────┘")
+    print(f"\n  Privacy Score: {s['score']}/100")
+    print(f"  Entities: {s['total_entities']} total ({s['replaced']} replaced, {s['perturbed']} perturbed, {s['preserved']} preserved)")
+    print(f"  Risk Level: {s['risk_level']}")
+    print(f"  HIPAA identifiers: {s['hipaa_identifiers_found']} found, {s['hipaa_identifiers_protected']} protected")
 
 
 def run_test(domain, scenario, prompt, expect_preserved=None):
-    """
-    Run a single test with full diagnostic output.
-    
-    Args:
-        expect_preserved: list of strings that SHOULD remain untouched in the output
-    """
+    """run one test case and check for leaks"""
     global test_num
     test_num += 1
 
     sanitized, entities, alias_map, privacy_score = sanitizer.sanitize_prompt(prompt)
 
-    # Check: replaced entities should NOT appear in output
+    # check for leaks - replaced entities shouldnt appear in output
     replaced = [e for e in entities if e.get("tier") == "REPLACE"]
     leaked = [e["text"] for e in replaced if e["text"] in sanitized]
 
-    # Check: preserved entities SHOULD appear in output
+    # check preserved entities are still there
     preserved_ok = True
     if expect_preserved:
         for term in expect_preserved:
@@ -71,40 +42,38 @@ def run_test(domain, scenario, prompt, expect_preserved=None):
 
     passed = len(leaked) == 0 and len(replaced) > 0 and preserved_ok
 
-    print(f"\n{'─' * 70}")
+    print(f"\n{'=' * 60}")
     print(f"TEST {test_num}: [{domain}] {scenario}")
-    print(f"{'─' * 70}")
-    print(f"📝 ORIGINAL:")
+    print(f"{'=' * 60}")
+    print(f"ORIGINAL:")
     print(f"   {prompt}")
-    print(f"\n🔒 SANITIZED (what AI sees):")
+    print(f"\nSANITIZED (what AI sees):")
     print(f"   {sanitized}")
 
-    print(f"\n🏷️  ENTITIES ({len(entities)}):")
+    print(f"\nENTITIES ({len(entities)}):")
     for e in entities:
         tier = e.get("tier", "?")
-        icon = {"REPLACE": "🔴", "PERTURB": "🟡", "PRESERVE": "🟢"}.get(tier, "⚪")
         alias = alias_map.get(e["text"], e["text"])
         score_str = f" ({e['score']:.0%})" if "score" in e else ""
-        print(f"   {icon} {tier:8s} | {e['text']:30s} → {alias:30s} [{e['label']}]{score_str}")
+        print(f"   [{tier:8s}] {e['text']:30s} -> {alias:30s} [{e['label']}]{score_str}")
 
-    # Privacy scorecard
-    print_scorecard(privacy_score)
+    show_score(privacy_score)
 
-    # Preservation check
+    # check preserved terms
     if expect_preserved:
-        print(f"\n🟢 CONTEXT PRESERVATION CHECK:")
+        print(f"\nCONTEXT PRESERVATION CHECK:")
         for term in expect_preserved:
-            present = "✅ KEPT" if term in sanitized else "❌ LOST"
-            print(f"   {present}: \"{term}\"")
+            status = "KEPT" if term in sanitized else "LOST!!"
+            print(f"   {status}: \"{term}\"")
 
     if passed:
-        print(f"\n✅ PASSED — {len(replaced)} entities replaced, zero leaks{', context preserved' if expect_preserved else ''}")
+        print(f"\nPASSED - {len(replaced)} entities replaced, zero leaks{', context preserved' if expect_preserved else ''}")
     elif len(replaced) == 0:
-        print(f"\n⚠️  WARNING — No REPLACE entities detected")
+        print(f"\nWARNING - No REPLACE entities detected")
     elif not preserved_ok:
-        print(f"\n❌ FAILED — Domain-critical context was destroyed")
+        print(f"\nFAILED - Domain-critical context was destroyed")
     else:
-        print(f"\n❌ FAILED — Leaked: {leaked}")
+        print(f"\nFAILED - Leaked: {leaked}")
 
     results.append({
         "test": test_num,
@@ -122,10 +91,7 @@ def run_test(domain, scenario, prompt, expect_preserved=None):
     return passed
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  INITIALIZATION
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+# setup
 print("=" * 70)
 print("  SILENT-PROTOCOL — Complete Pitch Dataset")
 print("  3-Layer Detection • 3-Tier Treatment • Privacy Scorecard")
@@ -133,15 +99,13 @@ print("  Loading GLiNER model...")
 print("=" * 70)
 
 sanitizer = Sanitizer()
-print("✅ Model loaded!\n")
+print("Model loaded!\n")
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  DOMAIN 1: MEDICAL — The WOW demo (drug names + conditions preserved)
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- DOMAIN 1: MEDICAL ----
 
-print_banner("DOMAIN 1: MEDICAL (HIPAA-SENSITIVE)",
-             "Drug names & conditions preserved — competitors destroy these!")
+print("\n\n--- DOMAIN 1: MEDICAL (HIPAA-SENSITIVE) ---")
+print("Drug names & conditions preserved — competitors destroy these!")
 
 run_test("MEDICAL", "Prescription + Diagnosis",
     "Dr. Sarah Chen at Mayo Clinic prescribed Metformin 500mg for John Smith's "
@@ -169,12 +133,10 @@ run_test("MEDICAL", "Surgical Consultation",
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  DOMAIN 2: LEGAL — Concepts preserved, parties replaced
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- DOMAIN 2: LEGAL ----
 
-print_banner("DOMAIN 2: LEGAL",
-             "Legal concepts preserved, party names replaced")
+print("\n\n--- DOMAIN 2: LEGAL ---")
+print("Legal concepts preserved, party names replaced")
 
 run_test("LEGAL", "Breach of Contract",
     "Apple Inc has filed a breach of contract suit against Tim Cook's former "
@@ -202,12 +164,10 @@ run_test("LEGAL", "Employment + Indemnification",
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  DOMAIN 3: FINANCIAL — Instruments preserved, amounts perturbed
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- DOMAIN 3: FINANCIAL ----
 
-print_banner("DOMAIN 3: FINANCIAL",
-             "Instruments preserved, amounts perturbed (±15%), names replaced")
+print("\n\n--- DOMAIN 3: FINANCIAL ---")
+print("Instruments preserved, amounts perturbed, names replaced")
 
 run_test("FINANCIAL", "Series B + SAFE Agreement",
     "TechVenture Partners led a $25 million Series B round for Nexon Corp, "
@@ -235,12 +195,10 @@ run_test("FINANCIAL", "M&A + Convertible Note",
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  DOMAIN 4: COMPLIANCE / REGULATORY
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- DOMAIN 4: COMPLIANCE ----
 
-print_banner("DOMAIN 4: COMPLIANCE / REGULATORY",
-             "Regulation names preserved — LLM needs to know WHICH regulation")
+print("\n\n--- DOMAIN 4: COMPLIANCE / REGULATORY ---")
+print("Regulation names preserved")
 
 run_test("COMPLIANCE", "GDPR + Data Breach",
     "Our Chief Privacy Officer Jennifer Walsh at Acme Corp discovered a "
@@ -260,12 +218,10 @@ run_test("COMPLIANCE", "HIPAA + SOX Audit",
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  DOMAIN 5: GOVERNMENT / DEFENSE
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- DOMAIN 5: GOVERNMENT ----
 
-print_banner("DOMAIN 5: GOVERNMENT / DEFENSE",
-             "Project names replaced, briefing details protected")
+print("\n\n--- DOMAIN 5: GOVERNMENT / DEFENSE ---")
+print("Project names replaced, briefing details protected")
 
 run_test("GOVERNMENT", "Defense Briefing",
     "Prepare a briefing document for Project Sentinel, overseen by General "
@@ -284,12 +240,10 @@ run_test("GOVERNMENT", "Policy Draft",
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  DOMAIN 6: CORPORATE / HR
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- DOMAIN 6: CORPORATE / HR ----
 
-print_banner("DOMAIN 6: CORPORATE / HR",
-             "Employee names replaced, job titles/roles preserved")
+print("\n\n--- DOMAIN 6: CORPORATE / HR ---")
+print("Employee names replaced, job titles/roles preserved")
 
 run_test("CORPORATE", "Performance Review",
     "Draft a performance review for Senior Software Engineer Priya Sharma at Google. "
@@ -307,12 +261,10 @@ run_test("CORPORATE", "Restructuring Memo",
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  DOMAIN 7: MIXED / CROSS-DOMAIN — The stress test
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- DOMAIN 7: CROSS-DOMAIN TESTS ----
 
-print_banner("DOMAIN 7: CROSS-DOMAIN STRESS TESTS",
-             "Prompts that combine multiple PII types and domains")
+print("\n\n--- DOMAIN 7: CROSS-DOMAIN STRESS TESTS ---")
+print("Prompts that combine multiple PII types and domains")
 
 run_test("CROSS-DOMAIN", "Medical-Legal (Malpractice)",
     "Patient Maria Garcia is suing Dr. David Lee at Massachusetts General Hospital "
@@ -334,11 +286,9 @@ run_test("CROSS-DOMAIN", "Financial-Compliance (AML)",
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  ⭐ HERO PROMPT — Use this in the LIVE DEMO
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- HERO PROMPT for live demo ----
 
-print_banner("⭐ HERO PROMPT — Use this in your live demo!")
+print("\n\n--- HERO PROMPT - Use this in your live demo! ---")
 
 run_test("HERO DEMO", "Cross-Domain Sensitive Prompt",
     "Dr. Sarah Chen at Stanford Medical Center prescribed Metformin 500mg and "
@@ -353,11 +303,9 @@ run_test("HERO DEMO", "Cross-Domain Sensitive Prompt",
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  🔄 ROUND-TRIP TEST — Prove de-sanitization works
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- ROUND-TRIP TEST ----
 
-print_banner("🔄 ROUND-TRIP TEST — Prove de-sanitization works")
+print("\n\n--- ROUND-TRIP TEST - Prove de-sanitization works ---")
 
 rt_sanitizer = Sanitizer()
 rt_prompt = (
@@ -366,28 +314,28 @@ rt_prompt = (
 )
 rt_sanitized, rt_entities, rt_map, rt_score = rt_sanitizer.sanitize_prompt(rt_prompt)
 
-# Build fake LLM response using aliases
+# build fake LLM response using aliases
 fake_names = list(rt_map.values())[:2]
 rt_fake_response = f"The meeting between {' and '.join(fake_names)} was productive. Both parties agreed to proceed."
 rt_restored = rt_sanitizer.desanitize_response(rt_fake_response)
 
-print(f"\n📝 Original prompt:      {rt_prompt}")
-print(f"🔒 What AI received:     {rt_sanitized}")
-print(f"🤖 AI responded:         {rt_fake_response}")
-print(f"🔓 User sees (restored): {rt_restored}")
+print(f"\nOriginal prompt:      {rt_prompt}")
+print(f"What AI received:     {rt_sanitized}")
+print(f"AI responded:         {rt_fake_response}")
+print(f"User sees (restored): {rt_restored}")
 
 real_names_back = any(name in rt_restored for name in rt_map.keys())
-print(f"\n{'✅ ROUND-TRIP PASSED' if real_names_back else '❌ ROUND-TRIP FAILED'} — "
-      f"Real names {'restored' if real_names_back else 'NOT restored'}!")
+if real_names_back:
+    print(f"\nROUND-TRIP PASSED - Real names restored!")
+else:
+    print(f"\nROUND-TRIP FAILED - Real names NOT restored")
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  FINAL REPORT
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ---- FINAL REPORT ----
 
-print("\n\n" + "=" * 70)
+print(f"\n\n{'=' * 60}")
 print("  FINAL REPORT")
-print("=" * 70)
+print(f"{'=' * 60}")
 
 total = len(results)
 passed = sum(1 for r in results if r["passed"])
@@ -395,9 +343,9 @@ warned = sum(1 for r in results if r["total_entities"] == 0)
 failed = total - passed - warned
 
 print(f"\n  Total Tests:  {total}")
-print(f"  ✅ Passed:    {passed}")
-print(f"  ⚠️  Warnings:  {warned} (no entities detected)")
-print(f"  ❌ Failed:    {failed}")
+print(f"  Passed:       {passed}")
+print(f"  Warnings:     {warned} (no entities detected)")
+print(f"  Failed:       {failed}")
 
 total_entities = sum(r["total_entities"] for r in results)
 total_replaced = sum(r["replaced"] for r in results)
@@ -412,18 +360,10 @@ print(f"  Average Privacy Score:    {avg_score:.0f}/100")
 print(f"\n  Domains Covered: MEDICAL, LEGAL, FINANCIAL, COMPLIANCE,")
 print(f"                   GOVERNMENT, CORPORATE, CROSS-DOMAIN")
 
-print(f"\n  Features Demonstrated:")
-print(f"    🔴 REPLACE (identity):         Names, orgs, emails, phones, SSNs, URLs, IPs")
-print(f"    🟡 PERTURB (structural):       Dates (±3-7 days), Money (±15%)")
-print(f"    🟢 PRESERVE (domain-critical): Drug names, conditions, symptoms, legal terms,")
-print(f"                                   financial instruments, regulatory terms")
-print(f"    🛡️  Privacy Scorecard:          Per-prompt risk score + HIPAA alignment")
-print(f"    🔄 Round-trip:                  Sanitize → LLM → De-sanitize → Correct")
-
 print(f"\n  Full Alias Map ({len(sanitizer.get_alias_map())} entries):")
 for real, fake in sorted(sanitizer.get_alias_map().items()):
-    print(f"    {real:35s} → {fake}")
+    print(f"    {real:35s} -> {fake}")
 
-print("\n" + "=" * 70)
+print("\n" + "=" * 60)
 print("  Done. Use the Hero Prompt for your live demo!")
-print("=" * 70)
+print("=" * 60)

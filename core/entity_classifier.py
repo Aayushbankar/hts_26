@@ -1,7 +1,6 @@
 """
-Entity Classifier - the brains of the pipeline.
-Merges regex + NER results, deduplicates overlapping spans,
-assigns tiers (REPLACE/PERTURB/PRESERVE), and scores privacy.
+entity_classifier.py - merges regex + NER entities, deduplicates
+overlapping ones, assigns tiers, and does privacy scoring
 """
 
 import re
@@ -72,17 +71,24 @@ class EntityClassifier:
 
     # things GLiNER sometimes misidentifies
     FALSE_POSITIVES = {
-        "government id": {"ssn", "dob", "ein", "tin", "id", "itin", "vin"},
+        "government id": {
+            "ssn", "dob", "ein", "tin", "id", "itin", "vin",
+            "aadhaar", "aadhar", "pan", "pan card", "passport",
+            "license", "driving license", "voter id", "ration card",
+        },
+        "person": {"cfo", "ceo", "cto", "coo", "dr", "mr", "mrs", "ms"},
     }
 
     # P3: well-known entities that should almost never be replaced
     # these are public knowledge, not PII by themselves
     WHITELISTED_ORGS = {
-        "google", "apple", "microsoft", "amazon", "meta", "netflix", "uber",
-        "stripe", "shopify", "linkedin", "whatsapp", "youtube", "instagram",
-        "slack", "zoom", "github", "docker", "kubernetes", "aws", "azure",
-        "gcp", "openai", "chatgpt", "tesla", "samsung", "sony", "tiktok",
-        "spotify", "twitter", "reddit", "wikipedia", "stack overflow",
+        "google", "google cloud", "google maps", "google drive",
+        "apple", "microsoft", "microsoft azure", "amazon", "amazon web services",
+        "meta", "netflix", "uber", "stripe", "shopify", "linkedin",
+        "whatsapp", "youtube", "instagram", "slack", "zoom", "github",
+        "docker", "kubernetes", "aws", "azure", "gcp", "openai", "chatgpt",
+        "tesla", "samsung", "sony", "tiktok", "spotify", "twitter", "reddit",
+        "wikipedia", "stack overflow",
         "infosys", "tcs", "wipro", "reliance", "tata", "hdfc", "icici",
         "sbi", "paytm", "flipkart", "swiggy", "zomato",
     }
@@ -97,10 +103,7 @@ class EntityClassifier:
     }
 
     def classify(self, regex_entities: list[dict], ner_entities: list[dict]) -> list[dict]:
-        """
-        Merge regex + NER entities, deduplicate overlapping spans, assign tiers.
-        When two overlap, keep the longer one. Same length = prefer regex.
-        """
+        """merge both entity lists, dedup overlaps, assign tiers"""
         all_entities = []
 
         for e in regex_entities:
@@ -181,14 +184,7 @@ class EntityClassifier:
     ]
 
     def _is_task_relevant(self, entity_text, entity_label, full_prompt):
-        """
-        Check if an entity is part of the user's task (preserve it)
-        or their identity (replace it).
-        
-        Two steps:
-          1. Is this a topic-related prompt? (travel, comparison, etc.)
-          2. Is this entity anchored to identity? ("I live in X")
-        """
+        """is this entity part of the users task (keep it) or their identity (replace it)"""
         if entity_label not in ("location", "organization", "product name"):
             return False
 
@@ -270,10 +266,7 @@ class EntityClassifier:
         return entities
 
     def compute_privacy_score(self, classified_entities: list[dict]) -> dict:
-        """
-        Privacy scorecard for a prompt.
-        Score 0-100 based on how much risk is mitigated.
-        """
+        """calculate a 0-100 privacy score based on how much risk we mitigated"""
         if not classified_entities:
             return {
                 "score": 100, "risk_level": "NONE",

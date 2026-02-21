@@ -1,6 +1,7 @@
 """
-Pattern Scanner - regex layer for catching structured PII 
-that NER models usually miss (emails, phones, IDs, etc.)
+pattern_scanner.py - regex layer for finding structured PII
+like emails, phone numbers, credit cards, aadhaar etc.
+that the NER model usually misses
 """
 
 import re
@@ -31,7 +32,7 @@ class PatternScanner:
     }
 
     def scan(self, text: str) -> list[dict]:
-        """Scan text and return entities in gliner-compatible format."""
+        """scan text for all patterns, returns list of matches"""
         entities = []
         for label, pattern in self.PATTERNS.items():
             for match in pattern.finditer(text):

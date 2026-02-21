@@ -1,4 +1,4 @@
-# 🚀 Aayush's Complete Task List — Silent-Protocol
+#  Aayush's Complete Task List — Silent-Protocol
 
 **Role:** Lead Engineer + Core Logic + Team Glue
 **Total Estimated Time:** ~16 hours (core work + team lead duties)
@@ -13,7 +13,7 @@
   - `/backend` (Aum's workspace)
   - `/frontend` (Divya's workspace)
   - `/core` (your workspace)
-  - `/docs` (already done ✅)
+  - `/docs` (already done )
 - [ ] **0.2** Initialize Git repo and push to GitHub (10 min)
 - [ ] **0.3** Invite Divya and Aum as collaborators on GitHub (5 min)
 - [ ] **0.4** Create `backend/requirements.txt` with all dependencies (5 min)
@@ -25,7 +25,7 @@
 - [ ] **0.10** Walk Divya through: clone → open `frontend/` → start Live Server (5 min)
 - [ ] **0.11** Walk Aum through: clone → create venv → pip install → get Groq key → save `.env` (5 min)
 
-**✅ Checkpoint:** Both teammates have the repo cloned and can see their starter files.
+** Checkpoint:** Both teammates have the repo cloned and can see their starter files.
 
 ---
 
@@ -40,7 +40,7 @@
 - [ ] **1.7** Implement `get_mapping()` and `clear()` (5 min)
 - [ ] **1.8** Quick manual test: create instance, add "Apple"→ORG twice → confirm same alias (5 min)
 
-**✅ Checkpoint:** AliasManager works standalone. Aliases are consistent, bidirectional, and collision-free.
+** Checkpoint:** AliasManager works standalone. Aliases are consistent, bidirectional, and collision-free.
 
 ---
 
@@ -54,7 +54,7 @@
 - [ ] **2.6** Implement `desanitize_response(llm_response)`: delegate to `alias_manager.desanitize()` (5 min)
 - [ ] **2.7** Implement `get_alias_map()`: delegate to `alias_manager.get_mapping()` (5 min)
 
-**✅ Checkpoint:** `Sanitizer("Tim Cook works at Apple")` → returns sanitized text with 0 real names.
+** Checkpoint:** `Sanitizer("Tim Cook works at Apple")` → returns sanitized text with 0 real names.
 
 ---
 
@@ -67,7 +67,7 @@
 - [ ] **3.5** Test 4 — Partial match: "Apple Inc" vs "Apple" — verify longest-first sorting works (10 min)
 - [ ] **3.6** Run all tests → fix any failures → commit and push (5 min)
 
-**✅ Checkpoint:** `python test_sanitizer.py` → "ALL TESTS PASSED". Push to Git. Tell Aum to pull.
+** Checkpoint:** `python test_sanitizer.py` → "ALL TESTS PASSED". Push to Git. Tell Aum to pull.
 
 ---
 
@@ -80,7 +80,7 @@
 - [ ] **4.5** Multi-turn: sanitize 3 messages mentioning "Apple" → same alias all 3 times (10 min)
 - [ ] **4.6** Document any entity types GLiNER misses → decide if regex fallback needed (15 min)
 
-**✅ Checkpoint:** Core logic handles all prompt types. Known limitations documented.
+** Checkpoint:** Core logic handles all prompt types. Known limitations documented.
 
 ---
 
@@ -108,7 +108,7 @@
 - [ ] **5.8** Test with curl: send "Tim Cook works at Apple" → verify response has fake names in `sanitized_prompt` and real names in `response` (15 min)
 - [ ] **5.9** Fix any bugs → push (15 min)
 
-**✅ Checkpoint:** API returns full sanitized/desanitized pipeline. Curl confirms it.
+** Checkpoint:** API returns full sanitized/desanitized pipeline. Curl confirms it.
 
 ---
 
@@ -134,7 +134,7 @@
 - [ ] **6.7** Verify: reset clears everything (5 min)
 - [ ] **6.8** Fix any rendering, timing, or data format bugs (20 min)
 
-**✅ Checkpoint:** Full app works end-to-end. Type → sanitize → LLM → desanitize → display.
+** Checkpoint:** Full app works end-to-end. Type → sanitize → LLM → desanitize → display.
 
 ---
 
@@ -149,7 +149,7 @@
 - [ ] **7.7** Final visual review: does the app look premium? Does the debug panel pop? (15 min)
 - [ ] **7.8** Clean up any console errors, warnings, or leftover debug prints (15 min)
 
-**✅ Checkpoint:** App is polished. No crashes. Looks good.
+** Checkpoint:** App is polished. No crashes. Looks good.
 
 ---
 
@@ -161,7 +161,7 @@
 - [ ] **8.4** Record a backup demo video in case live demo fails (15 min)
 - [ ] **8.5** Full dry-run with team: Divya opens app, you narrate, Aum monitors terminal (10 min)
 
-**✅ Checkpoint:** Demo rehearsed. Backup video recorded. Pitch memorized.
+** Checkpoint:** Demo rehearsed. Backup video recorded. Pitch memorized.
 
 ---
 

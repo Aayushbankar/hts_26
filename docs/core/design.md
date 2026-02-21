@@ -1,4 +1,4 @@
-# 🧠 Core Logic Design Document: Silent-Protocol v2
+#  Core Logic Design Document: Silent-Protocol v2
 
 **Owner:** Aayush
 **Deliverables:** `sanitiser.py`, `alias_manager.py`, `pattern_scanner.py`, `entity_classifier.py`, `test_sanitizer.py`, `pitch_tests.py`
@@ -24,27 +24,27 @@ This module has **no dependency** on FastAPI, Groq, or the frontend. It works st
 
 ```
 User Prompt
-    │
+    -
     ▼
-┌──────────────────┐
-│  PatternScanner   │  Layer 1: Regex → email, phone, SSN, credit card, URL, IP
-└───────┬──────────┘
-        │
+--------------------
+-  PatternScanner   -  Layer 1: Regex → email, phone, SSN, credit card, URL, IP
+--------------------
+        -
         ▼
-┌──────────────────┐
-│  GLiNER NER       │  Layer 2: Zero-shot NER → 18 entity categories (threshold ≥ 0.6)
-└───────┬──────────┘
-        │
+--------------------
+-  GLiNER NER       -  Layer 2: Zero-shot NER → 18 entity categories (threshold ≥ 0.6)
+--------------------
+        -
         ▼
-┌──────────────────┐
-│ EntityClassifier  │  Layer 3: Dedup overlaps, assign tier, compute privacy score
-└───────┬──────────┘
-        │
+--------------------
+- EntityClassifier  -  Layer 3: Dedup overlaps, assign tier, compute privacy score
+--------------------
+        -
         ▼
-┌──────────────────┐
-│  AliasManager     │  Offset-based R→L replacement, Faker generation, perturbation
-└───────┬──────────┘
-        │
+--------------------
+-  AliasManager     -  Offset-based R→L replacement, Faker generation, perturbation
+--------------------
+        -
         ▼
   (sanitized_text, entities, alias_map, privacy_score)
 ```
@@ -73,7 +73,7 @@ sanitiser.py → alias_manager.py
 
 This is Silent-Protocol's **key innovation**. Unlike competitors that treat all PII as binary (found → remove), we classify each entity into one of three treatment tiers:
 
-### 🔴 REPLACE (Identity Data)
+###  REPLACE (Identity Data)
 Entities that directly identify a person or organization. Fully replaced with realistic Faker-generated fakes.
 
 | Label           | Example             | Replacement         |
@@ -91,7 +91,7 @@ Entities that directly identify a person or organization. Fully replaced with re
 | `project_name`  | Project Titan       | Project Falcon      |
 | `product_name`  | iPhone 16           | Carter Pro          |
 
-### 🟡 PERTURB (Structural Data)
+###  PERTURB (Structural Data)
 Data that provides important context but doesn't directly identify. Shifted by small, controlled amounts to preserve analytical utility.
 
 | Label          | Example          | Perturbation                                    |
@@ -108,7 +108,7 @@ Data that provides important context but doesn't directly identify. Shifted by s
 - FY notation preserved: "FY2026" stays untouched
 - Abstract dates preserved: "Q2 2025", "March 2025", "2025" stay untouched
 
-### 🟢 PRESERVE (Domain-Critical Context)
+###  PRESERVE (Domain-Critical Context)
 Entities essential for LLM reasoning. Kept as-is — removing them would destroy analytic utility.
 
 | Label                  | Example                  | Why Preserved                                 |

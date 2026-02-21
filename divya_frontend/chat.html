@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="Screenshot 2026-02-19 141844.png" type="image/x-icon">
+    <title>Silent Protocol — Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="brand">
+            <div class="small-logo-ring">
+                <img src="Screenshot_2026-02-19_180716-removebg-preview.png" alt="S">
+            </div>
+        </div>
+        <div class="header-right">
+            <div id="privacy-badge" style="display:none; padding:5px 14px; border-radius:8px; font-size:11px; font-weight:600; letter-spacing:0.5px;"></div>
+            <button class="btn-reset" id="reset-btn">Reset</button>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="body-row">
+
+        <!-- CHAT PANEL -->
+        <div class="chat-panel">
+            <div class="chat-messages" id="chat-messages">
+                
+            </div>
+
+            <!-- Idle overlay -->
+            <div class="idle-state" id="idle-state">
+                <svg class="lock-icon" viewBox="0 0 24 24" width="44" height="44" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-amber);">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span class="idle-title">Secure Channel Ready</span>
+                <span class="idle-subtitle">Start typing to initiate encrypted conversation</span>
+            </div>
+
+            <!-- Input -->
+            <div class="input-bar">
+                <input class="chat-input" id="user-input" type="text" placeholder="Type your secure message..." autocomplete="off">
+                <button class="btn-send" id="send-btn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4l0 16M12 4l-6 6M12 4l6 6" stroke="#fff" stroke-width="2.5"
+                              stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="sidebar" id="sidebar">
+            <!-- privacy score (hidden until first message) -->
+            <div id="sidebar-score" class="sidebar-section" style="display:none;">
+                <div class="sidebar-section-title">Privacy Score</div>
+                <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:8px;">
+                    <div id="score-value" style="font-size:2.2rem; font-weight:700; font-family:'JetBrains Mono',monospace; color:var(--text-primary); line-height:1;">--</div>
+                    <div style="font-size:12px; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">/100</div>
+                    <div id="score-badge" style="padding:3px 10px; border-radius:6px; font-size:10px; font-weight:700; font-family:'JetBrains Mono',monospace; margin-left:auto;"></div>
+                </div>
+                <div id="score-bar-bg" style="width:100%; height:3px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden;">
+                    <div id="score-bar-fill" style="height:100%; width:0%; border-radius:2px; transition:width 0.8s cubic-bezier(0.33,1,0.68,1);"></div>
+                </div>
+                <div id="score-details" style="margin-top:10px; font-size:10px; color:var(--text-dim); font-family:'JetBrains Mono',monospace; line-height:1.7; letter-spacing:0.02em;"></div>
+            </div>
+
+            <!-- sidebar items -->
+            <div id="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">What AI Sees</div>
+                    <div style="font-size:12px; color:var(--text-dim); font-style:italic;">Send a message to see sanitized output</div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Entities Detected</div>
+                    <div style="font-size:12px; color:var(--text-dim); font-style:italic;">No entities yet</div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Alias Map</div>
+                    <div style="font-size:12px; color:var(--text-dim); font-style:italic;">No aliases yet</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Markdown Parser -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

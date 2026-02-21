@@ -1,10 +1,10 @@
-# 🧠 Phase 1 Checklist: Core Logic (AliasManager)
+#  Phase 1 Checklist: Core Logic (AliasManager)
 
 > **Goal:** Create a robust "Brain" that finds or generates fake names for real entities. It must remember mappings for the whole session.
 
 ---
 
-## 🏗️ Step 1: Initialize the Class
+##  Step 1: Initialize the Class
 **File:** `core/alias_manager.py`
 
 - [ ] **Import Requirements:**
@@ -69,7 +69,7 @@
 
 ---
 
-## 🔄 Step 5: Desanitize (Restore Real Names)
+##  Step 5: Desanitize (Restore Real Names)
 **Method:** `desanitize(self, text: str) -> str`
 
 - [ ] **Sort Fakes:** Get all items from `self.fake_to_real`. Sort by length of the *fake name* (descending).
@@ -86,5 +86,5 @@
 
 ---
 
-### ✅ Ready to Code?
+###  Ready to Code?
 Open `core/alias_manager.py` and start with Step 1.

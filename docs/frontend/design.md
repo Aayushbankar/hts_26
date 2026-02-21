@@ -1,4 +1,4 @@
-# 🎨 Frontend Design Document: Silent-Protocol
+#  Frontend Design Document: Silent-Protocol
 
 **Owner:** Divya
 **Deliverables:** `index.html`, `style.css`, `script.js`
@@ -111,31 +111,31 @@ The main area sits between header and input bar, and scrolls independently.
 ### Desktop Layout (> 1024px)
 
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│ HEADER (56px, fixed top, full width)                                 │
-│  Left: Lock icon + "Silent-Protocol" + "v0.1" badge                  │
-│  Right: Silent Mode toggle switch + "Reset Session" button           │
-├──────────────────────────────────────────┬───────────────────────────┤
-│                                          │                           │
-│  CHAT AREA                               │  DEBUG PANEL (340px)      │
-│  (flex: 1, vertically scrollable)        │  (fixed width, scrollable)│
-│                                          │                           │
-│  Messages appear here as bubbles.        │  Section 1: "WHAT AI SEES"│
-│  Auto-scrolls to bottom on new message.  │   Shows the sanitized     │
-│                                          │   prompt text             │
-│                                          │                           │
-│                                          │  Section 2: "ENTITIES"    │
-│                                          │   Colored pill tags for   │
-│                                          │   each detected entity    │
-│                                          │                           │
-│                                          │  Section 3: "ALIAS MAP"   │
-│                                          │   Table of real → fake    │
-│                                          │   name mappings           │
-│                                          │                           │
-├──────────────────────────────────────────┤                           │
-│ INPUT BAR (64px, fixed bottom)           │                           │
-│  Text input (fills space) + Send button  │                           │
-└──────────────────────────────────────────┴───────────────────────────┘
+------------------------------------------------------------------------
+- HEADER (56px, fixed top, full width)                                 -
+-  Left: Lock icon + "Silent-Protocol" + "v0.1" badge                  -
+-  Right: Silent Mode toggle switch + "Reset Session" button           -
+------------------------------------------------------------------------
+-                                          -                           -
+-  CHAT AREA                               -  DEBUG PANEL (340px)      -
+-  (flex: 1, vertically scrollable)        -  (fixed width, scrollable)-
+-                                          -                           -
+-  Messages appear here as bubbles.        -  Section 1: "WHAT AI SEES"-
+-  Auto-scrolls to bottom on new message.  -   Shows the sanitized     -
+-                                          -   prompt text             -
+-                                          -                           -
+-                                          -  Section 2: "ENTITIES"    -
+-                                          -   Colored pill tags for   -
+-                                          -   each detected entity    -
+-                                          -                           -
+-                                          -  Section 3: "ALIAS MAP"   -
+-                                          -   Table of real → fake    -
+-                                          -   name mappings           -
+-                                          -                           -
+--------------------------------------------                           -
+- INPUT BAR (64px, fixed bottom)           -                           -
+-  Text input (fills space) + Send button  -                           -
+------------------------------------------------------------------------
 ```
 
 ### Tablet (768px – 1024px)
@@ -160,7 +160,7 @@ The main area sits between header and input bar, and scrolls independently.
 | Z-index    | 100 (above all content)                          |
 
 **Left Section:**
-- Lock emoji (🔒) with a faint neon green text-shadow glow
+- Lock emoji () with a faint neon green text-shadow glow
 - Title "Silent-Protocol" in Instrument Sans, Bold, 24px
 - Version badge "v0.1" — tiny pill in muted text
 
@@ -198,7 +198,7 @@ The main area sits between header and input bar, and scrolls independently.
 ### 5.3 Empty State (Before First Message)
 
 When no messages exist, center this in the chat area:
-- Large lock icon (🔒) at 48px
+- Large lock icon () at 48px
 - Title: "Type a message. We'll handle the secrets." — Primary text color
 - Subtitle: "Your data never reaches the AI. We replace sensitive information with realistic fakes before forwarding." — Muted text color
 - Both centered vertically and horizontally
@@ -258,7 +258,7 @@ Appears at the bottom of the chat area while waiting for a response. Disappears 
 - Text color: Muted (dimmer than chat — this is "secondary" info)
 - Updates every time a new message is sent
 
-**Section 2: "🏷️ ENTITIES DETECTED"**
+**Section 2: " ENTITIES DETECTED"**
 - Title: same style as above
 - Content: a vertical list of entity tag pills (see 5.7)
 - Each tag shows: `[entity text]` + entity type label
@@ -407,7 +407,7 @@ These are copy-paste-ready prompts for Divya to use with ChatGPT/Claude to gener
 > "Add chat message bubbles to my chat app. User messages have a 3px neon green (#00ff88) left border with dark (#141620) background. AI messages have a gray left border. Each bubble has a header row with the sender name and timestamp. Messages should fade in and slide up when they appear. Also add a typing indicator with 3 small bouncing green dots that appears while waiting for a response."
 
 ### Prompt 3: Debug Panel Content
-> "In my chat app's right sidebar, add 3 sections separated by borders: First section titled '📡 WHAT AI SEES' with a monospace pre-formatted text block. Second section titled '🏷️ ENTITIES DETECTED' with colored pill-shaped tags (mint for person, lavender for organization, amber for location). Third section titled '🔗 ALIAS MAP' showing rows of 'Real Name → Fake Name' with the arrow in green."
+> "In my chat app's right sidebar, add 3 sections separated by borders: First section titled '📡 WHAT AI SEES' with a monospace pre-formatted text block. Second section titled ' ENTITIES DETECTED' with colored pill-shaped tags (mint for person, lavender for organization, amber for location). Third section titled '🔗 ALIAS MAP' showing rows of 'Real Name → Fake Name' with the arrow in green."
 
 ### Prompt 4: JavaScript Fetch Logic
 > "Add JavaScript to my chat app: when the form is submitted, POST to http://localhost:8000/chat with JSON body containing the message. The API returns response, sanitized_prompt, and entities_detected. Display the response as an AI bubble, show the sanitized_prompt in the debug panel, and create colored entity tags for each detected entity. Also add a reset button that POSTs to /reset and clears everything."

@@ -1,4 +1,4 @@
-<!-- # 🧠 Phase 2 Checklist: Sanitizer (The Detective) -->
+<!-- #  Phase 2 Checklist: Sanitizer (The Detective) -->
 
 > **Goal:** Build the class that uses GLiNER AI to FIND entities in text, then hands them to AliasManager to replace them.
 
@@ -6,7 +6,7 @@
 
 ---
 
-## 🏗️ Step 1: Imports
+##  Step 1: Imports
 
 - [ ] Import `GLiNER` from `gliner`
 - [ ] Import `AliasManager` from `alias_manager`
@@ -17,7 +17,7 @@
 
 ---
 
-## 🏗️ Step 2: Class + Constructor (`__init__`)
+##  Step 2: Class + Constructor (`__init__`)
 
 - [ ] **Define class:** `class Sanitizer:`
 - [ ] **Load the AI model:**
@@ -66,7 +66,7 @@
 
 ---
 
-## 🔄 Step 4: `desanitize_response(self, llm_response)`
+##  Step 4: `desanitize_response(self, llm_response)`
 
 **What it does:** Takes the AI's response (which has fake names) → puts real names back.
 
@@ -82,7 +82,7 @@
 
 ---
 
-## 📋 Step 5: `get_alias_map(self)`
+##  Step 5: `get_alias_map(self)`
 
 **What it does:** Returns the current notebook of real→fake mappings. Used by the `/aliases` API endpoint.
 
@@ -92,7 +92,7 @@
 
 ---
 
-## ✅ Done Checklist
+##  Done Checklist
 
 When you're finished, your file should have:
 - [ ] 2 import lines
@@ -105,5 +105,5 @@ When you're finished, your file should have:
 
 ---
 
-### ✅ Ready to Code?
+###  Ready to Code?
 Open `core/sanitiser.py` and start with Step 1 (imports).

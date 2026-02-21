@@ -1,10 +1,9 @@
 """
-Alias Manager - handles all the fake data generation and replacement.
+alias_manager.py - handles all the fake data generation
 
-Tiers:
-  REPLACE  - full swap with Faker (names, emails, etc.)
-  PERTURB  - small noise (dates +-few days, money +-15%)
-  PRESERVE - don't touch (medical terms, job titles, etc.)
+REPLACE = full swap (names, emails, etc)
+PERTURB = small noise (dates, money)
+PRESERVE = dont touch
 """
 
 from faker import Faker
@@ -41,7 +40,7 @@ class AliasManager:
     # --- public API ---
 
     def get_or_create(self, entity_text, label, tier="REPLACE"):
-        """Get existing alias or create new one. Handles collision detection."""
+        """get existing alias or make a new one"""
         if entity_text in self.real_to_fake:
             return self.real_to_fake[entity_text]
 
@@ -70,7 +69,7 @@ class AliasManager:
         return alias
 
     def sanitize_by_offsets(self, text, classified_entities):
-        """Replace entities right-to-left using char offsets (avoids cascading errors)."""
+        """replace entities right-to-left so positions dont shift"""
         to_replace = [e for e in classified_entities if e.get("tier") != "PRESERVE"]
         to_replace.sort(key=lambda e: e["start"], reverse=True)
 
@@ -83,7 +82,7 @@ class AliasManager:
         return text
 
     def desanitize(self, text):
-        """Reverse all aliases back to originals."""
+        """swap fake names back to real in the response"""
         for fake, real in sorted(
             self.fake_to_real.items(), key=lambda x: len(x[0]), reverse=True
         ):
