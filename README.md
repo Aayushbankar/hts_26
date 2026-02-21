@@ -63,33 +63,100 @@ python main.py
 ## Project struture
 
 ```
-hts_26/
-├── core/                    # privacy engine
-│   ├── sanitiser.py         # pipeline orchestrator
-│   ├── alias_manager.py     # fake data generation + replacement
-│   ├── pattern_scanner.py   # regex PII detection
-│   ├── entity_classifier.py # tier assignment + dedup + intent detection
-│   ├── test_sanitizer.py    # automated tests
-│   └── pitch_tests.py       # demo tests
-│
-├── backend/
-│   └── main.py              # fastapi server + groq integration
-│
-├── frontend/                # chat UI
+tree
+.
+├── backend
+│   ├── main.py
+│   └── __pycache__
+│       └── main.cpython-313.pyc
+├── cli_tester.py
+├── core
+│   ├── alias_manager.py
+│   ├── core_explanation.md
+│   ├── dataset.json
+│   ├── entity_classifier.py
+│   ├── __init__.py
+│   ├── intent_classifier.py
+│   ├── pattern_scanner.py
+│   ├── pitch_tests.py
+│   ├── __pycache__
+│   │   ├── alias_manager.cpython-313.pyc
+│   │   ├── entity_classifier.cpython-313.pyc
+│   │   ├── __init__.cpython-313.pyc
+│   │   ├── intent_classifier.cpython-313.pyc
+│   │   ├── pattern_scanner.cpython-313.pyc
+│   │   └── sanitiser.cpython-313.pyc
+│   ├── README.md
+│   ├── real_prompts.json
+│   ├── sanitiser.py
+│   ├── test_real_prompts.py
+│   ├── test_report.txt
+│   └── test_sanitizer.py
+├── divya_frontend
+│   ├── chat.html
 │   ├── index.html
+│   ├── new_desgin.jpeg
+│   ├── refrence.html
+│   ├── Screenshot 2026-02-19 141844.png
+│   ├── Screenshot_2026-02-19_141844-removebg-preview.png
+│   ├── Screenshot 2026-02-19 151825.png
+│   ├── Screenshot_2026-02-19_180716-removebg-preview.png
+│   ├── script.js
 │   ├── style.css
-│   └── script.js
-│
-└── docs/                    # design docs
+│   └── upscalemedia-transformed (2).jpeg
+├── docs
+│   ├── aayush_tasks.md
+│   ├── backend
+│   │   ├── design.md
+│   │   └── tasks.md
+│   ├── core
+│   │   ├── alias_manager.jpeg
+│   │   ├── core_phase_1.md
+│   │   ├── core_phase_2.md
+│   │   ├── design.md
+│   │   ├── entity_classification.jpeg
+│   │   ├── pattern_scanner.jpeg
+│   │   └── tasks.md
+│   ├── frontend
+│   │   ├── design.md
+│   │   └── tasks.md
+│   ├── insider_docs
+│   │   ├── complete_project_audit.md
+│   │   ├── pitch_deck_script.md
+│   │   ├── round1_concept_proof.md
+│   │   ├── round2_code_defense.md
+│   │   ├── round3_code_defense.md
+│   │   └── study_guide.md
+│   └── preparation
+│       ├── core_logic_blueprint.md
+│       ├── leader_guide_kickoff.md
+│       ├── privacy_proxy_master_plan.md
+│       ├── proxy_team_tasks.md
+│       └── srs_silent_protocol.md
+├── experimental_frontend
+│   ├── ideas
+│   │   ├── idea_1.webp
+│   │   ├── idea_2.webp
+│   │   └── idea_3.webp
+│   ├── index.html
+│   ├── script.js
+│   └── style.css
+├── prompts.txt
+├── README.md
+└── requirements.txt
+
+14 directories, 66 files
+(.venv) incide@mx-elitebook:/mnt/shared_data/projects/hts_26
+$ 
 ```
 
 ## Team
 
-| Member | Role        | What they did                                           |
-| ------ | ----------- | ------------------------------------------------------- |
-| Aayush | Core Engine | 3-layer pipeline, tiered treatment, alias system        |
-| Aum    | Backend     | FastAPI server, Groq integration                        |
-| Divya   | Frontend    | designer + ui/ux |
+| Member | Role        | What they did                                    |
+| ------ | ----------- | ------------------------------------------------ |
+| Aayush | Core Engine | 3-layer pipeline, tiered treatment, alias system |
+| Aum    | Backend     | FastAPI server, Groq integration                 |
+| Divya  | Frontend    | designer + ui/ux                                 |
 
 ## Test results
 
